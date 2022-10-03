@@ -1,0 +1,7 @@
+Week dairy
+Week1: 
+We set a group. We worked together to confirm our organisation and decided which project is suitable for us.
+Week2:
+We worked together to plan our project¡¯s functions, schedule and divided our proposal¡¯s work. As a backend developer, I learned which framework is suitable for this project.
+Week3:
+I designed our project¡¯s database. Meanwhile, I work for the part of homepage¡¯s user story, ER-diagram and data layer text writing and finished it.
