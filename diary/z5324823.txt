@@ -1,0 +1,9 @@
+
+Week1
+We formed a group and decided on our group name and the project we would work on.
+
+Week2:
+We discussed what we needed to implement for our project, configured git and jira, and divided up the work on the proposal.
+
+Week3:
+I finished epics and user stories of personal page for\'a0proposal, and built the framework for the front-end pages.
