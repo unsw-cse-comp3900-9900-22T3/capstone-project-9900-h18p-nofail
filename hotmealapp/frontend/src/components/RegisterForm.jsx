@@ -21,15 +21,15 @@ function RegisterForm () {
           'Content-type': 'application/json',
         },
         body: JSON.stringify({
-          email,
-          name,
-          password,
-          password1
+          "email":email,
+          "username":name,
+          "password":password,
+          "password1":password1
         })
       });
       const data = await response.json();
       localStorage.setItem('token', data.username)
-      navigate('/dashboard');
+      navigate('/login');
     } catch (err) {
       alert(err)
     }

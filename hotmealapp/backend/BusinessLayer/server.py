@@ -2,17 +2,19 @@
 
 from flask import Flask, jsonify, render_template, request, redirect, url_for, session
 from flask_mysqldb import MySQL
+from flask_cors import CORS
 import json
 import MySQLdb.cursors
 import re
 
-from DataLayer import DataLayer
+# from DataLayer import DataLayer
 
 import pymysql
 
 
 
 app = Flask(__name__)
+CORS(app)
 
 #######connect to database#######====================
 
@@ -39,12 +41,12 @@ db = pymysql.connect(host='localhost',
 @app.route('/register', methods =['GET', 'POST'])
 def register():
     msg = ''
-    if request.method == 'POST' and 'username' in request.form and 'password' in request.form and 'email' in request.form:
-        username = request.form['username']
-        password = request.form['password']
-        email = request.form['email']
-        if DataLayer.Username_Check(username):
-            DataLayer.User_Register(username, email, password)
+    if request.method == 'POST' and 'username' in request.json and 'password' in request.json and 'email' in request.json:
+        username = request.json['username']
+        password = request.json['password']
+        email = request.json['email']
+        if Username_Check(username):
+            User_Register(username, email, password)
             msg = {'status': 'success', 'message': 'You have successfully registered!'}
         else:
             msg = {'status': 'fail', 'message': 'Username already exists!'}
@@ -55,10 +57,10 @@ def register():
 @app.route('/login', methods =['GET', 'POST'])
 def login():
     msg = ''
-    if request.method == 'POST' and 'username' in request.form and 'password' in request.form:
-        username = request.form['username']
-        password = request.form['password']
-        if DataLayer.User_Login(username, password):
+    if request.method == 'POST' and 'username' in request.json and 'password' in request.json:
+        username = request.json['username']
+        password = request.json['password']
+        if User_Login(username, password):
             msg = {'status': 'success', 'message': 'You have successfully logged in!'}
         else:
             msg = {'status': 'fail', 'message': 'Username or Password Error!'}
@@ -68,40 +70,39 @@ def login():
 
 @app.route('/logout')
 def logout():
-    session.pop('loggedin', None)
     session.pop('username', None)
     return jsonify({'status': 'success', 'message': 'You have successfully logged out!'})
 #######End of Business Layer#######======================================================
 
 #######Datalayer########================================================================
 
-# def User_Register(username, email, password):
-#     sql = "INSERT INTO sys.User(Username, Email, Password) \
-#             VALUES ('%s', '%s', '%s');" % (username, email, password)
-#     insert_cursor = db.cursor()
-#     try:
-#         insert_cursor.execute(sql)
-#         db.commit()
-#     except Exception:
-#         db.rollback()
-#         print("register wrong!!")
+def User_Register(username, email, password):
+    sql = "INSERT INTO sys.User(Username, Email, Password) \
+            VALUES ('%s', '%s', '%s');" % (username, email, password)
+    insert_cursor = db.cursor()
+    try:
+        insert_cursor.execute(sql)
+        db.commit()
+    except Exception:
+        db.rollback()
+        print("register wrong!!")
 
-# def User_Login(username, password):
-#     sql = "SELECT Password FROM sys.User WHERE Username = '%s';" % (username)
-#     insert_cursor = db.cursor()
-#     return_password = ''
-#     try:
-#         insert_cursor.execute(sql)
-#         return_password = insert_cursor.fetchone()[0]
-#     except Exception:
-#         db.rollback()
-#         print("login wrong!!")
-#     if return_password == password:
-#         return True
-#     else:
-#         return False
+def User_Login(username, password):
+    sql = "SELECT Password FROM sys.User WHERE Username = '%s';" % (username)
+    insert_cursor = db.cursor()
+    return_password = ''
+    try:
+        insert_cursor.execute(sql)
+        return_password = insert_cursor.fetchone()[0]
+    except Exception:
+        db.rollback()
+        print("login wrong!!")
+    if return_password == password:
+        return True
+    else:
+        return False
         
-# def Username_Check(username):
+def Username_Check(username):
     sql = "SELECT * FROM sys.User WHERE Username = '%s';" % (username)
     insert_cursor = db.cursor()
     return_password = ''
