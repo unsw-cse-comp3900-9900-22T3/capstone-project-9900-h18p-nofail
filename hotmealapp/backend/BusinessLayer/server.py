@@ -12,6 +12,8 @@ import pymysql
 
 app = Flask(__name__)
 
+#######connect to database#######====================
+
 # app.secret_key = 'your secret key'
 
 # app.config['MYSQL_HOST'] = 'localhost'
@@ -26,6 +28,9 @@ db = pymysql.connect(host='localhost',
                         user='root',
                         password='12345678',
                         database='sys')
+
+
+#######End connect to database#######====================
 
 ######Start of Business Layer######======================================================
 
