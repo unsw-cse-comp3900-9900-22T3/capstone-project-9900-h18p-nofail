@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link href="menu.css" rel="stylesheet" />
+    <script type="text/javascript" src="jquery-2.0.3.min.js"></script>
+    <script type="text/javascript" src="menu.js"></script>
+</head>
+
+<body>
+    <div class="htmlBody">
+        <div class="top">
+            <div class="BarBanner">
+                <div class="logoContainer">
+                    <div class="logoBorder">
+                        <img class="logoImg" src="images/logo.png" onclick="logoJump()" />
+                    </div>
+                </div>
+                <div class="openRecipe">
+                    <button type="button" onclick="CreateRecipe()">Create New Recipe</button>
+                </div>
+                <div class="title">
+                    Ryan's Recipe
+                </div>
+                <div class="loginRemark">
+                    <a href="~">Welcome <label style="color: red;">Ryan</label></a>
+                </div>
+                <div class="loginOut">
+                    <button onclick="logOut()">Log Out</button>
+                </div>
+            </div>
+            <div class="topMain">
+                <div class="avatarContainer">
+                    <div class="avatarBorder">
+                        <img class="logoImg" src="images/logo.png" />
+                    </div>
+                    <div class="favoriteAndLike">
+                        <div class="favorite">
+                            <div class="favoriteNumberBorder" onclick="favorite()"></div>
+                            favorite
+                        </div>
+                        <div class="like">
+                            <div class="likeNumberBorder" onclick="like()"></div>
+                            like
+                        </div>
+                    </div>
+                </div>
+                <div class="mainRemark">
+                    <div class="recipeRemark">
+                        <div id="recipeName"></div>
+                        <div id="recipeDesciption"></div>
+                    </div>
+                    <div class="detailsAndSteps">
+                        <div class="details">
+                            <div class="detailRemark"></div>
+                        </div>
+                        <div class="steps">
+                            <div class="detailRemark"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="personMessage">
+                    <div class="personName">
+                        <img src="images/avatar.png" class="avatar" /> <span class="avatarName">Ryan</span>
+                    </div>
+                    <div class="personFollowing" onclick="follow()"></div>
+                    Following
+                </div>
+            </div>
+        </div>
+        <div class="bottom">
+            <div id="commentContainer">
+
+            </div>
+            <div class="commentInput">
+                <textarea rows="3" cols="30" id="currentComment"></textarea>
+                <input type="submit" value="comment" onclick="addComment()">
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
