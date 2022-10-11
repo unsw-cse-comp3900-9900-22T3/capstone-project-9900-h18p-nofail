@@ -6,6 +6,8 @@ import json
 import MySQLdb.cursors
 import re
 
+from DataLayer import DataLayer
+
 import pymysql
 
 
@@ -41,12 +43,12 @@ def register():
         username = request.form['username']
         password = request.form['password']
         email = request.form['email']
-        if Username_Check(username):
-            User_Register(username, email, password)
+        if DataLayer.Username_Check(username):
+            DataLayer.User_Register(username, email, password)
             msg = {'status': 'success', 'message': 'You have successfully registered!'}
         else:
             msg = {'status': 'fail', 'message': 'Username already exists!'}
-    elif request.method == 'POST':
+    elif request.method == 'GET':
         msg = {'status': 'fail', 'message': 'Please fill out the form!'}
     return jsonify(msg)
 
@@ -56,11 +58,11 @@ def login():
     if request.method == 'POST' and 'username' in request.form and 'password' in request.form:
         username = request.form['username']
         password = request.form['password']
-        if User_Login(username, password):
+        if DataLayer.User_Login(username, password):
             msg = {'status': 'success', 'message': 'You have successfully logged in!'}
         else:
             msg = {'status': 'fail', 'message': 'Username or Password Error!'}
-    elif request.method == 'POST':
+    elif request.method == 'GET':
         msg = {'status': 'fail', 'message': 'Please fill out the form!'}
     return jsonify(msg)
 
@@ -73,33 +75,33 @@ def logout():
 
 #######Datalayer########================================================================
 
-def User_Register(username, email, password):
-    sql = "INSERT INTO sys.User(Username, Email, Password) \
-            VALUES ('%s', '%s', '%s');" % (username, email, password)
-    insert_cursor = db.cursor()
-    try:
-        insert_cursor.execute(sql)
-        db.commit()
-    except Exception:
-        db.rollback()
-        print("register wrong!!")
+# def User_Register(username, email, password):
+#     sql = "INSERT INTO sys.User(Username, Email, Password) \
+#             VALUES ('%s', '%s', '%s');" % (username, email, password)
+#     insert_cursor = db.cursor()
+#     try:
+#         insert_cursor.execute(sql)
+#         db.commit()
+#     except Exception:
+#         db.rollback()
+#         print("register wrong!!")
 
-def User_Login(username, password):
-    sql = "SELECT Password FROM sys.User WHERE Username = '%s';" % (username)
-    insert_cursor = db.cursor()
-    return_password = ''
-    try:
-        insert_cursor.execute(sql)
-        return_password = insert_cursor.fetchone()[0]
-    except Exception:
-        db.rollback()
-        print("login wrong!!")
-    if return_password == password:
-        return True
-    else:
-        return False
+# def User_Login(username, password):
+#     sql = "SELECT Password FROM sys.User WHERE Username = '%s';" % (username)
+#     insert_cursor = db.cursor()
+#     return_password = ''
+#     try:
+#         insert_cursor.execute(sql)
+#         return_password = insert_cursor.fetchone()[0]
+#     except Exception:
+#         db.rollback()
+#         print("login wrong!!")
+#     if return_password == password:
+#         return True
+#     else:
+#         return False
         
-def Username_Check(username):
+# def Username_Check(username):
     sql = "SELECT * FROM sys.User WHERE Username = '%s';" % (username)
     insert_cursor = db.cursor()
     return_password = ''
