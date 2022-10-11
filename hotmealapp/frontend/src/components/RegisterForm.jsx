@@ -9,6 +9,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 function RegisterForm () {
   const [email, setEmail] = React.useState('');
   const [password, setPassword] = React.useState('');
+  const [password1, setPassword1] = React.useState('');
   const [name, setName] = React.useState('');
   const navigate = useNavigate();
 
@@ -21,12 +22,13 @@ function RegisterForm () {
         },
         body: JSON.stringify({
           email,
+          name,
           password,
-          name
+          password1
         })
       });
       const data = await response.json();
-      localStorage.setItem('token', data.token)
+      localStorage.setItem('token', data.username)
       navigate('/dashboard');
     } catch (err) {
       alert(err)
@@ -41,14 +43,18 @@ function RegisterForm () {
         <Form.Control placeholder="email" type='text' onChange={e => setEmail(e.target.value)} />
       </Form.Group>
       <Form.Group className="mb-3">
-        <Form.Label>Password: </Form.Label>
-        <Form.Control placeholder="password" type='password' onChange={e => setPassword(e.target.value)} />
+        <Form.Label>Name: </Form.Label>
+        <Form.Control placeholder="name" type='password' onChange={e => setName(e.target.value)} />
       </Form.Group>
       <Form.Group className="mb-3">
-        <Form.Label>Name: </Form.Label>
-        <Form.Control placeholder="name" type='text' onChange={e => setName(e.target.value)} />
+        <Form.Label>Password: </Form.Label>
+        <Form.Control placeholder="password" type='text' onChange={e => setPassword(e.target.value)} />
       </Form.Group>
-      <Button variant="success" type="submit" onClick={register}>Login</Button>
+      <Form.Group className="mb-3">
+        <Form.Label>Confirm Password: </Form.Label>
+        <Form.Control placeholder="confirm password" type='text' onChange={e => setPassword1(e.target.value)} />
+      </Form.Group>
+      <Button variant="success" type="submit" onClick={register}>Register</Button>
     </div>
     </>);
 }
