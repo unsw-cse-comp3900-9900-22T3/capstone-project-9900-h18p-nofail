@@ -28,8 +28,10 @@ function App () {
             <Nav className="me-auto">
               <Nav.Link href="/register">Register</Nav.Link>
               <Nav.Link href="/login">Login</Nav.Link>
-              <Nav.Link href="/dashboard">Dashboard</Nav.Link>
-              <Nav.Link href="/recipe_and_follower/recipe.html">CreateRecipe</Nav.Link>
+              <Nav.Link href="https://wenqinghomepage.s3.ap-southeast-2.amazonaws.com/personal-page/index.html">Personalpage</Nav.Link>
+              <Nav.Link href="https://wenqingbucket2.s3.ap-southeast-2.amazonaws.com/homepage/index.html">Homepage</Nav.Link>
+              <Nav.Link href="createrecipe">CreateRecipe</Nav.Link>
+              <Nav.Link href="https://zheyuanrecipe.s3.ap-southeast-2.amazonaws.com/recipe+and+follower/recipe.html">Recipe</Nav.Link>
               <Button href="/logout" variant="secondary">Logout</Button>
               {/* <Button onClick={logout}>Logout</Button> */}
             </Nav>
@@ -40,7 +42,7 @@ function App () {
           <Route path="/login" element={<Login />} />
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/logout" element={<Logout />} />
-          <Route path="/recipe_and_follower/recipe.html" element={<CreateRecipe />} />
+          <Route path="/createrecipe" element={<CreateRecipe />} />
         </Routes>
       </BrowserRouter>
     </>
