@@ -85,7 +85,6 @@
   position: absolute;
   width:100%;
   height:10%;
-  top: 38%;
   line-height:60px;
   color:#fff;
   overflow: auto;
@@ -98,17 +97,14 @@
 .createstep {
   position: absolute;
   width:100%;
-  height:40%;
-  top: 48%;
+  top: 18%;
   line-height:60px;
   text-align: center;
-  overflow: auto;
 }
 
 .createfoot {
   position: absolute;
   width:90%;
-  height:10%;
   top: 80%;
   text-align: right;
 }
@@ -117,11 +113,14 @@
   width:90%;
   position: absolute;
   right: 10%;
-  height:10%;
   justify-content: flex-end;
   display: flex;
 }
 
+.wrapper{
+  position:relative;
+  padding-bottom:120px;
+  }
 .createfoot2 {
   width:90%;
   position: absolute;

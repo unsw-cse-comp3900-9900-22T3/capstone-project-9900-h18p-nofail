@@ -80,18 +80,16 @@ function CreateRecipe () {
     setList([...list, [1]])
   }
   const todelete = () => {
-    setList(list.splice(list.length - 1));
+    setList(list.filter((item, index) => index != list.length - 1));
   }
   const addstep = () => {
     setList2([...list2, 1])
   }
   const todelete1 = () => {
-    setList2(list2.splice(list2.length - 1));
+    setList2(list2.filter((item, index) => index != list2.length - 1));
   }
   return (
     <>
-      <div className='personinfo'><h1>personal information</h1></div>
-      <br />
       <div className='createinfo'>
       <Button variant="outline-success" onClick={click1}>Recipe Details</Button>
       <Button variant="outline-success" onClick={click2}>Ingredients</Button>
@@ -129,9 +127,9 @@ function CreateRecipe () {
         </FloatingLabel>
         </Form.Group>
       </div>
-      <div className='createfoot'>
-        <Button variant="outline-success" onClick={click2}>next</Button>
       </div>
+      <div className='createfoot2'>
+        <div><Button variant="outline-success" onClick={click2}>next</Button></div>
       </div>
       </div>
       <div style={ifshow2}>
@@ -169,7 +167,7 @@ function CreateRecipe () {
               <Button variant='success' onClick={addgroup}>Add New Group</Button>
             </Form.Group>
             <Form.Group className="mb-3">
-              <div className='createfoot1'>
+              <div className='createfoot2'>
                 <div><Button variant="outline-success" onClick={click1}>prev</Button>&nbsp; &nbsp; &nbsp; &nbsp; </div>
                 <div><Button variant="outline-success" onClick={click3}>next</Button></div>
               </div>
