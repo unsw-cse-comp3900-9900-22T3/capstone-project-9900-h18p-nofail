@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#000000" />
+    <meta
+      name="description"
+      content="Web site created using create-react-app"
+    />
+    <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
+  
+    <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
+    
+    <title>React App</title>
+  </head>
+  <body>
+    <noscript>You need to enable JavaScript to run this app.</noscript>
+    <div id="root"></div>
+    
+    <!--Header-->
+    <img src="logo-social.png" width="80" height="50" style="margin-left:20px">
+    <u><label for="Welcome" style="margin-left:1100px">Welcome Ryan</label></u>
+    <button type="LogouBtn" style="margin-left:30px">Log Out</button>
+    <h1 style="margin-left:600px">Personal Page</h1>
+
+    <!--Personal Details-->
+    <div id="Personal Details" style="margin-left: 100px;" style="margin-top: 100px;">
+      <table border="0">
+        <tr>
+            <td>
+              <img src="Portrait.jpeg" width="180" height="180">
+            </td>
+            <td>
+              <b><h2>Ryan</h2></b>
+              <br><label for="Bio">Welcome, I'm Ryan.</label>
+            </td>
+            <td>
+              <label for="Following Number" style="margin-left:500px">10</label>
+              <br><a href="https://zheyuanrecipe.s3.ap-southeast-2.amazonaws.com/recipe+and+follower/following.html" style="margin-left:500px">Following</a>
+            </td>
+            <td>
+              <label for="Follower Number" style="margin-left:0px">100</label>
+              <br><a href="https://zheyuanrecipe.s3.ap-southeast-2.amazonaws.com/recipe+and+follower/follower.html" style="margin-left:0px">Follower</a>
+            </td>
+            <td>
+              <label for="Recipes Number" style="margin-left:50px">5</label>
+              <br><label for="Recipes" style="margin-left:50px">Recipes</label>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <br><button type="editSaveBtn" style="margin-left:50px">Edit/Save</button>
+              <br><br><button type="changePwdBtn" style="margin-left:25px">Change Password</button>
+            </td>
+            <td>
+            </td>
+            <td>
+              <a type="createRecipeBtn" href="http://localhost:3000/createrecipe" style="margin-left:500px">Create New Recipe</a>
+            </td>
+        </tr>
+    </table>
+    </div>
+
+    <!--Recipe List-->
+    <br>
+    <a href="https://wenqinghomepage.s3.ap-southeast-2.amazonaws.com/personal-page/index.html" style="margin-left:380px">My Recipe</a>
+    <a href="https://wenqinghomepage.s3.ap-southeast-2.amazonaws.com/personal-page/index.html" style="margin-left:500px">Favorite Recipe</a>
+    <br>
+    <!--Filters-->
+    <div id="Filters" style="margin-left: 100px;" style="margin-top: 200px;">
+      <br><label for="Cooking Time" >Cooking Time</label>
+      <select>
+        <option value ="Less than 10min">Less than 10min</option>
+        <option value ="10-30min">10-30min</option>
+        <option value ="30-60min">30-60min</option>
+        <option value ="More than 60min">More than 60min</option>
+      </select>
+
+      <label for="Food Style" style="margin-left: 150px;">Food Style</label>
+      <select>
+        <option value ="Asian">Asian</option>
+        <option value ="Italian">Italian</option>
+        <option value ="French">French</option>
+        <option value ="Fast Food">Fast Food</option>
+        <option value ="Other">Other</option>
+      </select>
+
+      <label for="Ingredient" style="margin-left: 150px;">Ingredient</label>
+      <select>
+        <option value ="Rice">Rice</option>
+        <option value ="Noodle">Noodle</option>
+        <option value ="Beef">Beef</option>
+        <option value ="Chicken">Chicken</option>
+        <option value ="Pork">Pork</option>
+        <option value ="Lamb">Lamb</option>
+        <option value ="Vegetable">Vegetable</option>
+        <option value ="Other">Other</option>
+      </select>
+
+      <label for="Sorting" style="margin-left: 200px;">Sort By</label>
+      <select>
+        <option value ="Most Likes">Most Likes</option>
+        <option value ="Most Subscribed">Most Subscribed</option>
+        <option value ="Most Recent">Most Recent</option>
+      </select>
+    </div>
+    <br>
+    <!--Recipe Table-->
+    <br><table border="0" style="padding-left:110px">
+      <tr>
+          <td>
+            <img src="zajiangmian.jpeg" width="300" height="400">
+            <br><a href="https://zheyuanrecipe.s3.ap-southeast-2.amazonaws.com/recipe+and+follower/recipe.html">Zajiang Noodle</a>
+            <br><label for="Likes">Likes:1128</label>
+          </td>
+          <td>
+            <img src="friedpork.jpeg" width="300" height="400">
+            <br><a href="https://zheyuanrecipe.s3.ap-southeast-2.amazonaws.com/recipe+and+follower/recipe.html">Fried Pork</a>
+            <br><label for="Likes">Likes:838</label>
+          </td>
+          <td>
+            <img src="koushuichicken.jpeg" width="300" height="400">
+            <br><a href="https://zheyuanrecipe.s3.ap-southeast-2.amazonaws.com/recipe+and+follower/recipe.html"></a>Koushui Chicken</a>
+            <br><label for="Likes">Likes:566</label>
+          </td>
+          <td>
+            <img src="MarghheritaPizza.jpeg" width="300" height="400">
+            <br><a href="https://zheyuanrecipe.s3.ap-southeast-2.amazonaws.com/recipe+and+follower/recipe.html">Margherita Pizza</a>
+            <br><label for="Likes">Likes:528</label>
+          </td>
+      </tr>
+      <tr>
+          <td>
+            <img src="roujiamo.jpeg" width="300" height="400">
+            <br><a href="https://zheyuanrecipe.s3.ap-southeast-2.amazonaws.com/recipe+and+follower/recipe.html">Roujiamo</a>
+            <br><label for="Likes">Likes:508</label>
+          </td>
+          <td>
+            <img src="soursoupbeef.jpeg" width="300" height="400">
+            <br><a href="https://zheyuanrecipe.s3.ap-southeast-2.amazonaws.com/recipe+and+follower/recipe.html">Sour Soup Beef</a>
+            <br><label for="Likes">Likes:498</label>
+          </td>
+          <td>
+            <img src="tiramisu.jpeg" width="300" height="400">
+            <br><a href="https://zheyuanrecipe.s3.ap-southeast-2.amazonaws.com/recipe+and+follower/recipe.html">Tiramisu</a>
+            <br><label for="Likes">Likes:367</label>
+          </td>
+          <td>
+            <img src="tomatofriedeggs.jpeg" width="300" height="400">
+            <br><a href="https://zheyuanrecipe.s3.ap-southeast-2.amazonaws.com/recipe+and+follower/recipe.html">Tomato Fried Eggs</a>
+            <br><label for="Likes">Likes:228</label>
+          </td>
+      </tr>
+    </table>
+
+  </body>
+</html>
