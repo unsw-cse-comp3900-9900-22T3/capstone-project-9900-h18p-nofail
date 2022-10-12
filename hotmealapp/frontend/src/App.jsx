@@ -29,7 +29,7 @@ function App () {
               <Nav.Link href="/register">Register</Nav.Link>
               <Nav.Link href="/login">Login</Nav.Link>
               <Nav.Link href="/dashboard">Dashboard</Nav.Link>
-              <Nav.Link href="/createrecipe">CreateRecipe</Nav.Link>
+              <Nav.Link href="/recipe_and_follower/recipe.html">CreateRecipe</Nav.Link>
               <Button href="/logout" variant="secondary">Logout</Button>
               {/* <Button onClick={logout}>Logout</Button> */}
             </Nav>
@@ -40,7 +40,7 @@ function App () {
           <Route path="/login" element={<Login />} />
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/logout" element={<Logout />} />
-          <Route path="/createrecipe" element={<CreateRecipe />} />
+          <Route path="/recipe_and_follower/recipe.html" element={<CreateRecipe />} />
         </Routes>
       </BrowserRouter>
     </>
