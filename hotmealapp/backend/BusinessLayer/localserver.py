@@ -1,17 +1,10 @@
 # Store this code in 'app.py' file
 
 from flask import Flask, jsonify, render_template, request, redirect, url_for, session
-from flask_mysqldb import MySQL
 from flask_cors import CORS
-import json
-import MySQLdb.cursors
-import re
+
 
 # from DataLayer import DataLayer
-
-import pymysql
-
-
 
 app = Flask(__name__)
 CORS(app)
