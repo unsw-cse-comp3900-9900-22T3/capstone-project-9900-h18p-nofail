@@ -1,4 +1,4 @@
-var nameList = ['John', 'Sophia', 'Edward', 'Lion', 'Derk', 'Linda', 'Steren'];
+var nameList = ['Ryan', 'Ryan', 'Ryan', 'Ryan', 'Ryan', 'Ryan', 'Ryan'];
 
 var commentList = ['so delicious', 'rubbish', 'just so so', 'not specially'];
 var favoriteNumber = 10;
@@ -83,20 +83,36 @@ Date.prototype.format = function (format) {
 
 function logoJump() {
     alert("logoJump");
+    window.location.href = 'https://wenqingbucket2.s3.ap-southeast-2.amazonaws.com/homepage/index.html';
 }
 
 function CreateRecipe() {
     alert("CreateRecipe");
+    window.location.href = 'http://localhost:3000/createrecipe';
+
 }
 
 function logOut() {
     alert("logOut");
+    window.location.href = 'http://localhost:3000/login';
 }
 
-
-
+function likeplus() {
+    alert("like+1");
+    likeNumber+=1;
+    document.getElementsByClassName("likeNumber")[0].innerHTML = "like: "+likeNumber;
+}
+function favplus() {
+    alert("favorite+1");
+    favoriteNumber+=1;
+    document.getElementsByClassName("favoriteNumber")[0].innerHTML = "favorite: "+favoriteNumber;
+}
+function followplus() {
+    alert("follow+1");
+    folloingNumber+=1;
+    document.getElementsByClassName("followperson")[0].innerHTML = "following person: "+folloingNumber;
+}
 function addComment() {
-    //获取评论内容
     var value = $("#currentComment").val();
 
     var currentName = Math.round(Math.random() * 6);

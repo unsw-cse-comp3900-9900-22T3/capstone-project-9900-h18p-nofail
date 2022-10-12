@@ -1,6 +1,6 @@
 var nameList = ['John', 'Sophia', 'Edward', 'Lion', 'Derk', 'Linda', 'Steren'];
 
-var commentList = ['so delicious', 'rubbish', 'just so so', 'not specially'];
+var commentList = ['Im a bot', 'Im a bot', 'Im a bot', 'Im a bot'];
 
 $(document).ready(
     function () {

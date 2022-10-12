@@ -24,7 +24,7 @@
                     Ryan's Recipe
                 </div>
                 <div class="loginRemark">
-                    <a href="~">Welcome <label style="color: red;">Ryan</label></a>
+                    <a href="https://wenqinghomepage.s3.ap-southeast-2.amazonaws.com/personal-page/index.html">Welcome <label style="color: red;">Ryan</label></a>
                 </div>
                 <div class="loginOut">
                     <button onclick="logOut()">Log Out</button>
@@ -37,13 +37,13 @@
                     </div>
                     <div class="favoriteAndLike">
                         <div class="favorite">
-                            <div id="like_button_container" class="favoriteNumberBorder"> favorite</div>
+                            <div id="like_button_container" class="favoriteNumberBorder" onclick="favplus()"> favorite</div>
                                 
    
                             <div class='favoriteNumber'> </div>
                         </div>
                         <div class="like">
-                            <div id="like" class="likeNumberBorder"> like</div>
+                            <div id="like" class="likeNumberBorder" onclick="likeplus()"> like</div>
                                 <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
                                 <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
                                 <script src="like.js"></script>
@@ -71,7 +71,7 @@
                         <img src="images/avatar.png" class="avatar" /> <span class="avatarName">Ryan</span>
                     </div>
                     <div class="follow">
-                            <div id="follow" class="personFollowing"> follow </div>
+                            <div id="follow" class="personFollowing" onclick="followplus()" > follow </div>
                             <script src="follow.js"></script>    
    
                             <div class='followperson'> </div>
