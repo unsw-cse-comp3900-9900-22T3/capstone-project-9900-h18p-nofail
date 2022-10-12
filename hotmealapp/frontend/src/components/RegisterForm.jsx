@@ -53,15 +53,15 @@ function RegisterForm () {
       </Form.Group>
       <Form.Group className="mb-3">
         <Form.Label>Name: </Form.Label>
-        <Form.Control placeholder="name" type='password' onChange={e => setName(e.target.value)} />
+        <Form.Control placeholder="name" type='text' onChange={e => setName(e.target.value)} />
       </Form.Group>
       <Form.Group className="mb-3">
         <Form.Label>Password: </Form.Label>
-        <Form.Control placeholder="password" type='text' onChange={e => setPassword(e.target.value)} />
+        <Form.Control placeholder="password" type='password' onChange={e => setPassword(e.target.value)} />
       </Form.Group>
       <Form.Group className="mb-3">
         <Form.Label>Confirm Password: </Form.Label>
-        <Form.Control placeholder="confirm password" type='text' onChange={e => setPassword1(e.target.value)} />
+        <Form.Control placeholder="confirm password" type='password' onChange={e => setPassword1(e.target.value)} />
       </Form.Group>
       <Button variant="success" type="submit" onClick={register}>Register</Button>
     </div>
