@@ -7,10 +7,9 @@ import {
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 function LoginForm () {
-  const [email, setEmail] = React.useState('');
+  const [username, setName] = React.useState('');
   const [password, setPassword] = React.useState('');
   const navigate = useNavigate();
-
   const login = async () => {
     try {
       const response = await fetch('http://localhost:8080/login', {
@@ -19,13 +18,18 @@ function LoginForm () {
           'Content-type': 'application/json',
         },
         body: JSON.stringify({
-          email,
+          username,
           password
         })
       });
       const data = await response.json();
       localStorage.setItem('token', data.username)
-      navigate('/dashboard');
+      if(data.status==="success") {
+        navigate('/dashboard');
+      }
+      else {
+        alert(data.message)
+      }
     } catch (err) {
       alert(err)
     }
@@ -34,8 +38,8 @@ function LoginForm () {
     <>
       <div className='Container'>
       <Form.Group className="mb-3">
-        <Form.Label>Email: </Form.Label>
-        <Form.Control placeholder="email" type='text' onChange={e => setEmail(e.target.value)} />
+        <Form.Label>Username: </Form.Label>
+        <Form.Control placeholder="username" type='text' onChange={e => setName(e.target.value)} />
       </Form.Group>
       <Form.Group className="mb-3">
         <Form.Label>Password: </Form.Label>

@@ -14,6 +14,10 @@ function RegisterForm () {
   const navigate = useNavigate();
 
   const register = async () => {
+    if (password != password1) {
+      alert("Password is different!");
+      return;
+    }
     try {
       const response = await fetch('http://localhost:8080/register', {
         method: 'POST',
@@ -29,7 +33,12 @@ function RegisterForm () {
       });
       const data = await response.json();
       localStorage.setItem('token', data.username)
-      navigate('/login');
+      if(data.status==="success") {
+        navigate('/login');
+      }
+      else {
+        alert(data.message)
+      }
     } catch (err) {
       alert(err)
     }
