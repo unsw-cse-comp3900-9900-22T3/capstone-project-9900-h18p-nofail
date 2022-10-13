@@ -53,6 +53,7 @@ function CreateRecipe () {
     setS3('none')
     setS4('block')
   }
+  
   const ifshow1 = {
     display: show1
   }
@@ -253,7 +254,8 @@ function CreateRecipe () {
           </div>
         </div>
         <div className='createfoot2'>
-            <div><Button variant="outline-success" onClick={click3}>prev</Button></div>
+            <div><Button variant="outline-success" onClick={click3}>prev</Button>&nbsp; &nbsp; &nbsp; &nbsp;</div>
+            <div><Button variant="outline-success" href='https://wenqinghomepage.s3.ap-southeast-2.amazonaws.com/personal-page/index.html'>submit</Button></div>
           </div>
       </div>
     </>);
