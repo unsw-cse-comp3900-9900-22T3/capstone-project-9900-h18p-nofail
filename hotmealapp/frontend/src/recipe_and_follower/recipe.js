@@ -119,7 +119,7 @@ function favplus() {
     }
     }
 function followplus() {
-    if (favflag==0){
+    if (followflag==0){
         alert("follow+1");
         folloingNumber+=1;
         document.getElementsByClassName("followperson")[0].innerHTML = "following person: "+folloingNumber;
