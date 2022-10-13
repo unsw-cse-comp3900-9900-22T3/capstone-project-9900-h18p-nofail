@@ -1,14 +1,16 @@
-import logo from './logo.svg';
-//import './App.css';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        
-      </header>
-    </div>
-  );
-}
 
-export default App;
+
+  function logoJump() {
+    window.location.href = 'https://wenqingbucket2.s3.ap-southeast-2.amazonaws.com/homepage/index.html';
+  }
+  
+  function Logout() {
+    window.location.href = 'http://localhost:3000/login';
+  
+  }
+  
+
+
+
+
