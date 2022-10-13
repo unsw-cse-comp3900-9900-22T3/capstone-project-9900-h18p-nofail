@@ -23,7 +23,7 @@ function RegisterForm () {
       return;
     }
     if (!/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*?&])[A-Za-z\d$@$!%*?&]{6,}/.test(password)) {
-      alert("Password illegal!");
+      alert("Password should be at least 6 character, contain with upper and lower case letter, numbers, and special characters: !@#$%^&*(,)~_");
       return;
     }
     try {
