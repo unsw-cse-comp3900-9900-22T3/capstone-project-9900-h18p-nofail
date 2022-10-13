@@ -24,7 +24,7 @@ function App () {
       <BrowserRouter>
         <Navbar bg="dark" variant="dark">
           <Container>
-            <Navbar.Brand href="#home">Hot Meal</Navbar.Brand>
+            <Navbar.Brand href="https://wenqingbucket2.s3.ap-southeast-2.amazonaws.com/homepage/index.html">Hot Meal</Navbar.Brand>
             <Nav className="me-auto">
               <Nav.Link href="/register">Register</Nav.Link>
               <Nav.Link href="/login">Login</Nav.Link>
