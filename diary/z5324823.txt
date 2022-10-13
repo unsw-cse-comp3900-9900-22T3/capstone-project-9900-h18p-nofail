@@ -7,3 +7,6 @@ We discussed what we needed to implement for our project, configured git and jir
 
 Week3:
 I finished epics and user stories of personal page for\'a0proposal, and built the framework for the front-end pages.
+
+Week4:
+I completed the front-end framework architecture, developed the front-end page for recipe creation, the front-end page for login and registration, and interfaced with the back-end api for login and registration.
