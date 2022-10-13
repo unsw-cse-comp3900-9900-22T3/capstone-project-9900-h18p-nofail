@@ -10,7 +10,7 @@ class followButton extends React.Component {
 
   render() {
     if (this.state.liked) {
-      return 'You followed.';
+      return 'followed.';
     }
 
     return follow1(

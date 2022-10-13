@@ -9,7 +9,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 function LoginForm () {
   const [username, setName] = React.useState('');
   const [password, setPassword] = React.useState('');
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   const login = async () => {
     try {
       const response = await fetch('http://localhost:8080/login', {
@@ -25,7 +25,8 @@ function LoginForm () {
       const data = await response.json();
       localStorage.setItem('token', data.username)
       if(data.status==="success") {
-        navigate('/dashboard');
+        // open https://wenqingbucket2.s3.ap-southeast-2.amazonaws.com/homepage/index.html
+        window.open("https://wenqingbucket2.s3.ap-southeast-2.amazonaws.com/homepage/index.html", "_self");
       }
       else {
         alert(data.message)

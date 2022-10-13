@@ -1,5 +1,7 @@
 var nameList = ['Ryan', 'Ryan', 'Ryan', 'Ryan', 'Ryan', 'Ryan', 'Ryan'];
-
+var likeflag=0;
+var favflag=0;
+var followflag=0;
 var commentList = ['so delicious', 'rubbish', 'just so so', 'not specially'];
 var favoriteNumber = 10;
 var likeNumber = 10;
@@ -82,35 +84,50 @@ Date.prototype.format = function (format) {
 };
 
 function logoJump() {
-    alert("logoJump");
     window.location.href = 'https://wenqingbucket2.s3.ap-southeast-2.amazonaws.com/homepage/index.html';
 }
 
 function CreateRecipe() {
-    alert("CreateRecipe");
     window.location.href = 'http://localhost:3000/createrecipe';
 
 }
 
 function logOut() {
-    alert("logOut");
     window.location.href = 'http://localhost:3000/login';
 }
 
 function likeplus() {
-    alert("like+1");
-    likeNumber+=1;
-    document.getElementsByClassName("likeNumber")[0].innerHTML = "like: "+likeNumber;
-}
+    if (likeflag==0){
+        alert("like+1");
+        likeNumber+=1;
+        document.getElementsByClassName("likeNumber")[0].innerHTML = "like: "+likeNumber;
+        likeflag=1;
+    }
+    else{
+        alert("you already liked this recipe")
+    }
+   }
 function favplus() {
-    alert("favorite+1");
-    favoriteNumber+=1;
-    document.getElementsByClassName("favoriteNumber")[0].innerHTML = "favorite: "+favoriteNumber;
-}
+    if (favflag==0){
+         alert("favorite+1");
+        favoriteNumber+=1;
+        document.getElementsByClassName("favoriteNumber")[0].innerHTML = "favorite: "+favoriteNumber;
+        favflag=1;
+    }
+    else{
+        alert("you already favorited this recipe")
+    }
+    }
 function followplus() {
-    alert("follow+1");
-    folloingNumber+=1;
-    document.getElementsByClassName("followperson")[0].innerHTML = "following person: "+folloingNumber;
+    if (favflag==0){
+        alert("follow+1");
+        folloingNumber+=1;
+        document.getElementsByClassName("followperson")[0].innerHTML = "following person: "+folloingNumber;
+        followflag=1;
+   }
+   else{
+       alert("you already followed this recipe")
+   }
 }
 function addComment() {
     var value = $("#currentComment").val();
