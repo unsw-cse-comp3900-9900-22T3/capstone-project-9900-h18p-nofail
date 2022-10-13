@@ -19,7 +19,7 @@ function RegisterForm () {
       return;
     }
     if (name.length < 4 || name.length > 20 || !/^[A-Za-z0-9]+$/.test(name)) {
-      alert("Username illegal!");
+      alert("Username should contain more than 4 characters, and no more than 20 characters!");
       return;
     }
     if (!/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*?&])[A-Za-z\d$@$!%*?&]{6,}/.test(password)) {
