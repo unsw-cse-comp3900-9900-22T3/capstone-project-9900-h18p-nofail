@@ -39,6 +39,7 @@ function App () {
         </Navbar>
         <Routes>
           <Route path="/register" element={<Register />} />
+          <Route path="/" element={<Login />} />
           <Route path="/login" element={<Login />} />
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/logout" element={<Logout />} />

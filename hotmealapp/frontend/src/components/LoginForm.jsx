@@ -9,7 +9,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 function LoginForm () {
   const [username, setName] = React.useState('');
   const [password, setPassword] = React.useState('');
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   const login = async () => {
     try {
       const response = await fetch('http://localhost:8080/login', {
