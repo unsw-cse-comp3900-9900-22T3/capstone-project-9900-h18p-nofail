@@ -18,6 +18,14 @@ function RegisterForm () {
       alert("Password is different!");
       return;
     }
+    if (name.length < 4 || name.length > 20 || !/^[A-Za-z0-9]+$/.test(name)) {
+      alert("Username illegal!");
+      return;
+    }
+    if (!/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*?&])[A-Za-z\d$@$!%*?&]{6,}/.test(password)) {
+      alert("Password illegal!");
+      return;
+    }
     try {
       const response = await fetch('http://localhost:8080/register', {
         method: 'POST',
