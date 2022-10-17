@@ -18,7 +18,7 @@
     <div id="root"></div>
 
       <!--Header-->
-      <img src="logo-social.png" width="80" height="50" style="margin-left:20px">
+      <img src="logo-social.png" onclick="logoJump()" width="80" height="50" style="margin-left:20px">
       <a href="https://wenqingbucket2.s3.ap-southeast-2.amazonaws.com/homepage/index.html" style="margin-left:200px">ForU</a>
       <a href="https://wenqingbucket2.s3.ap-southeast-2.amazonaws.com/homepage/index.html" style="margin-left:100px">Popular</a>
       <!--Search Box-->
@@ -27,7 +27,7 @@
         <input type="text" name="Search Box">
         <input type="Submit" value="Search">  
       <a href="https://wenqinghomepage.s3.ap-southeast-2.amazonaws.com/personal-page/index.html" style="margin-left:100px">Personal Page</a>
-      <button type="logoutBtn" style="margin-left:30px">Log Out</button>
+      <button type="logoutBtn" onclick="logout()" style="margin-left:30px">Log Out</button>
 
       <!--Filters-->
       <div id="Filters" style="margin-left: 100px;" style="margin-top: 200px;">
@@ -68,53 +68,70 @@
         </select>
       </div>
 
-      <!--Recipe List-->
-      <br><table border="0" style="padding-left:110px">
-        <tr>
-            <td>
-              <img src="zajiangmian.jpeg" width="300" height="400">
-              <br><a href="https://zheyuanrecipe.s3.ap-southeast-2.amazonaws.com/recipe+and+follower/recipe.html">Zajiang Noodle</a>
-              <br><label for="Likes">Likes:1128</label>
-            </td>
-            <td>
-              <img src="friedpork.jpeg" width="300" height="400">
-              <br><a href="https://zheyuanrecipe.s3.ap-southeast-2.amazonaws.com/recipe+and+follower/recipe.html">Fried Pork</a>
-              <br><label for="Likes">Likes:838</label>
-            </td>
-            <td>
-              <img src="koushuichicken.jpeg" width="300" height="400">
-              <br><a href="https://zheyuanrecipe.s3.ap-southeast-2.amazonaws.com/recipe+and+follower/recipe.html"></a>Koushui Chicken</a>
-              <br><label for="Likes">Likes:566</label>
-            </td>
-            <td>
-              <img src="MarghheritaPizza.jpeg" width="300" height="400">
-              <br><a href="https://zheyuanrecipe.s3.ap-southeast-2.amazonaws.com/recipe+and+follower/recipe.html">Margherita Pizza</a>
-              <br><label for="Likes">Likes:528</label>
-            </td>
-        </tr>
-        <tr>
-            <td>
-              <img src="roujiamo.jpeg" width="300" height="400">
-              <br><a href="https://zheyuanrecipe.s3.ap-southeast-2.amazonaws.com/recipe+and+follower/recipe.html">Roujiamo</a>
-              <br><label for="Likes">Likes:508</label>
-            </td>
-            <td>
-              <img src="soursoupbeef.jpeg" width="300" height="400">
-              <br><a href="https://zheyuanrecipe.s3.ap-southeast-2.amazonaws.com/recipe+and+follower/recipe.html">Sour Soup Beef</a>
-              <br><label for="Likes">Likes:498</label>
-            </td>
-            <td>
-              <img src="tiramisu.jpeg" width="300" height="400">
-              <br><a href="https://zheyuanrecipe.s3.ap-southeast-2.amazonaws.com/recipe+and+follower/recipe.html">Tiramisu</a>
-              <br><label for="Likes">Likes:367</label>
-            </td>
-            <td>
-              <img src="tomatofriedeggs.jpeg" width="300" height="400">
-              <br><a href="https://zheyuanrecipe.s3.ap-southeast-2.amazonaws.com/recipe+and+follower/recipe.html">Tomato Fried Eggs</a>
-              <br><label for="Likes">Likes:228</label>
-            </td>
-        </tr>
-      </table>
+      <!--Recipe Table-->
+    <br><table border="0" style="padding-left:110px">
+      <tr>
+          <td>
+            <img src="zajiangmian.jpeg" onclick="viewRecipe()" width="300" height="400">
+            <br><a href="https://zheyuanrecipe.s3.ap-southeast-2.amazonaws.com/recipe+and+follower/recipe.html">Zajiang Noodle</a>
+            <br><label for="Likes">Likes:1128</label>
+          </td>
+          <td>
+            <img src="friedpork.jpeg" onclick="viewRecipe()" width="300" height="400">
+            <br><a href="https://zheyuanrecipe.s3.ap-southeast-2.amazonaws.com/recipe+and+follower/recipe.html">Fried Pork</a>
+            <br><label for="Likes">Likes:838</label>
+          </td>
+          <td>
+            <img src="koushuichicken.jpeg" onclick="viewRecipe()" width="300" height="400">
+            <br><a href="https://zheyuanrecipe.s3.ap-southeast-2.amazonaws.com/recipe+and+follower/recipe.html">Koushui Chicken</a>
+            <br><label for="Likes">Likes:566</label>
+          </td>
+          <td>
+            <img src="MarghheritaPizza.jpeg" onclick="viewRecipe()" width="300" height="400">
+            <br><a href="https://zheyuanrecipe.s3.ap-southeast-2.amazonaws.com/recipe+and+follower/recipe.html">Margherita Pizza</a>
+            <br><label for="Likes">Likes:528</label>
+          </td>
+      </tr>
+      <tr>
+          <td>
+            <img src="roujiamo.jpeg" onclick="viewRecipe()" width="300" height="400">
+            <br><a href="https://zheyuanrecipe.s3.ap-southeast-2.amazonaws.com/recipe+and+follower/recipe.html">Roujiamo</a>
+            <br><label for="Likes">Likes:508</label>
+          </td>
+          <td>
+            <img src="soursoupbeef.jpeg" onclick="viewRecipe()" width="300" height="400">
+            <br><a href="https://zheyuanrecipe.s3.ap-southeast-2.amazonaws.com/recipe+and+follower/recipe.html">Sour Soup Beef</a>
+            <br><label for="Likes">Likes:498</label>
+          </td>
+          <td>
+            <img src="tiramisu.jpeg" onclick="viewRecipe()" width="300" height="400">
+            <br><a href="https://zheyuanrecipe.s3.ap-southeast-2.amazonaws.com/recipe+and+follower/recipe.html">Tiramisu</a>
+            <br><label for="Likes">Likes:367</label>
+          </td>
+          <td>
+            <img src="tomatofriedeggs.jpeg" onclick="viewRecipe()" width="300" height="400">
+            <br><a href="https://zheyuanrecipe.s3.ap-southeast-2.amazonaws.com/recipe+and+follower/recipe.html">Tomato Fried Eggs</a>
+            <br><label for="Likes">Likes:228</label>
+          </td>
+      </tr>
+    </table>
+
+    <!--script-->
+    <script>
+      function logoJump() {
+        window.location.href = 'https://wenqingbucket2.s3.ap-southeast-2.amazonaws.com/homepage/index.html';
+      }
+
+      function logout() {
+        window.location.href = 'http://localhost:3000/login';
+      }
+
+      function viewRecipe() {
+        window.location.href = 'https://zheyuanrecipe.s3.ap-southeast-2.amazonaws.com/recipe+and+follower/recipe.html';
+      }
+
+      
+    </script>
 
     
   </body>
