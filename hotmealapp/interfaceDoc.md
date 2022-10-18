@@ -4,7 +4,7 @@
   <tr>
     <th>Name & Description</th>
     <th>HTTP Method</th>
-    <th>Data Types</th>
+    <th>JSON Data</th>
     <th>Errors</th>
   </tr>
   <tr>
@@ -12,9 +12,8 @@
         <code>/login</code><br /><br />
         for user to login to hotmeal app
     </td>
-    <td>
-        post
-    </td>
+    <!-- make post in yellow -->
+  <td>POST</td>
     <td>
         <b>Query Parameters</b><br/>
         <code>{username, password}</code>
@@ -32,7 +31,7 @@
         for user to register to hotmeal app
     </td>
     <td>
-        post
+        POST
     </td>
     <td>
         <b>Query Parameters</b><br/>
@@ -47,15 +46,15 @@
   </tr>
   <tr>
     <td>
-        <code>/recipe</code><br/><br/>
+        <code>/recipe/create</code><br/><br/>
         Create a recipe and return the recipe id
     </td>
     <td>
         POST
     </td>
     <td>
-        <b>Body Parameters</b><br/>
-        <code>{title, description, ingredients, steps, image}</code>
+        <b>Query Parameters</b><br/>
+        <code>{Recipe_Name, Recipe_Username, Recipe_Style, Ingredient, Cooking_Time, Steps, Recipe_Photo}</code>
         <br/><br/>
         <b>Return Object</b><br/>
         <code>{status, message, recipe_id}</code>
@@ -63,193 +62,205 @@
     <td>
         Throw <code>HTTPError</code> (code <code>400</code>) when
         <ul>
-            <li>quizTitle is an empty string, <code>""</code></li>
-            <li>quizSynopsis is an empty string <code>""</code></li>
+            <li>Recipe_Name is an empty string <code>""</code></li>
+            <li>Recipe_Username is an empty string <code>""</code></li>
+            <li>Recipe_Style is an empty string <code>""</code></li>
+            <li>Ingredient is an empty string <code>""</code></li>
+            <li>Cooking_Time is an empty string <code>""</code></li>
+            <li>Steps is an empty string <code>""</code></li>
+            <li>Recipe_Photo is an empty string <code>""</code></li>
         </ul>
     </td>
   </tr>
-  <tr>
+
+<!-- `Recipe_Id` int NOT NULL AUTO_INCREMENT,
+`Recipe_Name` varchar(30) NOT NULL,
+`Recipe_Username` varchar(10) NOT NULL,
+`Recipe_Style` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+`Ingredient` varchar(30) NOT NULL,
+`Cooking_Time` int NOT NULL,
+`Steps` varchar(100) NOT NULL,
+`Recipe_Photo` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
+`Recipe_Time` timestamp NULL DEFAULT CURRENT_TIMESTAMP, -->
+
+<tr>
     <td>
-        <code>/quiz/details</code><br/><br/>
-        Get the full details about a quiz
+        <code>/recipe?username=$username</code><br/><br/>
+        Get recipes by username
     </td>
     <td>
         GET
     </td>
     <td>
-        <b>Query Parameters</b><br/>
-        <code>{quizId}</code>
-        <br/><br/>
         <b>Return Object</b><br/>
-        <code>{quiz}</code>
+        <code> {Recipe_Id, Recipe_Name, Recipe_Username, Recipe_Style, Ingredient, Cooking_Time, Steps, Recipe_Photo, Recipe_Time}</code>
     </td>
     <td>
         Throw <code>HTTPError</code> (code <code>400</code>) when
         <ul>
-            <li>quizId does not refer to a valid quiz
+            <li>There is no recipe for this username <code>"$username"</code></li>
         </ul>
     </td>
-  </tr>
-  <tr>
+</tr>
+<!-- update recipe -->
+<tr>
     <td>
-        <code>/quiz/edit</code><br /><br />
-        Edit a quiz
+        <code>/recipe/update</code><br/><br/>
+        Update a recipe
     </td>
     <td>
         PUT
     </td>
     <td>
-        <b>Body Parameters</b><br/>
-        <code>{quizId, quizTitle, quizSynopsis}</code>
+        <b>Query Parameters</b><br/>
+        <code>{Recipe_Name, Recipe_Username, Recipe_Style, Ingredient, Cooking_Time, Steps, Recipe_Photo}</code>
         <br/><br/>
         <b>Return Object</b><br/>
-        <code>{}</code>
+        <code>{status, message}</code>
     </td>
     <td>
-        Throw <code>HTTPError</code> (code <code>400</code>) when
-        <ul>
-            <li>quizId does not refer to a valid quiz
-            <li>quizTitle is an empty string, <code>""</code></li>
-            <li>quizSynopsis is an empty string <code>""</code></li>
-        </ul>
+        NAN
     </td>
   </tr>
+<!-- delete recipe -->
   <tr>
     <td>
-        <code>/quiz/remove</code><br/><br/>
-        Remove a quiz
+        <code>/recipe/delete</code><br/><br/>
+        Delete a recipe
     </td>
     <td>
         DELETE
     </td>
     <td>
         <b>Query Parameters</b><br/>
-        <code>{quizId}</code>
+        <code>{Recipe_Id}</code>
         <br/><br/>
         <b>Return Object</b><br/>
-        <code>{}</code>
+        <code>{status, message}</code>
     </td>
     <td>
         Throw <code>HTTPError</code> (code <code>400</code>) when
         <ul>
-            <li>quizId does not refer to a valid quiz
+            <li>Recipe_Id does not refer to a recipe</li>
         </ul>
-    </td>
+    </td>  
   </tr>
+
+
   <tr>
     <td>
-        <code>/quizzes/list</code><br/><br/>
-        Get brief details about all quizzes, in the order that they were created.
-        <br/><br/>
-        For example, if we create <code>q1</code>, <code>q2</code> and <code>q3</code>, the returned order is
-        <code>[q1, q2, q3]</code>.
+        <code>/logout</code><br/><br/>
+        Log out
     </td>
     <td>
         GET
     </td>
     <td>
         <b>Query Parameters</b><br/>
-        <code>{}</code>
+        <code>{username}</code>
         <br/><br/>
         <b>Return Object</b><br/>
-        <code>{quizzes}</code>
+        <code>{status, message}</code>
     </td>
     <td>
         N/A
     </td>
   </tr>
-  <tr>
+   
+<!--  `Username` varchar(10) NOT NULL,
+  `Email` varchar(30) NOT NULL,
+  `Password` varchar(30) NOT NULL,
+  `Describe` varchar(100) DEFAULT NULL,
+  `User_Photo` varchar(100) DEFAULT NULL,
+  `Time_Create` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP, -->
+
+<!-- Get user information -->
+
+<tr>
     <td>
-        <code>/question/add</code><br/><br/>
-        Add a question to a quiz
+        <code>/user?username=$username</code><br/><br/>
+        Get user information
     </td>
     <td>
-        POST
+        GET
     </td>
     <td>
-        <b>Body Parameters</b><br/>
-        <code>{quizId, questionString, questionType, answers}</code>
-        <br/><br/>
         <b>Return Object</b><br/>
-        <code>{questionId}</code>
+        <code>{Username, Email, Password, Describe, User_Photo, Time_Create}</code>
     </td>
     <td>
         Throw <code>HTTPError</code> (code <code>400</code>) when
         <ul>
-            <li>quizId does not refer to a valid quiz
-            <li>questionString is an empty string <code>""</code></li>
-            <li>questionType is not either "single" or "multiple"
-            <li>the questionType is "single" and there is not exactly 1 correct answer</li>
-            <li>there are no correct answers</li>
-            <li>any of the <code>answerString</code> is an empty string, <code>""</code></li>
+            <li>There is no user with username <code>"$username"</code></li>
         </ul>
     </td>
-  </tr>
-  <tr>
+</tr>
+<!-- update user information -->
+<tr>
     <td>
-        <code>/question/edit</code><br/><br/>
-        Edits a question
+        <code>/user/update</code><br/><br/>
+        Update user information
     </td>
     <td>
-        POST
-    </td>
-    <td>
-        <b>Body Parameters</b><br/>
-        <code>{questionId, questionString, questionType, answers}</code>
-        <br/><br/>
-        <b>Return Object</b><br/>
-        <code>{}</code>
-    </td>
-    <td>
-        Throw <code>HTTPError</code> (code <code>400</code>) when
-        <ul>
-            <li>questionId does not refer to a valid question
-            <li>questionString is an empty string <code>""</code></li>
-            <li>questionType is not either "single" or "multiple"
-            <li>the questionType is "single" and there is not exactly 1 correct answer</li>
-            <li>there are no correct answers</li>
-        </ul>
-    </td>
-  </tr>
-  <tr>
-    <td>
-        <code>/question/remove</code><br/><br/>
-        Remove a question
-    </td>
-    <td>
-        DELETE
+        PUT
     </td>
     <td>
         <b>Query Parameters</b><br/>
-        <code>{questionId}</code>
+        <code>{Username, Email, Password, Describe, User_Photo}</code>
         <br/><br/>
         <b>Return Object</b><br/>
-        <code>{}</code>
+        <code>{status, message}</code>
     </td>
     <td>
         Throw <code>HTTPError</code> (code <code>400</code>) when
         <ul>
-            <li>questionId does not refer to a valid question
+            <li>Username is an empty string <code>""</code></li>
+            <li>Email is an empty string <code>""</code></li>
+            <li>Password is an empty string <code>""</code></li>
+            <li>Describe is an empty string <code>""</code></li>
+            <li>User_Photo is an empty string <code>""</code></li>
         </ul>
     </td>
   </tr>
-  <tr>
+<!-- get follower -->
+<tr>
     <td>
-        <code>/clear</code><br/><br/>
-        Clear all data.
+        <code>/user/follower?username=$username</code><br/><br/>
+        Get follower
     </td>
     <td>
-        DELETE
+        GET
     </td>
     <td>
-        <b>Query Parameters</b><br/>
-        <code>{}</code>
-        <br/><br/>
         <b>Return Object</b><br/>
-        <code>{}</code>
+        <code>{Username, Email, Password, Describe, User_Photo, Time_Create}</code>
     </td>
     <td>
-        N/A
+        Throw <code>HTTPError</code> (code <code>400</code>) when
+        <ul>
+            <li>There is no user with username <code>"$username"</code></li>
+        </ul>
     </td>
-  </tr>
+</tr>
+<!-- get following -->
+<tr>
+    <td>
+        <code>/user/following?username=$username</code><br/><br/>
+        Get following
+    </td>
+    <td>
+        GET
+    </td>
+    <td>
+        <b>Return Object</b><br/>
+        <code>{Username, Email, Password, Describe, User_Photo, Time_Create}</code>
+    </td>
+    <td>
+        Throw <code>HTTPError</code> (code <code>400</code>) when
+        <ul>
+            <li>There is no user with username <code>"$username"</code></li>
+        </ul>
+    </td>
+</tr>
+
 </table>
