@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>接口文档.md</title>
+<title>interfaceDoc.md</title>
 <meta http-equiv="Content-type" content="text/html;charset=UTF-8">
 
 <style>
@@ -413,18 +413,18 @@ code {
   </tr>
   <tr>
     <td>
-        <code>/quiz/create</code><br/><br/>
-        Create a quiz and return its corresponding id.
+        <code>/recipe</code><br/><br/>
+        Create a recipe and return the recipe id
     </td>
     <td>
         POST
     </td>
     <td>
         <b>Body Parameters</b><br/>
-        <code>{quizTitle, quizSynopsis}</code>
+        <code>{title, description, ingredients, steps, image}</code>
         <br/><br/>
         <b>Return Object</b><br/>
-        <code>{quizId}</code>
+        <code>{status, message, recipe_id}</code>
     </td>
     <td>
         Throw <code>HTTPError</code> (code <code>400</code>) when
