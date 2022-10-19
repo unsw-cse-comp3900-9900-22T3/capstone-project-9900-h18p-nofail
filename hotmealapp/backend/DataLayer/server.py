@@ -15,13 +15,6 @@ import DataLayer
 app = Flask(__name__)
 CORS(app)
 
-
-# Required for session
-app.config['MYSQL_HOST'] = 'localhost'
-app.config['MYSQL_USER'] = 'root'
-app.config['MYSQL_PASSWORD'] = '12345678'
-mysql = MySQL(app)
-
 #######connect to database#######====================
 
 # app.secret_key = 'your secret key'
@@ -70,6 +63,25 @@ def login():
             msg = {'status': 'success', 'message': 'You have successfully logged in!'}
         else:
             msg = {'status': 'fail', 'message': 'Username or Password Error!'}
+    elif request.method == 'GET':
+        msg = {'status': 'fail', 'message': 'Please fill out the form!'}
+    return jsonify(msg)
+
+@app.route('/recipe/create', methods =['GET', 'POST'])
+def create_recipe():
+    msg = ''
+    if request.method == 'POST' and 'username' in request.json and 'recipe_name' in request.json and 'recipe_description' in request.json and 'recipe_ingredients' in request.json and 'recipe_steps' in request.json and 'recipe_image' in request.json:
+        username = request.json['username']
+        recipe_name = request.json['recipe_name']
+        recipe_description = request.json['recipe_description']
+        recipe_ingredients = request.json['recipe_ingredients']
+        recipe_steps = request.json['recipe_steps']
+        recipe_image = request.json['recipe_image']
+        if DataLayer.Recipe_Name_Check(recipe_name):
+            DataLayer.Recipe_Create(username, recipe_name, recipe_description, recipe_ingredients, recipe_steps, recipe_image)
+            msg = {'status': 'success', 'message': 'You have successfully created a recipe!'}
+        else:
+            msg = {'status': 'fail', 'message': 'Recipe name already exists!'}
     elif request.method == 'GET':
         msg = {'status': 'fail', 'message': 'Please fill out the form!'}
     return jsonify(msg)
