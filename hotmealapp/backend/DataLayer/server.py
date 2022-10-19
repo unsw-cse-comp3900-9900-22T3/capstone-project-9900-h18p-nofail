@@ -1,20 +1,26 @@
 # Store this code in 'app.py' file
+from os import path
+import sys
+# sys.path.append(path.dirname(path.dirname(path.abspath(__file__))))
+# sys.path.append('..')
 
 from flask import Flask, jsonify, render_template, request, redirect, url_for, session
-from flask_mysqldb import MySQL
 from flask_cors import CORS
-import json
-import MySQLdb.cursors
-import re
-
-# from DataLayer import DataLayer
+from flask_mysqldb import MySQL
 
 import pymysql
 
-
+import DataLayer
 
 app = Flask(__name__)
 CORS(app)
+
+
+# Required for session
+app.config['MYSQL_HOST'] = 'localhost'
+app.config['MYSQL_USER'] = 'root'
+app.config['MYSQL_PASSWORD'] = '12345678'
+mysql = MySQL(app)
 
 #######connect to database#######====================
 
@@ -28,10 +34,10 @@ CORS(app)
 # mysql = MySQL(app)
 # db = mysql.connection
 
-db = pymysql.connect(host='localhost',
-                        user='root',
-                        password='12345678',
-                        database='sys')
+# db = pymysql.connect(host='localhost',
+#                         user='root',
+#                         password='12345678',
+#                         database='sys')
 
 
 #######End connect to database#######====================
@@ -45,8 +51,8 @@ def register():
         username = request.json['username']
         password = request.json['password']
         email = request.json['email']
-        if Username_Check(username):
-            User_Register(username, email, password)
+        if DataLayer.Username_Check(username):
+            DataLayer.User_Register(username, password, email)
             msg = {'status': 'success', 'message': 'You have successfully registered!'}
         else:
             msg = {'status': 'fail', 'message': 'Username already exists!'}
@@ -60,7 +66,7 @@ def login():
     if request.method == 'POST' and 'username' in request.json and 'password' in request.json:
         username = request.json['username']
         password = request.json['password']
-        if User_Login(username, password):
+        if DataLayer.User_Login(username, password):
             msg = {'status': 'success', 'message': 'You have successfully logged in!'}
         else:
             msg = {'status': 'fail', 'message': 'Username or Password Error!'}
@@ -76,46 +82,46 @@ def logout():
 
 #######Datalayer########================================================================
 
-def User_Register(username, email, password):
-    sql = "INSERT INTO sys.User(Username, Email, Password) \
-            VALUES ('%s', '%s', '%s');" % (username, email, password)
-    insert_cursor = db.cursor()
-    try:
-        insert_cursor.execute(sql)
-        db.commit()
-    except Exception:
-        db.rollback()
-        print("register wrong!!")
+# def User_Register(username, email, password):
+#     sql = "INSERT INTO sys.User(Username, Email, Password) \
+#             VALUES ('%s', '%s', '%s');" % (username, email, password)
+#     insert_cursor = db.cursor()
+#     try:
+#         insert_cursor.execute(sql)
+#         db.commit()
+#     except Exception:
+#         db.rollback()
+#         print("register wrong!!")
 
-def User_Login(username, password):
-    sql = "SELECT Password FROM sys.User WHERE Username = '%s';" % (username)
-    insert_cursor = db.cursor()
-    return_password = ''
-    try:
-        insert_cursor.execute(sql)
-        return_password = insert_cursor.fetchone()[0]
-    except Exception:
-        db.rollback()
-        print("login wrong!!")
-    if return_password == password:
-        return True
-    else:
-        return False
+# def User_Login(username, password):
+#     sql = "SELECT Password FROM sys.User WHERE Username = '%s';" % (username)
+#     insert_cursor = db.cursor()
+#     return_password = ''
+#     try:
+#         insert_cursor.execute(sql)
+#         return_password = insert_cursor.fetchone()[0]
+#     except Exception:
+#         db.rollback()
+#         print("login wrong!!")
+#     if return_password == password:
+#         return True
+#     else:
+#         return False
         
-def Username_Check(username):
-    sql = "SELECT * FROM sys.User WHERE Username = '%s';" % (username)
-    insert_cursor = db.cursor()
-    return_password = ''
-    try:
-        insert_cursor.execute(sql)
-        return_password = insert_cursor.fetchone()[0]
-    except Exception:
-        db.rollback()
-        print("check wrong!!")
-    if return_password == '':
-        return True
-    else:
-        return False
+# def Username_Check(username):
+#     sql = "SELECT * FROM sys.User WHERE Username = '%s';" % (username)
+#     insert_cursor = db.cursor()
+#     return_password = ''
+#     try:
+#         insert_cursor.execute(sql)
+#         return_password = insert_cursor.fetchone()[0]
+#     except Exception:
+#         db.rollback()
+#         print("check wrong!!")
+#     if return_password == '':
+#         return True
+#     else:
+#         return False
 
 #######End of Datalayer########================================================================
 
