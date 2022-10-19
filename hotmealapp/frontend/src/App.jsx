@@ -5,6 +5,10 @@ import Login from './pages/Login';
 import Dashboard from './pages/Dashboard';
 import Logout from './pages/Logout';
 import CreateRecipe from './pages/CreateRecipe';
+import Homepage from './pages/Homepage'
+import Personalpage from './pages/Personalpage'
+import Viewpersonalpage from './pages/Viewpersonalpage'
+
 import {
   BrowserRouter,
   Routes,
@@ -28,8 +32,8 @@ function App () {
             <Nav className="me-auto">
               <Nav.Link href="/register">Register</Nav.Link>
               <Nav.Link href="/login">Login</Nav.Link>
-              <Nav.Link href="https://wenqinghomepage.s3.ap-southeast-2.amazonaws.com/personal-page/index.html">Personalpage</Nav.Link>
-              <Nav.Link href="https://wenqingbucket2.s3.ap-southeast-2.amazonaws.com/homepage/index.html">Homepage</Nav.Link>
+              <Nav.Link href="/personalpage">Personalpage</Nav.Link>
+              <Nav.Link href="/homepage">Homepage</Nav.Link>
               <Nav.Link href="createrecipe">CreateRecipe</Nav.Link>
               <Nav.Link href="https://zheyuanrecipe.s3.ap-southeast-2.amazonaws.com/recipe+and+follower/recipe.html">Recipe</Nav.Link>
               <Button href="/logout" variant="secondary">Logout</Button>
@@ -44,6 +48,8 @@ function App () {
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/logout" element={<Logout />} />
           <Route path="/createrecipe" element={<CreateRecipe />} />
+          <Route path="/homepage" element={<Homepage />} />
+          <Route path="/personalpage" element={<Personalpage />} />
         </Routes>
       </BrowserRouter>
     </>
