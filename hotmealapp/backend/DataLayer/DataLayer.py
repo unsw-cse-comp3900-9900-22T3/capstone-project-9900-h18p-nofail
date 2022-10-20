@@ -66,6 +66,7 @@ def Recipe_Insert_Update(recipe_name,recipe_username,recipe_style,ingredient,coo
     sql_check = "SELECT Recipe_Id FROM sys.Recipe WHERE Recipe_Name= '%s' AND Recipe_Username = '%s';" %(recipe_name,recipe_username)
     select_cursor = db.cursor()
     return_re = ''
+    db.ping()
     try:
         select_cursor.execute(sql_check)
         return_re = select_cursor.fetchone()
@@ -94,6 +95,7 @@ def Recipe_Delete(recipe_name,recipe_username):
     return_re = ''
     sql=''
     delet_cursor = db.cursor()
+    db.ping()
     try:
         select_cursor.execute(sql_check)
         return_re = select_cursor.fetchone()
@@ -119,6 +121,7 @@ def Recipe_Show(username):
           WHERE Recipe_Username = '%s';" %(username)
     sel_cursor = db.cursor()
     return_re = ''
+    db.ping()
     try:
         sel_cursor.execute(sql)
         return_re = sel_cursor.fetchall()
@@ -135,6 +138,7 @@ def Ingredient_Insert(ingredient,in_type):
     sql_check = "SELECT * FROM sys.Ingredients_type WHERE Ingredient= '%s';" % (ingredient)
     select_cursor = db.cursor()
     return_re = ''
+    db.ping()
     try:
         select_cursor.execute(sql_check)
         return_re = select_cursor.fetchone()
@@ -162,6 +166,7 @@ def User_follow(username,follow_name):
     following_sql = "INSERT INTO sys.User_Following(Username,Following_name)\
                     VALUE ('%s','%s');" %(username,follow_name)
     check_follow = db.cursor()
+    db.ping()
     follow_result = ''
     try:
         check_follow.execute(check_follower_sql)
@@ -205,6 +210,7 @@ def User_cancel_follow(username,follow_name):
     following_sql = "DELETE FROM sys.User_Following WHERE Username='%s' AND Following_name = '%s';" % (username, follow_name)
     check_follow = db.cursor()
     follow_result = ''
+    db.ping()
     try:
         check_follow.execute(check_follower_sql)
         follow_result = check_follow.fetchone()
@@ -241,6 +247,7 @@ def User_get_follower_number(username):
     sql="SELECT count(*) FROM sys.User_Follower WHERE Username ='%s';" %(username)
     cursor = db.cursor()
     re_num = ''
+    db.ping()
     try:
         cursor.execute(sql)
         re_num = cursor.fetchone()[0]
@@ -254,6 +261,7 @@ def User_get_following_number(username):
     sql="SELECT count(*) FROM sys.User_Following WHERE Username ='%s';" %(username)
     cursor = db.cursor()
     re_num = ''
+    db.ping()
     try:
         cursor.execute(sql)
         re_num = cursor.fetchone()[0]
@@ -267,6 +275,7 @@ def User_insert_favour(username,recipe_name,recipe_username):
     qury_recipe = "SELECT Recipe_Id FROM sys.Recipe WHERE Recipe_Name = '%s' AND Recipe_Username = '%s';" %(recipe_name,recipe_username)
     qury_cursor = db.cursor()
     re_id = ''
+    db.ping()
     try:
         qury_cursor.execute(qury_recipe)
         re_id = qury_cursor.fetchone()[0]
@@ -288,6 +297,7 @@ def User_show_favourite(username):
     sql = "SELECT * FROM sys.Recipe WHERE Recipe_Id IN(SELECT Favourite_Recipe FROM sys.User_Favourite WHERE Favourite_Name = '%s');" %(username)
     cursor = db.cursor()
     re = ''
+    db.ping()
     try:
         cursor.execute(sql)
         re = cursor.fetchall()
@@ -302,6 +312,7 @@ def User_remove_favourite(username,favourite_recipe,favourite_name):
     favourite_recipe, favourite_name)
     qury_cursor = db.cursor()
     re_id = ''
+    db.ping()
     try:
         qury_cursor.execute(qury_recipe)
         re_id = qury_cursor.fetchone()[0]
@@ -323,6 +334,7 @@ def User_get_favourite_num(username):
     sql="SELECT COUNT(*) FROM sys.User_Favourite WHERE Favourite_Name='%s';"%(username)
     cursor = db.cursor()
     re_num=''
+    db.ping()
     try:
         cursor.execute(sql)
         re_num = cursor.fetchone()[0]
@@ -337,6 +349,7 @@ def Recipe_add_like(username,recipe_name,recipe_username):
     recipe_name, recipe_username)
     qury_cursor = db.cursor()
     re_id = ''
+    db.ping()
     try:
         qury_cursor.execute(qury_recipe)
         re_id = qury_cursor.fetchone()[0]
@@ -359,6 +372,7 @@ def Recipe_remove_Like(username,recipe_name,recipe_username):
         recipe_name, recipe_username)
     qury_cursor = db.cursor()
     re_id = ''
+    db.ping()
     try:
         qury_cursor.execute(qury_recipe)
         re_id = qury_cursor.fetchone()[0]
@@ -380,6 +394,7 @@ def Recipe_get_like_num(recipe_name,recipe_username):
     qury_recipe = "SELECT Recipe_Id FROM sys.Recipe WHERE Recipe_Name = '%s' AND Recipe_Username = '%s';" % (recipe_name, recipe_username)
     qury_cursor = db.cursor()
     re_id = ''
+    db.ping()
     try:
         qury_cursor.execute(qury_recipe)
         re_id = qury_cursor.fetchone()[0]
@@ -405,6 +420,7 @@ def Recipe_show_comment(recipe_name,recipe_username):
     recipe_name, recipe_username)
     qury_cursor = db.cursor()
     re_id = ''
+    db.ping()
     try:
         qury_cursor.execute(qury_recipe)
         re_id = qury_cursor.fetchone()[0]
@@ -428,6 +444,7 @@ def User_comment_recipe(username,recipe_name,recipe_username,content):
         recipe_name, recipe_username)
     qury_cursor = db.cursor()
     re_id = ''
+    db.ping()
     try:
         qury_cursor.execute(qury_recipe)
         re_id = qury_cursor.fetchone()[0]
@@ -451,6 +468,7 @@ def User_comment_user(username,recipe_name,recipe_username,comment_id,content):
         recipe_name, recipe_username)
     qury_cursor = db.cursor()
     re_id = ''
+    db.ping()
     try:
         qury_cursor.execute(qury_recipe)
         re_id = qury_cursor.fetchone()[0]
@@ -472,6 +490,7 @@ def User_comment_user(username,recipe_name,recipe_username,comment_id,content):
 def Comment_delete(comment_id):
     sql = "DELETE FROM sys.Recipe_Comment WHERE Comment_Id='%s' OR Comment_To='%s';"%(comment_id,comment_id)
     cursor = db.cursor()
+    db.ping()
     try:
         cursor.execute(sql)
         db.commit()
@@ -485,6 +504,7 @@ def Recipe_get_comment_num(recipe_name,recipe_username):
         recipe_name, recipe_username)
     qury_cursor = db.cursor()
     re_id = ''
+    db.ping()
     try:
         qury_cursor.execute(qury_recipe)
         re_id = qury_cursor.fetchone()[0]
@@ -505,6 +525,7 @@ def Recipe_get_comment_num(recipe_name,recipe_username):
     print(re_num)
     return True
 def Search_Recipe(search_content,difficult='',style_name='',ingredient=''):
+    db.ping()
     if difficult!='':
         if difficult=='easy':
             difficult=" AND Cooking_Time <= 30"
@@ -533,6 +554,7 @@ def search_user(search_content):
     ur_sql = "SELECT * FROM sys.User WHERE Username Like '%" + search_content + "%';"
     ur_cursor = db.cursor()
     re_ur = ''
+    db.ping()
     try:
         ur_cursor.execute(ur_sql)
         re_ur = ur_cursor.fetchall()
