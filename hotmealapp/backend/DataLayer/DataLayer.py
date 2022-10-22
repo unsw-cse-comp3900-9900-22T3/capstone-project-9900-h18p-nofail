@@ -18,10 +18,13 @@ def User_Register(username, email, password):
     try:
         insert_cursor.execute(sql)
         db.commit()
+        db.close()
+        return True
     except Exception:
         db.rollback()
         print("register worng!!")
-    db.close()
+        db.close()
+        return False
 
 def User_Login(username, password):
     sql = "SELECT Password FROM sys.User WHERE Username = '%s';" % (username)
@@ -60,7 +63,7 @@ def Username_Check(username):
     else:
         db.close()
         return False
-def Recipe_Insert_Update(recipe_name,recipe_username,recipe_style,ingredient,cooking_time,steps,recipe_photo):
+def Recipe_Insert_Update(recipe_name,recipe_username,recipe_discrption,recipe_style,ingredient,cooking_time,steps,recipe_photo):
     sql=""
     creat_cursor = db.cursor()
     sql_check = "SELECT Recipe_Id FROM sys.Recipe WHERE Recipe_Name= '%s' AND Recipe_Username = '%s';" %(recipe_name,recipe_username)
@@ -74,19 +77,22 @@ def Recipe_Insert_Update(recipe_name,recipe_username,recipe_style,ingredient,coo
         db.rollback()
         print("select_recipe worng!!")
     if return_re==None:
-        sql = "INSERT INTO sys.Recipe(Recipe_Name,Recipe_Username,Recipe_Style,Ingredient,Cooking_Time,Steps,Recipe_Photo) \
-        VALUE ('%s','%s','%s','%s','%s','%s','%s');" %(recipe_name,recipe_username,recipe_style,ingredient,cooking_time,steps,recipe_photo)
+        sql = "INSERT INTO sys.Recipe(Recipe_Name,Recipe_Username,Description,Recipe_Style,Ingredient,Cooking_Time,Steps,Recipe_Photo) \
+        VALUE ('%s','%s','%s','%s','%s','%s','%s','%s');" %(recipe_name,recipe_username,recipe_discrption,recipe_style,ingredient,cooking_time,steps,recipe_photo)
     else:
         return_re = int(return_re[0])
-        sql = "UPDATE sys.Recipe SET Recipe_Name = '%s',Recipe_Username = '%s',Recipe_Style = '%s',Ingredient = '%s',Cooking_Time = '%s',\
-         Steps = '%s',Recipe_Photo = '%s' WHERE Recipe_Id = '%s';" %(recipe_name,recipe_username,recipe_style,ingredient,cooking_time,steps,recipe_photo,return_re)
+        sql = "UPDATE sys.Recipe SET Recipe_Name = '%s',Recipe_Username = '%s',Description= '%s',Recipe_Style = '%s',Ingredient = '%s',Cooking_Time = '%s',\
+        Steps = '%s',Recipe_Photo = '%s' WHERE Recipe_Id = '%s';" %(recipe_name,recipe_username,recipe_discrption,recipe_style,ingredient,cooking_time,steps,recipe_photo,return_re)
     try:
         creat_cursor.execute(sql)
         db.commit()
+        db.close()
+        return True
     except Exception:
         db.rollback()
         print("create recipe worng!!")
-    db.close()
+        db.close()
+        return False
 
 def Recipe_Delete(recipe_name,recipe_username):
     sql_check = "SELECT Recipe_Id FROM sys.Recipe WHERE Recipe_Name= '%s' AND Recipe_Username = '%s';" % (
@@ -113,11 +119,12 @@ def Recipe_Delete(recipe_name,recipe_username):
     except Exception:
         db.rollback()
         print("delete recipe worng!!")
+        return False
     db.close()
     return True
 
 def Recipe_Show(username):
-    sql = "SELECT Recipe_Name,Recipe_Username,Recipe_Style,Ingredient,Cooking_Time,Steps,Recipe_Photo FROM sys.Recipe \
+    sql = "SELECT Recipe_Name,Recipe_Username,Recipe_Style,Ingredient,Cooking_Time,Steps,Recipe_Photo,Description FROM sys.Recipe \
           WHERE Recipe_Username = '%s';" %(username)
     sel_cursor = db.cursor()
     return_re = ''
@@ -524,7 +531,7 @@ def Recipe_get_comment_num(recipe_name,recipe_username):
     db.close()
     print(re_num)
     return True
-def Search_Recipe(search_content,difficult='',style_name='',ingredient=''):
+def Search_Recipe(search_content='',difficult='',style_name='',ingredient=''):
     db.ping()
     if difficult!='':
         if difficult=='easy':
@@ -567,10 +574,10 @@ def search_user(search_content):
 
 
 
-# re='fry chicken'
+re='fry fish'
 fname = 'Ryan'
 uname='Ryan'
-frecipe = 'fry chicken'
+frecipe = 'fry fish'
 
 # Search_Recipe('a',difficult='easy',style_name='Home cooking')
 # Recipe_get_comment_num('Malatang','Katherine')
@@ -589,18 +596,19 @@ frecipe = 'fry chicken'
 # User_get_follower_number(fname)
 # User_cancel_follow(uname,fname)
 # User_follow(uname,fname)
-# resty='fast food'
-# ingr='chicken,oil'
-# co_time=40
-# ste='pure oil and fry chicken'
-# rephoto='hhhhh'
+resty='fast food'
+ingr='fish,oil'
+co_time=30
+ste='pure oil and fry fish'
+rephoto='lol'
+des='true good'
 # ing='potato'
 # t='vegetable'
 # Ingredient_Insert(ing,t)
 # kk=Recipe_Show(uname)
 # print(kk)
 # Recipe_Delete(re,uname)
-# Recipe_Insert_Update(re,uname,resty,ingr,co_time,ste,rephoto)
+# Recipe_Insert_Update(re,uname,des,resty,ingr,co_time,ste,rephoto)
 # User_Register(username, email, password)
 # print(User_Login(username, password))
 # print('hello world')
