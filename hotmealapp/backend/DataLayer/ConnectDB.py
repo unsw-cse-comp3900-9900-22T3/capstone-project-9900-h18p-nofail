@@ -1,6 +1,6 @@
 import pymysql
 
-from flask_mysqldb import MySQL
+# from flask_mysqldb import MySQL
 
 def connectDb():
     db = pymysql.connect(host='localhost',

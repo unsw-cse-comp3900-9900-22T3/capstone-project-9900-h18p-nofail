@@ -6,7 +6,7 @@ import sys
 
 from flask import Flask, jsonify, render_template, request, redirect, url_for, session
 from flask_cors import CORS
-from flask_mysqldb import MySQL
+# from flask_mysqldb import MySQL
 
 import pymysql
 
