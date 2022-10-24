@@ -11,10 +11,6 @@ import {
 } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import FloatingLabel from 'react-bootstrap/FloatingLabel';
-import Radio from '@mui/material/Radio';
-import RadioGroup from '@mui/material/RadioGroup';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import FormControl from '@mui/material/FormControl';
 import FormLabel from '@mui/material/FormLabel';
 import Divider from '@mui/material/Divider';
 // import copy from 'copy-to-clipboard';
@@ -25,10 +21,48 @@ function CreateRecipe () {
   // const go = (val) => {
   //   setCurr(Number(curr) + val);
   // };
+  const [Recipe_Name, setName] = React.useState('');
+  const [Recipe_Style, setCategory] = React.useState('');
+  const [des, setDes] = React.useState('');
+  const [Ingredient, setIngre] = React.useState('');
+  const [ingres, setIngres] = React.useState('');
+  const [group, setGrou] = React.useState('');
+  const [Steps, setSteps] = React.useState('');
+  const [Recipe_Photo, setImg] = React.useState('');
+  const [Cooking_Time, setTime] = React.useState('');
   const [show1, setS1] = React.useState('block');
   const [show2, setS2] = React.useState('none');
   const [show3, setS3] = React.useState('none');
   const [show4, setS4] = React.useState('none');
+  const createrecipe = async () => {
+    console.log(Ingredient)
+    try {
+      const response = await fetch('http://localhost:8080/recipe/create', {
+        method: 'POST',
+        headers: {
+          'Content-type': 'application/json',
+        },
+        body: JSON.stringify({
+          Recipe_Name,
+          Recipe_Style,
+          des,
+          Ingredient,
+          Steps,
+          Recipe_Photo,
+          Cooking_Time,
+        })
+      });
+      const data = await response.json();
+      if(data.status==="success") {
+        alert("create successfully!")
+      }
+      else {
+        alert(data.message)
+      }
+    } catch (err) {
+      alert(err)
+    }
+  }
   function click1 () {
     setS1('block')
     setS2('none')
@@ -79,9 +113,11 @@ function CreateRecipe () {
   }
   const addgroup = () => {
     setList([...list, [1]])
+    setIngre({...Ingredient, [group]: ingres})
   }
   const todelete = () => {
     setList(list.filter((item, index) => index != list.length - 1));
+    setIngre(_.omit(Ingredient, [group]))
   }
   const addstep = () => {
     setList2([...list2, 1])
@@ -103,11 +139,11 @@ function CreateRecipe () {
             <div className='Container1'>
               <Form.Group className="mb-3">
                 <Form.Label>Recipe Name: </Form.Label>
-                <Form.Control placeholder="recipe name" type='text'/>
+                <Form.Control placeholder="recipe name" type='text' onChange={e => setName(e.target.value)}/>
               </Form.Group>
               <Form.Group className="mb-3">
                 <Form.Label>Category: </Form.Label>
-                <Form.Select aria-label="Default select example">
+                <Form.Select aria-label="Default select example" onChange={e => setCategory(e.target.value)}>
                   <option>Open to select</option>
                   <option value="1">One</option>
                   <option value="2">Two</option>
@@ -124,6 +160,7 @@ function CreateRecipe () {
           as="textarea"
           placeholder="description"
           style={{ height: '150px' }}
+          onChange={e => setDes(e.target.value)}
         />
         </FloatingLabel>
         </Form.Group>
@@ -143,7 +180,16 @@ function CreateRecipe () {
                   <Row>
                     <Form.Label>Group Title {index + 1}: </Form.Label>
                     <InputGroup className="mb-3">
-                    <Form.Control placeholder="group name" type='text'/>
+                    <Form.Select aria-label="Default select example" onChange={e => setGrou(e.target.value)}>
+                      <option>Open to select</option>
+                      <option value="Meat">Meat</option>
+                      <option value="Egg">Egg</option>
+                      <option value="Vegetable">Vegetable</option>
+                      <option value="Milk">Milk</option>
+                      <option value="Seafood">Seafood</option>
+                      <option value="Seasoning">Seasoning</option>
+                      <option value="Grain">Grain</option>
+                    </Form.Select>
                     <Button variant="outline-secondary" onClick={todelete}>Delete</Button>
                     </InputGroup>
                   </Row>
@@ -155,7 +201,7 @@ function CreateRecipe () {
                           Ingredient{index1 + 1}
                         </Form.Label>
                         <Col sm={6}>
-                          <Form.Control type="email" placeholder={`ingredient${index1 + 1}`} />
+                          <Form.Control type="email" placeholder={`ingredient${index1 + 1}`} onBlur={e => setIngres([...ingres, e.target.value])}/>
                         </Col>
                       </Row>
                     ))}
@@ -188,6 +234,7 @@ function CreateRecipe () {
                     as="textarea"
                     placeholder="description"
                     style={{ height: '150px' }}
+                    onBlur={e => setSteps([...Steps, e.target.value])}
                     />
                   <Button variant="outline-secondary" onClick={todelete1}>Delete</Button>
                   </InputGroup>
@@ -217,45 +264,24 @@ function CreateRecipe () {
           <div className='Container2'>
             <Form.Group controlId="formFile" className="mb-3">
               <FormLabel>Upload A Picture</FormLabel>
-              <Form.Control type="file" />
+              <Form.Control type="file" onChange={e => setImg(e.target.value)}/>
             </Form.Group>
             <Divider textAlign="left">Other Details</Divider>
-              <FormControl>
-                <FormLabel id="demo-row-radio-buttons-group-label">Difficulty</FormLabel>
-                <RadioGroup
-                  row
-                  aria-labelledby="demo-row-radio-buttons-group-label"
-                  name="row-radio-buttons-group"
-                >
-                <FormControlLabel value="Easy" control={<Radio />} label="Easy" />
-                <FormControlLabel value="Medium" control={<Radio />} label="Medium" />
-                <FormControlLabel value="Hard" control={<Radio />} label="Hard" />
-                </RadioGroup>
-              </FormControl>
               <FormLabel id="demo-row-radio-buttons-group-label">Prepare Time</FormLabel>
             <InputGroup className="mb-3">
               <Form.Control
                 placeholder="time"
                 aria-describedby="basic-addon2"
+                onChange={e => setTime(e.target.value)}
               />
             <InputGroup.Text id="basic-addon2">Minutes</InputGroup.Text>
             </InputGroup>
           </div>
           </div>
-          <div className='columnright2'>
-          <div className='Container2'>
-            <Form.Group className="mb-3">
-            <Form.Label>Tips: </Form.Label>
-            <FloatingLabel controlId="floatingTextarea2">
-            <Form.Control as="textarea" placeholder="description" style={{ height: '150px' }}/>
-            </FloatingLabel>
-            </Form.Group>
-          </div>
-          </div>
         </div>
         <div className='createfoot2'>
             <div><Button variant="outline-success" onClick={click3}>prev</Button>&nbsp; &nbsp; &nbsp; &nbsp;</div>
-            <div><Button variant="outline-success" href='https://wenqinghomepage.s3.ap-southeast-2.amazonaws.com/personal-page/index.html'>submit</Button></div>
+            <div><Button variant="outline-success" href='https://wenqinghomepage.s3.ap-southeast-2.amazonaws.com/personal-page/index.html' onClick={createrecipe}>submit</Button></div>
           </div>
       </div>
     </>);

@@ -1,5 +1,4 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
 import {
   Form,
   Button,
@@ -27,6 +26,7 @@ function LoginForm () {
       if(data.status==="success") {
         // open https://wenqingbucket2.s3.ap-southeast-2.amazonaws.com/homepage/index.html
         window.open("https://wenqingbucket2.s3.ap-southeast-2.amazonaws.com/homepage/index.html", "_self");
+        localStorage.setItem('username', username)
       }
       else {
         alert(data.message)
