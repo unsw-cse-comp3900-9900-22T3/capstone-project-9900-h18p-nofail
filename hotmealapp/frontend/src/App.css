@@ -126,6 +126,14 @@
   position: absolute;
   right: 10%;
   height:10%;
+  justify-content: flex-end;
+  display: flex;
+}
+.createfoot2_2 {
+  width:90%;
+  position: absolute;
+  right: 10%;
+  height:10%;
   bottom: 0;
   justify-content: flex-end;
   display: flex;

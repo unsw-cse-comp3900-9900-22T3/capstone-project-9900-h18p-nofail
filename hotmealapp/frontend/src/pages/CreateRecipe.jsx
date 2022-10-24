@@ -21,21 +21,22 @@ function CreateRecipe () {
   // const go = (val) => {
   //   setCurr(Number(curr) + val);
   // };
-  const [Recipe_Name, setName] = React.useState('');
-  const [Recipe_Style, setCategory] = React.useState('');
+  const [recipe_name, setName] = React.useState('');
+  const [recipe_style, setCategory] = React.useState('');
   const [des, setDes] = React.useState('');
-  const [Ingredient, setIngre] = React.useState('');
+  const [ingredient, setIngre] = React.useState('');
   const [ingres, setIngres] = React.useState('');
   const [group, setGrou] = React.useState('');
-  const [Steps, setSteps] = React.useState('');
-  const [Recipe_Photo, setImg] = React.useState('');
-  const [Cooking_Time, setTime] = React.useState('');
+  const [steps, setSteps] = React.useState('');
+  const [recipe_photo, setImg] = React.useState('');
+  const [cooking_time, setTime] = React.useState('');
   const [show1, setS1] = React.useState('block');
   const [show2, setS2] = React.useState('none');
   const [show3, setS3] = React.useState('none');
   const [show4, setS4] = React.useState('none');
+  const recipe_username = localStorage.getItem('username');
   const createrecipe = async () => {
-    console.log(Ingredient)
+    console.log(ingredient)
     try {
       const response = await fetch('http://localhost:8080/recipe/create', {
         method: 'POST',
@@ -43,21 +44,23 @@ function CreateRecipe () {
           'Content-type': 'application/json',
         },
         body: JSON.stringify({
-          Recipe_Name,
-          Recipe_Style,
-          des,
-          Ingredient,
-          Steps,
-          Recipe_Photo,
-          Cooking_Time,
+          recipe_name,
+          recipe_style,
+          recipe_username,
+          ingredient,
+          steps,
+          recipe_photo,
+          cooking_time,
         })
       });
       const data = await response.json();
       if(data.status==="success") {
         alert("create successfully!")
+        window.open('https://wenqinghomepage.s3.ap-southeast-2.amazonaws.com/personal-page/index.html')
       }
       else {
         alert(data.message)
+        //alert("my alert")
       }
     } catch (err) {
       alert(err)
@@ -113,11 +116,11 @@ function CreateRecipe () {
   }
   const addgroup = () => {
     setList([...list, [1]])
-    setIngre({...Ingredient, [group]: ingres})
+    setIngre({...ingredient, [group]: ingres})
   }
   const todelete = () => {
     setList(list.filter((item, index) => index != list.length - 1));
-    setIngre(_.omit(Ingredient, [group]))
+    setIngre(_.omit(ingredient, [group]))
   }
   const addstep = () => {
     setList2([...list2, 1])
@@ -166,7 +169,7 @@ function CreateRecipe () {
         </Form.Group>
       </div>
       </div>
-      <div className='createfoot2'>
+      <div className='createfoot2_2'>
         <div><Button variant="outline-success" onClick={click2}>next</Button></div>
       </div>
       </div>
@@ -211,7 +214,7 @@ function CreateRecipe () {
             </Form.Group>
             <Form.Group className="mb-3">
             <Button variant='success' style={{ float: 'right' }} onClick={addingre}>add</Button>
-              <Button variant='success' onClick={addgroup}>Add New Group</Button>
+              <Button variant='success' onClick={addgroup}>Finish This Group</Button>
             </Form.Group>
             <Form.Group className="mb-3">
               <div className='createfoot2'>
@@ -224,7 +227,7 @@ function CreateRecipe () {
       </div>
       <div style={ifshow3}>
         <div className='createstep'>
-          <div className='columnleft1'>
+          <div className='Container2'>
             {list2.map((item, index) => (
               <div key={index} id={item}>
                 <Row>
@@ -234,7 +237,7 @@ function CreateRecipe () {
                     as="textarea"
                     placeholder="description"
                     style={{ height: '150px' }}
-                    onBlur={e => setSteps([...Steps, e.target.value])}
+                    onBlur={e => setSteps([...steps, e.target.value])}
                     />
                   <Button variant="outline-secondary" onClick={todelete1}>Delete</Button>
                   </InputGroup>
@@ -244,19 +247,14 @@ function CreateRecipe () {
             <Form.Group className="mb-3">
               <Button variant='success' onClick={addstep}>Add New Step</Button>
             </Form.Group>
-          </div>
-          <div className='columnright1'>
-            <h3>Indredient Details</h3>
-            <h4>Meat</h4>
-            <div>1: meat1</div>
-            <div>2: meat2</div>
-            <div>3: meat3</div>
+            <Form.Group className="mb-3">
+              <div className='createfoot2'>
+                <div><Button variant="outline-success" onClick={click2}>prev</Button>&nbsp; &nbsp; &nbsp; &nbsp; </div>
+                <div><Button variant="outline-success" onClick={click4}>next</Button></div>
+              </div>
+            </Form.Group>
           </div>
         </div>
-          <div className='createfoot2'>
-            <div><Button variant="outline-success" onClick={click2}>prev</Button>&nbsp; &nbsp; &nbsp; &nbsp; </div>
-            <div><Button variant="outline-success" onClick={click4}>next</Button></div>
-          </div>
       </div>
       <div style={ifshow4}>
         <div className='createstep'>
@@ -279,9 +277,9 @@ function CreateRecipe () {
           </div>
           </div>
         </div>
-        <div className='createfoot2'>
+        <div className='createfoot2_2'>
             <div><Button variant="outline-success" onClick={click3}>prev</Button>&nbsp; &nbsp; &nbsp; &nbsp;</div>
-            <div><Button variant="outline-success" href='https://wenqinghomepage.s3.ap-southeast-2.amazonaws.com/personal-page/index.html' onClick={createrecipe}>submit</Button></div>
+            <div><Button variant="outline-success" onClick={createrecipe}>submit</Button></div>
           </div>
       </div>
     </>);
