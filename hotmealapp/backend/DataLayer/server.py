@@ -68,21 +68,24 @@ def login():
     return jsonify(msg)
 
 @app.route('/recipe/create', methods =['GET', 'POST'])
-#recipe_name,recipe_username,recipe_style,ingredient,cooking_time,steps,recipe_photo
+#recipe_name,recipe_username,description, recipe_style,ingredient,cooking_time,steps,recipe_photo
 def create_recipe():
-    msg = ''
-    if request.method == 'POST' and 'recipe_name' in request.json and 'recipe_username' in request.json and 'recipe_style' in request.json and 'ingredient' in request.json and 'cooking_time' in request.json and 'steps' in request.json and 'recipe_photo' in request.json:
+    msg = 'none'
+    print(request.json)
+    if request.method == 'POST' and 'recipe_name' in request.json and 'recipe_username' in request.json and 'description' in request.json and 'recipe_style' in request.json and 'ingredient' in request.json and 'cooking_time' in request.json and 'steps' in request.json and 'recipe_photo' in request.json:
         recipe_name = request.json['recipe_name']
         recipe_username = request.json['recipe_username']
+        description = request.json['description']
         recipe_style = request.json['recipe_style']
         ingredient = request.json['ingredient']
-        cooking_time = request.json['cooking_time']
+        cooking_time = int(request.json['cooking_time'])
         steps = request.json['steps']
         recipe_photo = request.json['recipe_photo']
-
-        DataLayer.Recipe_Insert_Update(recipe_name,recipe_username,recipe_style,ingredient,cooking_time,steps,recipe_photo)
-
-        msg = {'status': 'success', 'message': 'You have successfully created a recipe!'}
+        if DataLayer.Recipe_Insert_Update(str(recipe_name), str(recipe_username), str(description), str(recipe_style), str(ingredient), cooking_time,str(steps), str(recipe_photo)):
+            # if DataLayer.Ingredient_Insert(str(ingredient)):
+            msg = {'status': 'success', 'message': 'You have successfully created recipe!'}
+        else:
+            msg = {'status': 'fail', 'message': 'Create recipe failed!'}
     elif request.method == 'GET':
         msg = {'status': 'fail', 'message': 'Please fill out the form!'}
     return jsonify(msg)
