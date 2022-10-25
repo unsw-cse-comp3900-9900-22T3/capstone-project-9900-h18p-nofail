@@ -8,6 +8,7 @@ import CreateRecipe from './pages/CreateRecipe';
 import Homepage from './pages/Homepage'
 import Personalpage from './pages/Personalpage'
 import Viewpersonalpage from './pages/Viewpersonalpage'
+import UpdateRecipe from './pages/UpdateRecipe';
 
 import {
   BrowserRouter,
@@ -28,13 +29,12 @@ function App () {
       <BrowserRouter>
         <Navbar bg="dark" variant="dark">
           <Container>
-            <Navbar.Brand href="https://wenqingbucket2.s3.ap-southeast-2.amazonaws.com/homepage/index.html">Hot Meal</Navbar.Brand>
+            <Navbar.Brand href="/homepage">Hot Meal</Navbar.Brand>
             <Nav className="me-auto">
               <Nav.Link href="/register">Register</Nav.Link>
               <Nav.Link href="/login">Login</Nav.Link>
-              <Nav.Link href="/homepage">Homepage</Nav.Link>
               <Nav.Link href="/personalpage">Personalpage</Nav.Link>
-              <Nav.Link href="/viewpersonalpage">Viewpersonalpage</Nav.Link>
+              <Nav.Link href="/homepage">Homepage</Nav.Link>
               <Nav.Link href="createrecipe">CreateRecipe</Nav.Link>
               <Nav.Link href="https://zheyuanrecipe.s3.ap-southeast-2.amazonaws.com/recipe+and+follower/recipe.html">Recipe</Nav.Link>
               <Button href="/logout" variant="secondary">Logout</Button>
@@ -51,7 +51,7 @@ function App () {
           <Route path="/createrecipe" element={<CreateRecipe />} />
           <Route path="/homepage" element={<Homepage />} />
           <Route path="/personalpage" element={<Personalpage />} />
-          <Route path="/viewpersonalpage" element={<Viewpersonalpage />} />
+          <Route path="/updaterecipe:recipeid" element={<UpdateRecipe />} />
         </Routes>
       </BrowserRouter>
     </>

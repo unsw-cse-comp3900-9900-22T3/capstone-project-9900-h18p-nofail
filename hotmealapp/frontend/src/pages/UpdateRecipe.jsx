@@ -1,4 +1,5 @@
 import React from 'react';
+import {useParams} from 'react-router-dom';
 // import { useNavigate } from 'react-router-dom';
 import {
 //   Card,
@@ -15,12 +16,14 @@ import FormLabel from '@mui/material/FormLabel';
 import Divider from '@mui/material/Divider';
 // import copy from 'copy-to-clipboard';
 
-function CreateRecipe () {
+function UpdateRecipe () {
   // const navigate = useNavigate();
   // const [curr, setCurr] = React.useState(0);
   // const go = (val) => {
   //   setCurr(Number(curr) + val);
   // };
+  const params = useParams();
+  const recipeid = params.recipeid
   const [recipe_name, setName] = React.useState('');
   const [recipe_style, setCategory] = React.useState('');
   const [description, setDes] = React.useState('');
@@ -28,33 +31,29 @@ function CreateRecipe () {
   const [ingres, setIngres] = React.useState('');
   const [group, setGrou] = React.useState('');
   const [steps, setSteps] = React.useState('');
-  let [recipe_photo, setImg] = React.useState('');
-  const [cooking_time, setTime] = React.useState(0);
+  const [recipe_photo, setImg] = React.useState('');
+  const [cooking_time, setTime] = React.useState('');
   const [show1, setS1] = React.useState('block');
   const [show2, setS2] = React.useState('none');
   const [show3, setS3] = React.useState('none');
   const [show4, setS4] = React.useState('none');
   const recipe_username = localStorage.getItem('username');
-  const createrecipe = async () => {
-    //console.log(ingredient)
-    const pics = recipe_photo.split('\\')
-    //console.log(pics)
-    recipe_photo = 'imgs/' + pics[2]
-    const a = JSON.stringify({
-      recipe_name,
-      recipe_style,
-      recipe_username,
-      ingredient,
-      description,
-      steps,
-      recipe_photo,
-      cooking_time
+  const getrecipe = async (id) => {
+    const response = await fetch('http://localhost:8080/recipe/' + recipeid, {
+      method: 'GET',
+      headers: {
+        'Content-type': 'application/json',
+      }
     })
-    console.log(a);
+    const data = await response.json();
+    const recipe = data.recipe
+    localStorage.setItem('recipe', JSON.stringify(recipe))
+  }
+  const updaterecipe = async () => {
+    console.log(ingredient)
     try {
       const response = await fetch('http://localhost:8080/recipe/create', {
         method: 'POST',
-        mode: 'no-cors',
         headers: {
           'Content-type': 'application/json',
         },
@@ -70,7 +69,6 @@ function CreateRecipe () {
         })
       });
       const data = await response.json();
-      console.log(data)
       if(data.status==="success") {
         alert("create successfully!")
         window.open('https://wenqinghomepage.s3.ap-southeast-2.amazonaws.com/personal-page/index.html')
@@ -279,7 +277,7 @@ function CreateRecipe () {
           <div className='Container2'>
             <Form.Group controlId="formFile" className="mb-3">
               <FormLabel>Upload A Picture</FormLabel>
-              <Form.Control type="file" accept=".jpg, .jpeg, .png" onChange={e => setImg(e.target.value)}/>
+              <Form.Control type="file" onChange={e => setImg(e.target.value)}/>
             </Form.Group>
             <Divider textAlign="left">Other Details</Divider>
               <FormLabel id="demo-row-radio-buttons-group-label">Prepare Time</FormLabel>
@@ -296,9 +294,9 @@ function CreateRecipe () {
         </div>
         <div className='createfoot2_2'>
             <div><Button variant="outline-success" onClick={click3}>prev</Button>&nbsp; &nbsp; &nbsp; &nbsp;</div>
-            <div><Button variant="outline-success" onClick={createrecipe}>submit</Button></div>
+            <div><Button variant="outline-success" onClick={updaterecipe}>submit</Button></div>
           </div>
       </div>
     </>);
 }
-export default CreateRecipe;
+export default UpdateRecipe;
