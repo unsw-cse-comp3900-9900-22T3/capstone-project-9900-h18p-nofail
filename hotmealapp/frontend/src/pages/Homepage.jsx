@@ -6,7 +6,15 @@ import {
     Col,
     InputGroup,
   } from 'react-bootstrap';
-  import 'bootstrap/dist/css/bootstrap.min.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import Friedpork from '../images/friedpork.jpeg';
+import Koushuichicken from '../images/koushuichicken.jpeg';
+import Margheritapizza from '../images/MarghheritaPizza.jpeg';
+import Roujiamo from '../images/roujiamo.jpeg';
+import Soursoupbeef from '../images/soursoupbeef.jpeg';
+import Tiramisu from '../images/tiramisu.jpeg';
+import Tomatofriedegges from '../images/tomatofriedeggs.jpeg';
+import Zajiangmian from '../images/zajiangmian.jpeg';
 
 function Homepage() {
   function logoJump() {
@@ -17,13 +25,17 @@ function Homepage() {
     window.location.href = 'http://localhost:3000/login';
   }
 
+  function personalPage() {
+    window.location.href = 'http://localhost:3000/personalpage';
+  }
+
   function viewRecipe() {
     window.location.href = 'https://zheyuanrecipe.s3.ap-southeast-2.amazonaws.com/recipe+and+follower/recipe.html';
   }
 
       return (
         <>
-  <div className='“homepage"'></div>
+  <div className='Title'><h1>Hot Meal</h1></div>
   <p>
     <meta charSet="utf-8" />
     <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
@@ -39,6 +51,7 @@ function Homepage() {
     <noscript>You need to enable JavaScript to run this app.</noscript>
   </p>
   <div id="root" />
+
   {/*Header*/}
   {/*<img
     src="logo-social.png"
@@ -48,50 +61,58 @@ function Homepage() {
     style={{ marginLeft: 20 }}
       />*/}
   <a
-    href="http://localhost:3000/homepage"
+    onClick={logoJump}
     style={{ marginLeft: 200 }}
   >
     ForU
   </a>
   <a
-    href="http://localhost:3000/homepage"
+    onClick={logoJump}
     style={{ marginLeft: 100 }}
   >
     Popular
   </a>
+
   {/*Search Box*/}
   <input
     type="radio"
     name="Search Type"
     defaultValue="Username"
-    style={{ marginLeft: 200 }}
+    style={{ marginLeft: 200}}
   />
   Username
-  <input type="radio" name="Search Type" defaultValue="Recipe" />
+  <input 
+    type="radio" 
+    name="Search Type" 
+    defaultValue="Recipe" />
   Recipe
   <input type="text" name="Search Box" />
   <input type="Submit" defaultValue="Search" />
-  <a
-    href="http://localhost:3000/personalpage"
-    style={{ marginLeft: 100 }}
+  
+  <Button
+    onClick={personalPage}
+    variant="outline-success"
+    style={{ marginLeft: 180 }}
   >
     Personal Page
-  </a>
-  {/*<button type="logoutBtn" onclick="logout()" style={{ marginLeft: 30 }}>
+  </Button>
+  <Button onClick={logout} variant="secondary" style={{ marginLeft: 30 }}>
     Log Out
-  </button>*/}
+  </Button>
+
   {/*Filters*/}
-  <div id="Filters" style={{ marginLeft: 100 }}>
+  <div className='Container2'>
+  <div id="Filters">
     <br />
-    <label htmlFor="Cooking Time">Cooking Time</label>
+    <label htmlFor="Cooking Time">Cooking Time: </label>
     <select>
       <option value="Less than 10min">Less than 10min</option>
       <option value="10-30min">10-30min</option>
       <option value="30-60min">30-60min</option>
       <option value="More than 60min">More than 60min</option>
     </select>
-    <label htmlFor="Food Style" style={{ marginLeft: 150 }}>
-      Food Style
+    <label htmlFor="Food Style" style={{ marginLeft: 80 }}>
+      Food Style: 
     </label>
     <select>
       <option value="Asian">Asian</option>
@@ -100,8 +121,8 @@ function Homepage() {
       <option value="Fast Food">Fast Food</option>
       <option value="Other">Other</option>
     </select>
-    <label htmlFor="Ingredient" style={{ marginLeft: 150 }}>
-      Ingredient
+    <label htmlFor="Ingredient" style={{ marginLeft: 80 }}>
+      Ingredient: 
     </label>
     <select>
       <option value="Rice">Rice</option>
@@ -113,7 +134,7 @@ function Homepage() {
       <option value="Vegetable">Vegetable</option>
       <option value="Other">Other</option>
     </select>
-    <label htmlFor="Sorting" style={{ marginLeft: 200 }}>
+    <label htmlFor="Sorting" style={{ marginLeft: 195}}>
       Sort By
     </label>
     <select>
@@ -122,20 +143,23 @@ function Homepage() {
       <option value="Most Recent">Most Recent</option>
     </select>
   </div>
+  </div>
+
   {/*Recipe Table*/}
+  <div className='Container2'>
   <br />
-  <table border={0} style={{ paddingLeft: 110 }}>
+  <table>
     <tbody>
       <tr>
         <td>
           <img
-            src="zajiangmian.jpeg"
-            onclick="viewRecipe()"
+            src={Zajiangmian}
+            onClick={viewRecipe}
             width={300}
             height={400}
           />
           <br />
-          <a href="https://zheyuanrecipe.s3.ap-southeast-2.amazonaws.com/recipe+and+follower/recipe.html">
+          <a onClick={viewRecipe}>
             Zajiang Noodle
           </a>
           <br />
@@ -143,13 +167,13 @@ function Homepage() {
         </td>
         <td>
           <img
-            src="friedpork.jpeg"
-            onclick="viewRecipe()"
+            src={Friedpork}
+            onClick={viewRecipe}
             width={300}
             height={400}
           />
           <br />
-          <a href="https://zheyuanrecipe.s3.ap-southeast-2.amazonaws.com/recipe+and+follower/recipe.html">
+          <a onClick={viewRecipe}>
             Fried Pork
           </a>
           <br />
@@ -157,13 +181,13 @@ function Homepage() {
         </td>
         <td>
           <img
-            src="koushuichicken.jpeg"
-            onclick="viewRecipe()"
+            src={Koushuichicken}
+            onClick={viewRecipe}
             width={300}
             height={400}
           />
           <br />
-          <a href="https://zheyuanrecipe.s3.ap-southeast-2.amazonaws.com/recipe+and+follower/recipe.html">
+          <a onClick={viewRecipe}>
             Koushui Chicken
           </a>
           <br />
@@ -171,13 +195,13 @@ function Homepage() {
         </td>
         <td>
           <img
-            src="MarghheritaPizza.jpeg"
-            onclick="viewRecipe()"
+            src={Margheritapizza}
+            onClick={viewRecipe}
             width={300}
             height={400}
           />
           <br />
-          <a href="https://zheyuanrecipe.s3.ap-southeast-2.amazonaws.com/recipe+and+follower/recipe.html">
+          <a onClick={viewRecipe}>
             Margherita Pizza
           </a>
           <br />
@@ -187,13 +211,13 @@ function Homepage() {
       <tr>
         <td>
           <img
-            src="roujiamo.jpeg"
-            onclick="viewRecipe()"
+            src={Roujiamo}
+            onClick={viewRecipe}
             width={300}
             height={400}
           />
           <br />
-          <a href="https://zheyuanrecipe.s3.ap-southeast-2.amazonaws.com/recipe+and+follower/recipe.html">
+          <a onClick={viewRecipe}>
             Roujiamo
           </a>
           <br />
@@ -201,13 +225,13 @@ function Homepage() {
         </td>
         <td>
           <img
-            src="soursoupbeef.jpeg"
-            onclick="viewRecipe()"
+            src={Soursoupbeef}
+            onClick={viewRecipe}
             width={300}
             height={400}
           />
           <br />
-          <a href="https://zheyuanrecipe.s3.ap-southeast-2.amazonaws.com/recipe+and+follower/recipe.html">
+          <a onClick={viewRecipe}>
             Sour Soup Beef
           </a>
           <br />
@@ -215,13 +239,13 @@ function Homepage() {
         </td>
         <td>
           <img
-            src="tiramisu.jpeg"
-            onclick="viewRecipe()"
+            src={Tiramisu}
+            onClick={viewRecipe}
             width={300}
             height={400}
           />
           <br />
-          <a href="https://zheyuanrecipe.s3.ap-southeast-2.amazonaws.com/recipe+and+follower/recipe.html">
+          <a onClick={viewRecipe}>
             Tiramisu
           </a>
           <br />
@@ -229,13 +253,13 @@ function Homepage() {
         </td>
         <td>
           <img
-            src="tomatofriedeggs.jpeg"
-            onclick="viewRecipe()"
+            src={Tomatofriedegges}
+            onClick={viewRecipe}
             width={300}
             height={400}
           />
           <br />
-          <a href="https://zheyuanrecipe.s3.ap-southeast-2.amazonaws.com/recipe+and+follower/recipe.html">
+          <a onClick={viewRecipe}>
             Tomato Fried Eggs
           </a>
           <br />
@@ -244,6 +268,8 @@ function Homepage() {
       </tr>
     </tbody>
   </table>
+  </div>
+  
   {/*script*/}
   <p />
 </>
