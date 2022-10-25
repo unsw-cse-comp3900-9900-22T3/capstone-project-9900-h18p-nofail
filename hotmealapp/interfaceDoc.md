@@ -60,7 +60,7 @@
         <code>{status, message, recipe_id}</code>
     </td>
     <td>
-        Throw <code>HTTPError</code> (code <code>400</code>) when
+        Throw <code>HTTPError</code> (status <code>fail</code>) when
         <ul>
             <li>Recipe_Name is an empty string <code>""</code></li>
             <li>Recipe_Username is an empty string <code>""</code></li>
@@ -72,36 +72,6 @@
         </ul>
     </td>
   </tr>
-
-<!-- `Recipe_Id` int NOT NULL AUTO_INCREMENT,
-`Recipe_Name` varchar(30) NOT NULL,
-`Recipe_Username` varchar(10) NOT NULL,
-`Recipe_Style` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
-`Ingredient` varchar(30) NOT NULL,
-`Cooking_Time` int NOT NULL,
-`Steps` varchar(100) NOT NULL,
-`Recipe_Photo` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
-`Recipe_Time` timestamp NULL DEFAULT CURRENT_TIMESTAMP, -->
-
-<tr>
-    <td>
-        <code>/recipe?username=$username</code><br/><br/>
-        Get recipes by username
-    </td>
-    <td>
-        GET
-    </td>
-    <td>
-        <b>Return Object</b><br/>
-        <code> {Recipe_Id, Recipe_Name, Recipe_Username, Recipe_Style, Ingredient, Cooking_Time, Steps, Recipe_Photo, Recipe_Time}</code>
-    </td>
-    <td>
-        Throw <code>HTTPError</code> (code <code>400</code>) when
-        <ul>
-            <li>There is no recipe for this username <code>"$username"</code></li>
-        </ul>
-    </td>
-</tr>
 <!-- update recipe -->
 <tr>
     <td>
@@ -139,18 +109,19 @@
         <code>{status, message}</code>
     </td>
     <td>
-        Throw <code>HTTPError</code> (code <code>400</code>) when
+        Throw <code>HTTPError</code> (status <code>fail</code>) when
         <ul>
             <li>Recipe_Id does not refer to a recipe</li>
         </ul>
     </td>  
   </tr>
-
-
-  <tr>
+<!-- /recipe/show -->
+<!-- Query Parameters: username -->
+<!-- return: Recipe_Name,Recipe_Username,Recipe_Style,Ingredient,Cooking_Time,Steps,Recipe_Photo, Description  -->
+<tr>
     <td>
-        <code>/logout</code><br/><br/>
-        Log out
+        <code>/recipe/showlist</code><br/><br/>
+        Show recipe list for user
     </td>
     <td>
         GET
@@ -160,105 +131,528 @@
         <code>{username}</code>
         <br/><br/>
         <b>Return Object</b><br/>
-        <code>{status, message}</code>
+        <code>{status, message:{Recipe_Name,Recipe_Username,Recipe_Style,Ingredient,Cooking_Time,Steps,Recipe_Photo,Description}}</code>
     </td>
     <td>
-        N/A
-    </td>
-  </tr>
-   
-<!--  `Username` varchar(10) NOT NULL,
-  `Email` varchar(30) NOT NULL,
-  `Password` varchar(30) NOT NULL,
-  `Describe` varchar(100) DEFAULT NULL,
-  `User_Photo` varchar(100) DEFAULT NULL,
-  `Time_Create` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP, -->
-
-<!-- Get user information -->
-
-<tr>
-    <td>
-        <code>/user?username=$username</code><br/><br/>
-        Get user information
-    </td>
-    <td>
-        GET
-    </td>
-    <td>
-        <b>Return Object</b><br/>
-        <code>{Username, Email, Password, Describe, User_Photo, Time_Create}</code>
-    </td>
-    <td>
-        Throw <code>HTTPError</code> (code <code>400</code>) when
+        Throw <code>HTTPError</code> (status <code>fail</code>) when
         <ul>
-            <li>There is no user with username <code>"$username"</code></li>
+            <li>no recipe is referring to the username</li>
         </ul>
     </td>
 </tr>
-<!-- update user information -->
+<!-- /ingredient/create -->
+<!-- Query Parameters: ingredient, in_type -->
+<!-- return: status, message -->
 <tr>
     <td>
-        <code>/user/update</code><br/><br/>
-        Update user information
+        <code>/ingredient/insert</code><br/><br/>
+        Insert an ingredient
     </td>
     <td>
-        PUT
+        POST
     </td>
     <td>
         <b>Query Parameters</b><br/>
-        <code>{Username, Email, Password, Describe, User_Photo}</code>
+        <code>{ingredient, in_type}</code>
         <br/><br/>
         <b>Return Object</b><br/>
         <code>{status, message}</code>
     </td>
     <td>
-        Throw <code>HTTPError</code> (code <code>400</code>) when
+        Throw <code>HTTPError</code> (status <code>fail</code>) when
         <ul>
-            <li>Username is an empty string <code>""</code></li>
-            <li>Email is an empty string <code>""</code></li>
-            <li>Password is an empty string <code>""</code></li>
-            <li>Describe is an empty string <code>""</code></li>
-            <li>User_Photo is an empty string <code>""</code></li>
-        </ul>
-    </td>
-  </tr>
-<!-- get follower -->
-<tr>
-    <td>
-        <code>/user/follower?username=$username</code><br/><br/>
-        Get follower
-    </td>
-    <td>
-        GET
-    </td>
-    <td>
-        <b>Return Object</b><br/>
-        <code>{Username, Email, Password, Describe, User_Photo, Time_Create}</code>
-    </td>
-    <td>
-        Throw <code>HTTPError</code> (code <code>400</code>) when
-        <ul>
-            <li>There is no user with username <code>"$username"</code></li>
+            <li>ingredient is an empty string <code>""</code></li>
+            <li>in_type is an empty string <code>""</code></li>
         </ul>
     </td>
 </tr>
-<!-- get following -->
+<!-- /follow  POST-->
+<!-- Query Parameters: username, follow_username -->
+<!-- return: status, message -->
 <tr>
     <td>
-        <code>/user/following?username=$username</code><br/><br/>
-        Get following
+        <code>/user/follow</code><br/><br/>
+        Follow a user
+    </td>
+    <td>
+        POST
+    </td>
+    <td>
+        <b>Query Parameters</b><br/>
+        <code>{from_username, to_username}</code>
+        <br/><br/>
+        <b>Return Object</b><br/>
+        <code>{status, message}</code>
+    </td>
+    <td>
+        Throw <code>HTTPError</code> (status <code>fail</code>) when
+        <ul>
+            <li>username is an empty string <code>""</code></li>
+            <li>follow_username is an empty string <code>""</code></li>
+        </ul>
+    </td>
+</tr>
+
+<!-- /unfollow  POST-->
+<!-- Query Parameters: from_username, to_username -->
+<!-- return: status, message -->
+<tr>
+    <td>
+        <code>/user/unfollow</code><br/><br/>
+        Unfollow a user
+    </td>
+    <td>
+        POST
+    </td>
+    <td>
+        <b>Query Parameters</b><br/>
+        <code>{from_username, to_username}</code>
+        <br/><br/>
+        <b>Return Object</b><br/>
+        <code>{status, message}</code>
+    </td>
+    <td>
+        Throw <code>HTTPError</code> (status <code>fail</code>) when
+        <ul>
+            <li>from_username is an empty string <code>""</code></li>
+            <li>to_username is an empty string <code>""</code></li>
+        </ul>
+    </td>
+</tr>
+
+<!-- /user/getfollowernum  GET-->
+<!-- Query Parameters: username -->
+<!-- return: status, message,  follower_num-->
+<tr>
+    <td>
+        <code>/user/getfollowernum</code><br/><br/>
+        Get the number of followers of a user
     </td>
     <td>
         GET
     </td>
     <td>
+        <b>Query Parameters</b><br/>
+        <code>{username}</code>
+        <br/><br/>
         <b>Return Object</b><br/>
-        <code>{Username, Email, Password, Describe, User_Photo, Time_Create}</code>
+        <code>{status, message, follower_num}</code>
     </td>
     <td>
-        Throw <code>HTTPError</code> (code <code>400</code>) when
+        Throw <code>HTTPError</code> (status <code>fail</code>) when
         <ul>
-            <li>There is no user with username <code>"$username"</code></li>
+            <li>username is an empty string <code>""</code></li>
+        </ul>
+    </td>
+</tr>
+
+<!-- /user/getfollowingnum  GET-->
+<!-- Query Parameters: username -->
+<!-- return: status, message,  following_num-->
+<tr>
+    <td>
+        <code>/user/getfollowingnum</code><br/><br/>
+        Get the number of following of a user
+    </td>
+    <td>
+        GET
+    </td>
+    <td>
+        <b>Query Parameters</b><br/>
+        <code>{username}</code>
+        <br/><br/>
+        <b>Return Object</b><br/>
+        <code>{status, message, following_num}</code>
+    </td>
+    <td>
+        Throw <code>HTTPError</code> (status <code>fail</code>) when
+        <ul>
+            <li>username is an empty string <code>""</code></li>
+        </ul>
+    </td>
+</tr>
+
+<!-- /user/favrecipe  POST-->
+<!-- Query Parameters: username,recipe_name,recipe_username -->
+<!-- return: status, message-->
+<tr>
+    <td>
+        <code>/user/favrecipe</code><br/><br/>
+        Favorite a recipe
+    </td>
+    <td>
+        POST
+    </td>
+    <td>
+        <b>Query Parameters</b><br/>
+        <code>{username,recipe_name,recipe_username}</code>
+        <br/><br/>
+        <b>Return Object</b><br/>
+        <code>{status, message}</code>
+    </td>
+    <td>
+        Throw <code>HTTPError</code> (status <code>fail</code>) when
+        <ul>
+            <li>username is an empty string <code>""</code></li>
+            <li>recipe_name is an empty string <code>""</code></li>
+            <li>recipe_username is an empty string <code>""</code></li>
+        </ul>
+    </td>
+</tr>
+
+<!-- /user/getfavlist  GET-->
+<!-- Query Parameters: username -->
+<!-- return: status, message, fav_list-->
+<tr>
+    <td>
+        <code>/user/getfavlist</code><br/><br/>
+        Get the favorite list of a user
+    </td>
+    <td>
+        GET
+    </td>
+    <td>
+        <b>Query Parameters</b><br/>
+        <code>{username}</code>
+        <br/><br/>
+        <b>Return Object</b><br/>
+        <code>{status, message, fav_list}</code>
+    </td>
+    <td>
+        Throw <code>HTTPError</code> (status <code>fail</code>) when
+        <ul>
+            <li>username is an empty string <code>""</code></li>
+        </ul>
+    </td>
+</tr>
+
+<!-- /user/unfavrecipe  POST-->
+<!-- Query Parameters: username,favourite_recipe,favourite_name -->
+<!-- return: status, message-->
+<tr>
+    <td>
+        <code>/user/unfavrecipe</code><br/><br/>
+        Unfavorite a recipe
+    </td>
+    <td>
+        POST
+    </td>
+    <td>
+        <b>Query Parameters</b><br/>
+        <code>{username,favourite_recipe,favourite_name}</code>
+        <br/><br/>
+        <b>Return Object</b><br/>
+        <code>{status, message}</code>
+    </td>
+    <td>
+        Throw <code>HTTPError</code> (status <code>fail</code>) when
+        <ul>
+            <li>username is an empty string <code>""</code></li>
+            <li>favourite_recipe is an empty string <code>""</code></li>
+            <li>favourite_name is an empty string <code>""</code></li>
+        </ul>
+    </td>
+</tr>
+
+<!-- /user/getfavrecipenum  GET-->
+<!-- Query Parameters: username -->
+<!-- return: status, message, fav_num-->
+<tr>
+    <td>
+        <code>/user/getfavrecipenum</code><br/><br/>
+        Get the number of favorite recipes of a user
+    </td>
+    <td>
+        GET
+    </td>
+    <td>
+        <b>Query Parameters</b><br/>
+        <code>{username}</code>
+        <br/><br/>
+        <b>Return Object</b><br/>
+        <code>{status, message, fav_num}</code>
+    </td>
+    <td>
+        Throw <code>HTTPError</code> (status <code>fail</code>) when
+        <ul>
+            <li>username is an empty string <code>""</code></li>
+        </ul>
+    </td>
+</tr>
+
+<!-- /user/likerecipe  POST-->
+<!-- Query Parameters: username,recipe_name,recipe_username -->
+<!-- return: status, message-->
+<tr>
+    <td>
+        <code>/user/likerecipe</code><br/><br/>
+        Like a recipe
+    </td>
+    <td>
+        POST
+    </td>
+    <td>
+        <b>Query Parameters</b><br/>
+        <code>{username,recipe_name,recipe_username}</code>
+        <br/><br/>
+        <b>Return Object</b><br/>
+        <code>{status, message}</code>
+    </td>
+    <td>
+        Throw <code>HTTPError</code> (status <code>fail</code>) when
+        <ul>
+            <li>username is an empty string <code>""</code></li>
+            <li>recipe_name is an empty string <code>""</code></li>
+            <li>recipe_username is an empty string <code>""</code></li>
+        </ul>
+    </td>
+</tr>
+
+<!-- /user/unlikerecipe  POST-->
+<!-- Query Parameters: username,recipe_name,recipe_username -->
+<!-- return: status, message-->
+<tr>
+    <td>
+        <code>/user/unlikerecipe</code><br/><br/>
+        Unlike a recipe
+    </td>
+    <td>
+        POST
+    </td>
+    <td>
+        <b>Query Parameters</b><br/>
+        <code>{username,recipe_name,recipe_username}</code>
+        <br/><br/>
+        <b>Return Object</b><br/>
+        <code>{status, message}</code>
+    </td>
+    <td>
+        Throw <code>HTTPError</code> (status <code>fail</code>) when
+        <ul>
+            <li>username is an empty string <code>""</code></li>
+            <li>recipe_name is an empty string <code>""</code></li>
+            <li>recipe_username is an empty string <code>""</code></li>
+        </ul>
+    </td>
+</tr>
+
+<!-- /recipe/getlikenum  GET-->
+<!-- Query Parameters: recipe_name,recipe_username -->
+<!-- return: status, message, re_like_num-->
+<tr>
+    <td>
+        <code>/recipe/getlikenum</code><br/><br/>
+        Get the number of likes of a recipe
+    </td>
+    <td>
+        GET
+    </td>
+    <td>
+        <b>Query Parameters</b><br/>
+        <code>{recipe_name,recipe_username}</code>
+        <br/><br/>
+        <b>Return Object</b><br/>
+        <code>{status, message, re_like_num}</code>
+    </td>
+    <td>
+        Throw <code>HTTPError</code> (status <code>fail</code>) when
+        <ul>
+            <li>recipe_name is an empty string <code>""</code></li>
+            <li>recipe_username is an empty string <code>""</code></li>
+        </ul>
+    </td>
+</tr>
+
+<!-- /recipe/getcommentlist  GET-->
+<!-- Query Parameters: recipe_name,recipe_username -->
+<!-- return: status, message, comm-->
+<tr>
+    <td>
+        <code>/comment/showlist</code><br/><br/>
+        Get the comment list of a recipe
+    </td>
+    <td>
+        GET
+    </td>
+    <td>
+        <b>Query Parameters</b><br/>
+        <code>{recipe_name,recipe_username}</code>
+        <br/><br/>
+        <b>Return Object</b><br/>
+        <code>{status, message, comm}</code>
+    </td>
+    <td>
+        Throw <code>HTTPError</code> (status <code>fail</code>) when
+        <ul>
+            <li>recipe_name is an empty string <code>""</code></li>
+            <li>recipe_username is an empty string <code>""</code></li>
+        </ul>
+    </td>
+</tr>
+
+<!-- /user/addrecipecomment  POST-->
+<!-- Query Parameters: username,recipe_name,recipe_username,content -->
+<!-- return: status, message-->
+<tr>
+    <td>
+        <code>/comment/add</code><br/><br/>
+        Add a comment to a recipe
+    </td>
+    <td>
+        POST
+    </td>
+    <td>
+        <b>Query Parameters</b><br/>
+        <code>{username,recipe_name,recipe_username,content}</code>
+        <br/><br/>
+        <b>Return Object</b><br/>
+        <code>{status, message}</code>
+    </td>
+    <td>
+        Throw <code>HTTPError</code> (status <code>fail</code>) when
+        <ul>
+            <li>username is an empty string <code>""</code></li>
+            <li>recipe_name is an empty string <code>""</code></li>
+            <li>recipe_username is an empty string <code>""</code></li>
+            <li>content is an empty string <code>""</code></li>
+        </ul>
+    </td>
+</tr>
+
+<!-- /user/replycomment  POST-->
+<!-- Query Parameters: username,recipe_name,recipe_username,comment_id,content -->
+<!-- return: status, message-->
+<tr>
+    <td>
+        <code>/comment/reply</code><br/><br/>
+        Add a comment to a comment
+    </td>
+    <td>
+        POST
+    </td>
+    <td>
+        <b>Query Parameters</b><br/>
+        <code>{username,recipe_name,recipe_username,comment_id,content}</code>
+        <br/><br/>
+        <b>Return Object</b><br/>
+        <code>{status, message}</code>
+    </td>
+    <td>
+        Throw <code>HTTPError</code> (status <code>fail</code>) when
+        <ul>
+            <li>username is an empty string <code>""</code></li>
+            <li>recipe_name is an empty string <code>""</code></li>
+            <li>recipe_username is an empty string <code>""</code></li>
+            <li>comment_id is an empty string <code>""</code></li>
+            <li>content is an empty string <code>""</code></li>
+        </ul>
+    </td>
+</tr>
+
+<!-- /comment/delete  POST-->
+<!-- Query Parameters: comment_id-->
+<!-- return: status, message-->
+<tr>
+    <td>
+        <code>/comment/delete</code><br/><br/>
+        Delete a comment
+    </td>
+    <td>
+        POST
+    </td>
+    <td>
+        <b>Query Parameters</b><br/>
+        <code>{comment_id}</code>
+        <br/><br/>
+        <b>Return Object</b><br/>
+        <code>{status, message}</code>
+    </td>
+    <td>
+        Throw <code>HTTPError</code> (status <code>fail</code>) when
+        <ul>
+            <li>comment_id is an empty string <code>""</code></li>
+        </ul>
+    </td>
+</tr>
+
+<!-- /comment/getnum  GET-->
+<!-- Query Parameters: recipe_name,recipe_username-->
+<!-- return: status, message, comm_num-->
+<tr>
+    <td>
+        <code>/comment/getnum</code><br/><br/>
+        Get the number of comments of a recipe
+    </td>
+    <td>
+        GET
+    </td>
+    <td>
+        <b>Query Parameters</b><br/>
+        <code>{recipe_name,recipe_username}</code>
+        <br/><br/>
+        <b>Return Object</b><br/>
+        <code>{status, message, comm_num}</code>
+    </td>
+    <td>
+        Throw <code>HTTPError</code> (status <code>fail</code>) when
+        <ul>
+            <li>recipe_name is an empty string <code>""</code></li>
+            <li>recipe_username is an empty string <code>""</code></li>
+        </ul>
+    </td>
+</tr>
+
+<!-- /recipe/search  GET-->
+<!-- Query Parameters: search_content,difficult,style_name,ingredient -->
+<!-- return: status, message, return_recipe-->
+<tr>
+    <td>
+        <code>/search/recipe</code><br/><br/>
+        Search recipes
+    </td>
+    <td>
+        GET
+    </td>
+    <td>
+        <b>Query Parameters</b><br/>
+        <code>{search_content,difficult,style_name,ingredient}</code>
+        <br/><br/>
+        <b>Return Object</b><br/>
+        <code>{status, message, return_recipe}</code>
+    </td>
+    <td>
+        Throw <code>HTTPError</code> (status <code>fail</code>) when
+        <ul>
+            <li>search_content is an empty string <code>""</code></li>
+            <li>difficult is an empty string <code>""</code></li>
+            <li>style_name is an empty string <code>""</code></li>
+            <li>ingredient is an empty string <code>""</code></li>
+        </ul>
+    </td>
+</tr>
+
+<!-- /search/user  GET-->
+<!-- Query Parameters: search_content -->
+<!-- return: status, message, return_user-->
+<tr>
+    <td>
+        <code>/search/user</code><br/><br/>
+        Search users
+    </td>
+    <td>
+        GET
+    </td>
+    <td>
+        <b>Query Parameters</b><br/>
+        <code>{search_content}</code>
+        <br/><br/>
+        <b>Return Object</b><br/>
+        <code>{status, message, return_user}</code>
+    </td>
+    <td>
+        Throw <code>HTTPError</code> (status <code>fail</code>) when
+        <ul>
+            <li>search_content is an empty string <code>""</code></li>
         </ul>
     </td>
 </tr>
