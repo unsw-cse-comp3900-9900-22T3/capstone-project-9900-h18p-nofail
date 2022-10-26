@@ -29,7 +29,7 @@ $(document).ready(
                 $.ajax({
                     url: "http://127.0.0.1:8080/recipe/showone",
                     contentType: 'application/json',
-                    data: JSON.stringify({ 'recipe_name': 'Tomato fry eggs', 'recipe_username': 'Ryan' }),
+                    data: JSON.stringify({ 'recipe_name': recipeDetail.recipeName, 'recipe_username': recipeDetail.recipeOwnerName }),
                     type: "POST",
                     success: function (data) {
                         initDetails();
@@ -93,6 +93,8 @@ $(document).ready(
 
             function initDetails() {
                 getfollowingnum();
+
+                document.getElementsByClassName("recipeOwnerName")[0].innerHTML = recipeDetail.recipeOwnerName;
                 document.getElementsByClassName("favoriteNumber")[0].innerHTML = recipeDetail.recipeFavoriteNumber;
                 document.getElementsByClassName("followperson")[0].innerHTML = recipeDetail.recipeOwnerFollowerNumber;
                 document.getElementsByClassName("likeNumber")[0].innerHTML = recipeDetail.recipeLikeNumber;
@@ -167,26 +169,21 @@ function logOut() {
 }
 
 function likeplus() {
-    if (likeflag == 0) {
-        $.ajax({
-            url: "http://127.0.0.1:8080/user/like",
-            contentType: 'application/json',
-            data: JSON.stringify({ 'username': currentUserName, 'recipe_name': 'Tomato fry eggs', 'follow_username': 'k1' }),
-            type: "POST",
-            success: function (data) {
-                if (data.status === "success") {
-                    alert(data.message);
-                }
-            },
-            error: function (data) {
-                alert("follow failed!")
+    $.ajax({
+        url: "http://127.0.0.1:8080/user/likerecipe",
+        contentType: 'application/json',
+        data: JSON.stringify({ 'username': currentUserName, 'recipe_name':  recipeDetail.recipeName, 'recipe_username': recipeDetail.recipeOwnerName}),
+        type: "POST",
+        success: function (data) {
+            if (data.status === "success") {
+                alert(data.message);
             }
+        },
+        error: function (data) {
+            alert("follow failed!")
+        }
 
-        })
-    }
-    else {
-        alert("you already liked this recipe")
-    }
+    })
 }
 function favplus() {
     $.ajax({
