@@ -36,7 +36,7 @@ function App () {
               <Nav.Link href="/personalpage">Personalpage</Nav.Link>
               <Nav.Link href="/homepage">Homepage</Nav.Link>
               <Nav.Link href="createrecipe">CreateRecipe</Nav.Link>
-              <Nav.Link href="https://zheyuanrecipe.s3.ap-southeast-2.amazonaws.com/recipe+and+follower/recipe.html">Recipe</Nav.Link>
+              <Nav.Link href="/recipe_and_follower/recipe.html">Recipe</Nav.Link>
               <Button href="/logout" variant="secondary">Logout</Button>
               {/* <Button onClick={logout}>Logout</Button> */}
             </Nav>
