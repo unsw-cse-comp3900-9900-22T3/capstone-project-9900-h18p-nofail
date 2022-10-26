@@ -366,20 +366,109 @@ code {
     });
   </script>
 <h3 id="interface-routes">Interface: Routes</h3>
+<!-- /user/getfollowernum  GET-->
+<!-- Query Parameters: username -->
+<!-- return: status, message,  follower_num-->
 <table>
-  <tr>
-    <th>Name & Description</th>
-    <th>HTTP Method</th>
-    <th>JSON Data</th>
-    <th>Errors</th>
-  </tr>
-  <tr>
+<thead>
+<tr>
+<th style="text-align:left">API</th>
+<th style="text-align:left">Description</th>
+<th style="text-align:left">HTTP Method</th>
+<th style="text-align:left">query</th>
+<th style="text-align:left">return</th>
+<th style="text-align:left">Errors</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left"><code>/user/favrecipe</code></td>
+<td style="text-align:left">Add a recipe to user's favorite list</td>
+<td style="text-align:left">POST</td>
+<td style="text-align:left"><code>{username,recipe_name,recipe_username}</code></td>
+<td style="text-align:left">status, message</td>
+<td style="text-align:left"></td>
+</tr>
+<tr>
+<td style="text-align:left">&lt;!--</td>
+<td style="text-align:left"><code>/unfollow</code></td>
+<td style="text-align:left">Unfollow a user</td>
+<td style="text-align:left">POST</td>
+<td style="text-align:left"><code>{from_username,to_username}</code></td>
+<td style="text-align:left">status, message</td>
+</tr>
+<tr>
+<td style="text-align:left"><code>/user/follow</code></td>
+<td style="text-align:left">Follow a user</td>
+<td style="text-align:left">POST</td>
+<td style="text-align:left"><code>{from_username,to_username}</code></td>
+<td style="text-align:left">status, message</td>
+<td style="text-align:left"></td>
+</tr>
+<tr>
+<td style="text-align:left"><code>/user/getfollowernum</code></td>
+<td style="text-align:left">Get the number of followers of a user</td>
+<td style="text-align:left">GET</td>
+<td style="text-align:left"><code>{username}</code></td>
+<td style="text-align:left">status, message, follower_num</td>
+<td style="text-align:left"></td>
+</tr>
+<tr>
+<td style="text-align:left"><code>/user/getfollowingnum</code></td>
+<td style="text-align:left">Get the number of users that a user is following</td>
+<td style="text-align:left">GET</td>
+<td style="text-align:left"><code>{username}</code></td>
+<td style="text-align:left">status, message, following_num</td>
+<td style="text-align:left"></td>
+</tr>
+<tr>
+<td style="text-align:left"><code>/user/getfollowinglist</code></td>
+<td style="text-align:left">Get the list of users that a user is following</td>
+<td style="text-align:left">GET</td>
+<td style="text-align:left"><code>{username}</code></td>
+<td style="text-align:left">status, message, following_list</td>
+<td style="text-align:left"></td>
+</tr>
+<tr>
+<td style="text-align:left"><code>/user/getfollowerlist</code></td>
+<td style="text-align:left">Get the list of followers of a user</td>
+<td style="text-align:left">GET</td>
+<td style="text-align:left"><code>{username}</code></td>
+<td style="text-align:left">status, message, follower_list</td>
+<td style="text-align:left"></td>
+</tr>
+<tr>
+<td style="text-align:left"><code>/user/getfavrecipelist</code></td>
+<td style="text-align:left">Get the list of favorite recipes of a user</td>
+<td style="text-align:left">GET</td>
+<td style="text-align:left"><code>{username}</code></td>
+<td style="text-align:left">status, message, fav_recipe_list</td>
+<td style="text-align:left"></td>
+</tr>
+<tr>
+<td style="text-align:left"><code>/user/getfavrecipenum</code></td>
+<td style="text-align:left">Get the number of favorite recipes of a user</td>
+<td style="text-align:left">GET</td>
+<td style="text-align:left"><code>{username}</code></td>
+<td style="text-align:left">status, message, fav_recipe_num</td>
+<td style="text-align:left"></td>
+</tr>
+</tbody>
+</table>
+<table>
+    <tr>
+        <th>Name & Description</th>
+        <th>HTTP Method</th>
+        <th>JSON Data</th>
+        <th>Errors</th>
+    </tr>
+<tr>
     <td>
         <code>/login</code><br /><br />
         for user to login to hotmeal app
     </td>
     <!-- make post in yellow -->
-  <td>POST</td>
+    <td>POST</td>
     <td>
         <b>Query Parameters</b><br/>
         <code>{username, password}</code>
@@ -390,8 +479,8 @@ code {
     <td>
         Throw error message if username or password is wrong
     </td>
-  </tr>
-  <tr>
+</tr>
+<tr>
     <td>
         <code>/register</code><br/><br/>
         for user to register to hotmeal app
@@ -409,8 +498,8 @@ code {
     <td>
         Throw error message if username or email is already registered
     </td>
-  </tr>
-  <tr>
+</tr>
+<tr>
     <td>
         <code>/recipe/create</code><br/><br/>
         Create a recipe and return the recipe id
@@ -437,7 +526,7 @@ code {
             <li>Recipe_Photo is an empty string <code>""</code></li>
         </ul>
     </td>
-  </tr>
+</tr>
 <!-- update recipe -->
 <tr>
     <td>
@@ -481,7 +570,7 @@ code {
         </ul>
     </td>  
   </tr>
-<!-- /recipe/show -->
+<!-- /recipe/showlist -->
 <!-- Query Parameters: username -->
 <!-- return: Recipe_Name,Recipe_Username,Recipe_Style,Ingredient,Cooking_Time,Steps,Recipe_Photo, Description  -->
 <tr>
@@ -497,7 +586,32 @@ code {
         <code>{username}</code>
         <br/><br/>
         <b>Return Object</b><br/>
-        <code>{status, message:{Recipe_Name,Recipe_Username,Recipe_Style,Ingredient,Cooking_Time,Steps,Recipe_Photo,Description}}</code>
+        <code>{status, message, recipe_list}</code>
+    </td>
+    <td>
+        Throw <code>HTTPError</code> (status <code>fail</code>) when
+        <ul>
+            <li>no recipe is referring to the username</li>
+        </ul>
+    </td>
+</tr>
+<!-- /recipe/showone -->
+<!-- Query Parameters: username, Recipe_Name -->
+<!-- return: Recipe_Name,Recipe_Username,Recipe_Style,Ingredient,Cooking_Time,Steps,Recipe_Photo, Description  -->
+<tr>
+    <td>
+        <code>/recipe/showone</code><br/><br/>
+        Show one recipe for user
+    </td>
+    <td>
+        GET
+    </td>
+    <td>
+        <b>Query Parameters</b><br/>
+        <code>{username, Recipe_Name}</code>
+        <br/><br/>
+        <b>Return Object</b><br/>
+        <code><json>{status:"success", message:"you have successfully get the one recipe", recipe:{Recipe_Name,Recipe_Username,Recipe_Style,Ingredient,Cooking_Time,Steps,Recipe_Photo, Description}}</json></code>
     </td>
     <td>
         Throw <code>HTTPError</code> (status <code>fail</code>) when

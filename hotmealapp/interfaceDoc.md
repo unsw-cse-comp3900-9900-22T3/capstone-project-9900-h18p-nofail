@@ -1,19 +1,36 @@
 ### Interface: Routes
 
+<!-- /user/getfollowernum  GET-->
+<!-- Query Parameters: username -->
+<!-- return: status, message,  follower_num-->
+|API|Description|HTTP Method|query|return|Errors
+|:---|:----|:---|:---|:----|:---|
+|```/user/favrecipe```|Add a recipe to user's favorite list|POST|```{username,recipe_name,recipe_username}```|status, message||
+<!-- |```/unfollow```|Unfollow a user|POST|```{from_username,to_username}```|status, message||
+|```/user/follow```|Follow a user|POST|```{from_username,to_username}```|status, message||
+|```/user/getfollowernum```|Get the number of followers of a user|GET|```{username}```|status, message, follower_num||
+|```/user/getfollowingnum```|Get the number of users that a user is following|GET|```{username}```|status, message, following_num||
+|```/user/getfollowinglist```|Get the list of users that a user is following|GET|```{username}```|status, message, following_list||
+|```/user/getfollowerlist```|Get the list of followers of a user|GET|```{username}```|status, message, follower_list||
+|```/user/getfavrecipelist```|Get the list of favorite recipes of a user|GET|```{username}```|status, message, fav_recipe_list||
+|```/user/getfavrecipenum```|Get the number of favorite recipes of a user|GET|```{username}```|status, message, fav_recipe_num|| -->
+
+
+
 <table>
-  <tr>
-    <th>Name & Description</th>
-    <th>HTTP Method</th>
-    <th>JSON Data</th>
-    <th>Errors</th>
-  </tr>
-  <tr>
+    <tr>
+        <th>Name & Description</th>
+        <th>HTTP Method</th>
+        <th>JSON Data</th>
+        <th>Errors</th>
+    </tr>
+<tr>
     <td>
         <code>/login</code><br /><br />
         for user to login to hotmeal app
     </td>
     <!-- make post in yellow -->
-  <td>POST</td>
+    <td>POST</td>
     <td>
         <b>Query Parameters</b><br/>
         <code>{username, password}</code>
@@ -24,8 +41,8 @@
     <td>
         Throw error message if username or password is wrong
     </td>
-  </tr>
-  <tr>
+</tr>
+<tr>
     <td>
         <code>/register</code><br/><br/>
         for user to register to hotmeal app
@@ -43,8 +60,9 @@
     <td>
         Throw error message if username or email is already registered
     </td>
-  </tr>
-  <tr>
+</tr>
+
+<tr>
     <td>
         <code>/recipe/create</code><br/><br/>
         Create a recipe and return the recipe id
@@ -71,7 +89,7 @@
             <li>Recipe_Photo is an empty string <code>""</code></li>
         </ul>
     </td>
-  </tr>
+</tr>
 <!-- update recipe -->
 <tr>
     <td>
@@ -115,7 +133,7 @@
         </ul>
     </td>  
   </tr>
-<!-- /recipe/show -->
+<!-- /recipe/showlist -->
 <!-- Query Parameters: username -->
 <!-- return: Recipe_Name,Recipe_Username,Recipe_Style,Ingredient,Cooking_Time,Steps,Recipe_Photo, Description  -->
 <tr>
@@ -131,7 +149,7 @@
         <code>{username}</code>
         <br/><br/>
         <b>Return Object</b><br/>
-        <code>{status, message:{Recipe_Name,Recipe_Username,Recipe_Style,Ingredient,Cooking_Time,Steps,Recipe_Photo,Description}}</code>
+        <code>{status, message, recipe_list}</code>
     </td>
     <td>
         Throw <code>HTTPError</code> (status <code>fail</code>) when
@@ -140,6 +158,33 @@
         </ul>
     </td>
 </tr>
+
+<!-- /recipe/showone -->
+<!-- Query Parameters: username, Recipe_Name -->
+<!-- return: Recipe_Name,Recipe_Username,Recipe_Style,Ingredient,Cooking_Time,Steps,Recipe_Photo, Description  -->
+<tr>
+    <td>
+        <code>/recipe/showone</code><br/><br/>
+        Show one recipe for user
+    </td>
+    <td>
+        GET
+    </td>
+    <td>
+        <b>Query Parameters</b><br/>
+        <code>{username, Recipe_Name}</code>
+        <br/><br/>
+        <b>Return Object</b><br/>
+        <code><json>{status:"success", message:"you have successfully get the one recipe", recipe:{Recipe_Name,Recipe_Username,Recipe_Style,Ingredient,Cooking_Time,Steps,Recipe_Photo, Description}}</json></code>
+    </td>
+    <td>
+        Throw <code>HTTPError</code> (status <code>fail</code>) when
+        <ul>
+            <li>no recipe is referring to the username</li>
+        </ul>
+    </td>
+</tr>
+
 <!-- /ingredient/create -->
 <!-- Query Parameters: ingredient, in_type -->
 <!-- return: status, message -->
