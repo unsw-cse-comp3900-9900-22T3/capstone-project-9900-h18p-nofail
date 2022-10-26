@@ -89,7 +89,26 @@ $(document).ready(
                     document.getElementById("commentContainer").innerHTML += commentContainer;
   
 
-  
+                    // $.ajax({
+                    //     url: "http://127.0.0.1:8080/user/getfollower",
+                    //     contentType: 'application/json',
+                    //     data: JSON.stringify({ 'username': 'Katherine' }),
+                    //     type: "POST",
+                    //     success: function (data) {
+                    //         for (var i = 0; i < data.length; i++) {
+                    //             let obj = data[i];
+                    //             obj.avatarUrl = "images/logo.png";
+    
+                    //             var commentContainer =
+                    //                 "<div class='commentDiv'><div class='commentAvatar'><div class='commentImgBorder'><img src='" + obj.avatarUrl + "' class='commentImg'/></div></div><div class='commentMain'><div class='commentUserName'>" + obj[1] + "</div><div class='commentContent'>" + obj[4] + "</div></div><div class='commentTime'>" + obj[5] + "</div></div>";
+    
+                    //             document.getElementById("commentContainer").innerHTML += commentContainer;
+                    //         }
+                    //     },
+                    //     error: function (data) {
+                    //     }
+    
+                    // })
             }
         }
     }

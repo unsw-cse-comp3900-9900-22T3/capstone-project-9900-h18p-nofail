@@ -1,15 +1,19 @@
 var nameList = ['Ryan', 'Ryan', 'Ryan', 'Ryan', 'Ryan', 'Ryan', 'Ryan'];
-var likeflag=0;
-var favflag=0;
-var followflag=0;
+var likeflag = 0;
+var favflag = 0;
+var followflag = 0;
 var commentList = ['so delicious', 'rubbish', 'just so so', 'not specially'];
 var favoriteNumber = 10;
 var likeNumber = 10;
 var folloingNumber = 100;
+var currentUserName = 'Ryan';
 $(document).ready(
     function () {
         {
             window.onload = function () {
+                currentUserName = localStorage.getItem("token") ? localStorage.getItem("token") : 'Ryan';
+
+
                 init();
                 initDetails();
                 initComment();
@@ -17,9 +21,21 @@ $(document).ready(
 
             function init() {
 
+                // $.ajax({
+                //     url: "http://127.0.0.1:8080/user/getfollower",
+                //     contentType: 'application/json',
+                //     data: JSON.stringify({ 'username': currentUserName }),
+                //     type: "POST",
+                //     success: function (data) {
 
-                document.getElementsByClassName("favoriteNumber")[0].innerHTML = "favorite: "+favoriteNumber;
-                document.getElementsByClassName("likeNumber")[0].innerHTML = "like: "+likeNumber;
+                //     },
+                //     error: function (data) {
+                //     }
+
+                // })
+
+                document.getElementsByClassName("favoriteNumber")[0].innerHTML = "favorite: " + favoriteNumber;
+                document.getElementsByClassName("likeNumber")[0].innerHTML = "like: " + likeNumber;
             }
 
             function initDetails() {
@@ -37,27 +53,36 @@ $(document).ready(
                 document.getElementsByClassName("detailRemark")[1].innerHTML = steps;
 
 
-                
 
-                document.getElementsByClassName("followperson")[0].innerHTML = "following person: "+folloingNumber;
+
+                document.getElementsByClassName("followperson")[0].innerHTML = "following person: " + folloingNumber;
 
             }
 
             function initComment() {
-                for (var i = 0; i < nameList.length; i++) {
-                    var contentIndex = Math.round(Math.random() * 3);
-                    var obj = {
-                        avatarUrl: "images/logo.png",
-                        commentUserName: nameList[i],
-                        commentContent: commentList[contentIndex],
-                        commentTime: new Date().format("yyyy-MM-dd hh:mm:ss")
+
+                $.ajax({
+                    url: "http://127.0.0.1:8080/recipe/showcomment",
+                    contentType: 'application/json',
+                    data: JSON.stringify({ 'recipe_name': 'Malatang', 'recipe_username': 'Katherine' }),
+                    type: "POST",
+                    success: function (data) {
+                        for (var i = 0; i < data.length; i++) {
+                            let obj = data[i];
+                            obj.avatarUrl = "images/logo.png";
+
+                            var commentContainer =
+                                "<div class='commentDiv'><div class='commentAvatar'><div class='commentImgBorder'><img src='" + obj.avatarUrl + "' class='commentImg'/></div></div><div class='commentMain'><div class='commentUserName'>" + obj[1] + "</div><div class='commentContent'>" + obj[4] + "</div></div><div class='commentTime'>" + obj[5] + "</div></div>";
+
+                            document.getElementById("commentContainer").innerHTML += commentContainer;
+                        }
+                    },
+                    error: function (data) {
                     }
 
-                    var commentContainer =
-                        "<div class='commentDiv'><div class='commentAvatar'><div class='commentImgBorder'><img src='" + obj.avatarUrl + "' class='commentImg'/></div></div><div class='commentMain'><div class='commentUserName'>" + obj.commentUserName + "</div><div class='commentContent'>" + obj.commentContent + "</div></div><div class='commentTime'>" + obj.commentTime + "</div></div>";
+                })
 
-                    document.getElementById("commentContainer").innerHTML += commentContainer;
-                }
+
             }
         }
     }
@@ -97,49 +122,118 @@ function logOut() {
 }
 
 function likeplus() {
-    if (likeflag==0){
-        alert("like+1");
-        likeNumber+=1;
-        document.getElementsByClassName("likeNumber")[0].innerHTML = "like: "+likeNumber;
-        likeflag=1;
+    if (likeflag == 0) {
+        $.ajax({
+            url: "http://127.0.0.1:8080/user/like",
+            contentType: 'application/json',
+            data: JSON.stringify({ 'username': currentUserName, 'recipe_name': 'Katherine', 'follow_username': 'kk' }),
+            type: "POST",
+            success: function (data) {
+                if (data.status === "success") {
+                    alert(data.message);
+                }
+            },
+            error: function (data) {
+                alert("follow failed!")
+            }
+
+        })
     }
-    else{
+    else {
         alert("you already liked this recipe")
     }
-   }
+}
 function favplus() {
-    if (favflag==0){
-         alert("favorite+1");
-        favoriteNumber+=1;
-        document.getElementsByClassName("favoriteNumber")[0].innerHTML = "favorite: "+favoriteNumber;
-        favflag=1;
+    if (favflag == 0) {
+        $.ajax({
+            url: "http://127.0.0.1:8080/user/favrecipe",
+            contentType: 'application/json',
+            data: JSON.stringify({ 'username': currentUserName, 'recipe_name': 'Katherine', 'follow_username': 'kk' }),
+            type: "POST",
+            success: function (data) {
+                if (data.status === "success") {
+                    alert(data.message);
+                }
+            },
+            error: function (data) {
+                alert("follow failed!")
+            }
+
+        })
     }
-    else{
+    else {
         alert("you already favorited this recipe")
     }
-    }
+}
 function followplus() {
-    if (followflag==0){
-        alert("follow+1");
-        folloingNumber+=1;
-        document.getElementsByClassName("followperson")[0].innerHTML = "following person: "+folloingNumber;
-        followflag=1;
-   }
-   else{
-       alert("you already followed this recipe")
-   }
+    if (followflag == 0) {
+        $.ajax({
+            url: "http://127.0.0.1:8080/user/follow",
+            contentType: 'application/json',
+            data: JSON.stringify({ 'username': currentUserName, 'follow_username': 'kk' }),
+            type: "POST",
+            success: function (data) {
+                if (data.status === "success") {
+                    alert(data.message);
+                }
+            },
+            error: function (data) {
+                alert("follow failed!")
+            }
+
+        })
+    }
+    else {
+        alert("you already followed this recipe")
+    }
 }
 function addComment() {
     var value = $("#currentComment").val();
 
-    var currentName = Math.round(Math.random() * 6);
-
-    var currentDate = new Date().format("yyyy-MM-dd hh:mm:ss");
-
-    var commentContainer =
-        "<div class='commentDiv'><div class='commentAvatar'><div class='commentImgBorder'><img src='images/logo.png' class='commentImg'/></div></div><div class='commentMain'><div class='commentUserName'>" + nameList[currentName] + "</div><div class='commentContent'>" + value + "</div></div><div class='commentTime'>" + currentDate + "</div></div>";
-
-    document.getElementById("commentContainer").innerHTML += commentContainer;
+    $.ajax({
+        url: "http://127.0.0.1:8080/comment/recipe",
+        contentType: 'application/json',
+        data: JSON.stringify({ 'username': currentUserName, 'recipe_username': 'Katherine', 'recipe_name': 'Malatang', 'content': value }),
+        type: "POST",
+        success: function (data) {
+            if (data.status === "success") {
+                alert(data.message);
+                setTimeout(
+                    getCommentList(), 500)
+            }
+        },
+        error: function (data) {
+            alert("comment failed!")
+        }
+    })
 
     $("#currentComment").val("");
+
+}
+
+
+function getCommentList() {
+    document.getElementById("commentContainer").innerHTML = "";
+    $.ajax({
+        url: "http://127.0.0.1:8080/recipe/showcomment",
+        contentType: 'application/json',
+        data: JSON.stringify({ 'recipe_name': 'Malatang', 'recipe_username': 'Katherine' }),
+        type: "POST",
+        success: function (data) {
+            for (var i = 0; i < data.length; i++) {
+                let obj = data[i];
+                obj.avatarUrl = "images/logo.png";
+
+                var commentContainer =
+                    "<div class='commentDiv'><div class='commentAvatar'><div class='commentImgBorder'><img src='" + obj.avatarUrl + "' class='commentImg'/></div></div><div class='commentMain'><div class='commentUserName'>" + obj[1] + "</div><div class='commentContent'>" + obj[4] + "</div></div><div class='commentTime'>" + obj[5] + "</div></div>";
+
+                document.getElementById("commentContainer").innerHTML += commentContainer;
+            }
+        },
+        error: function (data) {
+        }
+
+    })
+
+
 }
