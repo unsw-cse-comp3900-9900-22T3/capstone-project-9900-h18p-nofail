@@ -443,7 +443,7 @@ def search_recipe():
         difficult = request.json['difficult']
         style_name = request.json['style_name']
         ingredient = request.json['ingredient']
-        return_recipe = DataLayer.Recipe_search(search_content,difficult,style_name,ingredient)
+        return_recipe = DataLayer.Search_Recipe(search_content,difficult,style_name,ingredient)
         if return_recipe:
             msg = {'status': 'success', 'message': 'You have successfully searched a recipe!','return_recipe':return_recipe}
         else:
@@ -456,7 +456,7 @@ def search_user():
     msg = ''
     if request.method == 'GET' and 'search_content' in request.json:
         search_content = request.json['search_content']
-        return_user = DataLayer.User_search(search_content)
+        return_user = DataLayer.search_user(search_content)
         if return_user:
             msg = {'status': 'success', 'message': 'You have successfully searched a user!','return_user':return_user}
         else:
