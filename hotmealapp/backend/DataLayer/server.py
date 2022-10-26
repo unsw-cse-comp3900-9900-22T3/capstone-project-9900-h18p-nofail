@@ -183,9 +183,9 @@ def insert_ingredient():
 #username,follow_username
 def follow_user():
     msg = ''
-    if request.method == 'POST' and 'username' in request.json and 'follow_username' in request.json:
-        username = request.json['username']
-        follow_username = request.json['follow_username']
+    if request.method == 'POST' and 'from_username' in request.json and 'to_username' in request.json:
+        username = request.json['from_username']
+        follow_username = request.json['to_username']
         if DataLayer.User_follow(username,follow_username):
             msg = {'status': 'success', 'message': 'You have successfully followed a user!'}
         else:
@@ -198,9 +198,9 @@ def follow_user():
 #username,follow_username
 def unfollow_user():
     msg = ''
-    if request.method == 'POST' and 'username' in request.json and 'follow_username' in request.json:
-        username = request.json['username']
-        follow_username = request.json['follow_username']
+    if request.method == 'POST' and 'from_username' in request.json and 'to_username' in request.json:
+        username = request.json['from_username']
+        follow_username = request.json['to_username']
         if DataLayer.User_cancel_follow(username,follow_username):
             msg = {'status': 'success', 'message': 'You have successfully unfollowed a user!'}
         else:
