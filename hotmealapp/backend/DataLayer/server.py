@@ -6,8 +6,7 @@ import sys
 
 from flask import Flask, jsonify, render_template, request, redirect, url_for, session, Blueprint, Response
 from flask_cors import CORS, cross_origin
-# from flask_mysqldb import MySQL
-# from api import Time
+import json
 
 import pymysql
 
