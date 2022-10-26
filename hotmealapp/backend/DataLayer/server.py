@@ -155,7 +155,7 @@ def delete_recipe():
         msg = {'status': 'fail', 'message': 'Please fill out the form!'}
     return jsonify(msg)
 
-@app.route('/recipe/showlist', methods =['GET'])
+@app.route('/recipe/showlist', methods =['POST'])
 #username
 def show_recipe():
     msg = ''
@@ -168,7 +168,7 @@ def show_recipe():
             msg = {'status': 'fail', 'message': 'The user has no recipe!'}
     return jsonify(msg)
 
-@app.route('/recipe/showone', methods =['GET'])  
+@app.route('/recipe/showone', methods =['POST'])  
 #recipe_name,recipe_username
 def show_one_recipe():
     msg = ''
@@ -238,17 +238,16 @@ def getfollowernum():
             msg = {'status': 'fail', 'message': 'Get number of followers failed!'}
     return jsonify(msg)
 
-@app.route('/user/getfollowingnum', methods =['GET'])
+@app.route('/user/getfollowingnum', methods =['POST'])
 #username
+#backup_1
 def get_following():
     msg = ''
-    if request.method == 'GET' and 'username' in request.json:
+    if request.method == 'POST' and 'username' in request.json:
         username = request.json['username']
+        # backup_2 
         num = DataLayer.User_get_following_number(username)
-        if num: 
-            msg = {'status': 'success', 'message': 'You have successfully got the number of following!','following_num':num}
-        else:
-            msg = {'status': 'fail', 'message': 'Get number of following failed!'}
+        msg = {'status': 'success', 'message': 'You have successfully got the number of following!','following_num':num}
     return jsonify(msg)
 
 
@@ -261,7 +260,8 @@ def fav_recipe():
         username = request.json['username']
         recipe_name = request.json['recipe_name']
         recipe_username = request.json['recipe_username']
-        if DataLayer.User_fav_recipe(username,recipe_name,recipe_username):
+        #backup_3
+        if DataLayer.User_insert_favour(username,recipe_name,recipe_username):
             msg = {'status': 'success', 'message': 'You have successfully favorited a recipe!'}
         else:
             msg = {'status': 'fail', 'message': 'Favorite recipe failed!'}
@@ -298,17 +298,16 @@ def remove_fav():
         msg = {'status': 'fail', 'message': 'Please fill out the form!'}
     return jsonify(msg)
 
-@app.route('/user/getfavrecipenum', methods =['GET'])
+@app.route('/user/getfavrecipenum', methods =['POST'])
 #username
+# backup_1
 def get_fav_recipe_num():
     msg = ''
-    if request.method == 'GET' and 'username' in request.json:
+    if request.method == 'POST' and 'username' in request.json:
         username = request.json['username']
+        #backup_2
         fav_num = DataLayer.User_get_favourite_num(username)
-        if fav_num:
-            msg = {'status': 'success', 'message': 'You have successfully got the number of favorite recipes!','fav_num':fav_num}
-        else:
-            msg = {'status': 'fail', 'message': 'Get number of favorite recipes failed!'}
+        msg = {'status': 'success', 'message': 'You have successfully got the number of favorite recipes!','fav_num':fav_num}
     return jsonify(msg)
 
 @app.route('/user/likerecipe', methods =['POST'])
@@ -343,21 +342,20 @@ def unlike_recipe():
         msg = {'status': 'fail', 'message': 'Please fill out the form!'}
     return jsonify(msg)
 
-@app.route('/recipe/getlikenum', methods =['GET'])
+@app.route('/recipe/getlikenum', methods =['POST'])
 #recipe_name,recipe_username
+# backup_1
 def get_like_num():
     msg = ''
-    if request.method == 'GET' and 'recipe_name' in request.json and 'recipe_username' in request.json:
+    if request.method == 'POST' and 'recipe_name' in request.json and 'recipe_username' in request.json:
         recipe_name = request.json['recipe_name']
         recipe_username = request.json['recipe_username']
+        #backup_2
         re_like_num = DataLayer.Recipe_get_like_num(recipe_name,recipe_username)
-        if re_like_num:
-            msg = {'status': 'success', 'message': 'You have successfully got the number of likes!','re_like_num':re_like_num}
-        else:
-            msg = {'status': 'fail', 'message': 'Get number of likes failed!'}
+        msg = {'status': 'success', 'message': 'You have successfully got the number of likes!','re_like_num':re_like_num}
     return jsonify(msg)
 
-@app.route('/comment/showlist', methods =['GET'])
+@app.route('/comment/showlist', methods =['POST'])
 #recipe_name,recipe_username
 def show_comment():
     msg = ''
@@ -461,6 +459,16 @@ def search_user():
             msg = {'status': 'success', 'message': 'You have successfully searched a user!','return_user':return_user}
         else:
             msg = {'status': 'fail', 'message': 'Search user failed!'}
+    return jsonify(msg)
+
+@app.route('/recipe/showcomment', methods =['POST'])
+#recipe_name,recipe_username
+def show_comment_backup():
+    msg = ''
+    if request.method == 'POST' and 'recipe_name' in request.json and 'recipe_username' in request.json:
+        recipe_name = request.json['recipe_name']
+        recipe_username = request.json['recipe_username']
+        msg = DataLayer.Recipe_show_comment_backup(recipe_name,recipe_username)
     return jsonify(msg)
 
 

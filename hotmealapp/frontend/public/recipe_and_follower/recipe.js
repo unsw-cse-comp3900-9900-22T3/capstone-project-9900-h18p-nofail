@@ -1,61 +1,108 @@
-var nameList = ['Ryan', 'Ryan', 'Ryan', 'Ryan', 'Ryan', 'Ryan', 'Ryan'];
-var likeflag = 0;
-var favflag = 0;
-var followflag = 0;
-var commentList = ['so delicious', 'rubbish', 'just so so', 'not specially'];
-var favoriteNumber = 10;
-var likeNumber = 10;
-var folloingNumber = 100;
 var currentUserName = 'Ryan';
+var recipeDetail = {
+    id: 2, //菜单ID
+    recipeName: "Malatang",         //菜单名
+    recipeOwnerName: "Katherine",   //菜单拥有者姓名
+    recipeDetail: "Ingredient Details<br/>Beef soup<br/>1.Beef mince<br/>2.Onion",      //菜单详情
+    recipeSteps: "Steps<br/>1.cut<br/>2.stir",  //菜单步骤
+    recipeDescription: "Spicy", //菜单简介
+    recipeFavoriteNumber: 0,    //最爱该菜单的人的统计数量
+    recipeLikeNumber: 0,        //喜欢该菜单的人的统计数量
+    recipeOwnerFollowerNumber: 0    //菜单拥有者的关注数量
+}
 $(document).ready(
     function () {
         {
             window.onload = function () {
-                currentUserName = localStorage.getItem("token") ? localStorage.getItem("token") : 'Ryan';
+                currentUserName = localStorage.getItem("username") ? localStorage.getItem("username") : 'Ryan';
 
+                var domList = document.getElementsByClassName("currentUserName");
+                for (let index = 0; index < domList.length; index++) {
+                    const element = domList[index];
+                    element.innerHTML = currentUserName;
+                }
 
                 init();
-                initDetails();
-                initComment();
             };
 
             function init() {
+                $.ajax({
+                    url: "http://127.0.0.1:8080/recipe/showone",
+                    contentType: 'application/json',
+                    data: JSON.stringify({ 'recipe_name': 'Tomato fry eggs', 'recipe_username': 'Ryan' }),
+                    type: "POST",
+                    success: function (data) {
+                        initDetails();
+                    },
+                    error: function (data) {
+                        initDetails();
+                    }
+                })
+            }
 
-                // $.ajax({
-                //     url: "http://127.0.0.1:8080/user/getfollower",
-                //     contentType: 'application/json',
-                //     data: JSON.stringify({ 'username': currentUserName }),
-                //     type: "POST",
-                //     success: function (data) {
+            function getfollowingnum() {
+                $.ajax({
+                    url: "http://127.0.0.1:8080/user/getfollowingnum",
+                    contentType: 'application/json',
+                    data: JSON.stringify({ 'username': recipeDetail.recipeOwnerName }),
+                    type: "POST",
+                    success: function (data) {
+                        if (data.status == "success") {
+                            recipeDetail.recipeOwnerFollowerNumber = data.following_num;
+                        }
+                        getLikeNumber();
+                    },
+                    error: function (data) {
+                    }
+                })
+            }
 
-                //     },
-                //     error: function (data) {
-                //     }
+            function getLikeNumber() {
+                $.ajax({
+                    url: "http://127.0.0.1:8080/recipe/getlikenum",
+                    contentType: 'application/json',
+                    data: JSON.stringify({ 'recipe_name': recipeDetail.recipeName, 'recipe_username': recipeDetail.recipeOwnerName }),
+                    type: "POST",
+                    success: function (data) {
+                        if (data.status == "success") {
+                            recipeDetail.recipeLikeNumber = data.re_like_num;
+                        }
+                        getFavoriteNumber();
+                    },
+                    error: function (data) {
+                    }
+                })
+            }
 
-                // })
-
-                document.getElementsByClassName("favoriteNumber")[0].innerHTML = "favorite: " + favoriteNumber;
-                document.getElementsByClassName("likeNumber")[0].innerHTML = "like: " + likeNumber;
+            function getFavoriteNumber() {
+                $.ajax({
+                    url: "http://127.0.0.1:8080/user/getfavrecipenum",
+                    contentType: 'application/json',
+                    data: JSON.stringify({ 'username': recipeDetail.recipeOwnerName }),
+                    type: "POST",
+                    success: function (data) {
+                        if (data.status == "success") {
+                            recipeDetail.recipeFavoriteNumber = data.fav_num;
+                            initComment();
+                        }
+                    },
+                    error: function (data) {
+                    }
+                })
             }
 
             function initDetails() {
-                var name = "Recipe Name: Steak";
-                var description = "Recipe Description: Easy home make";
+                getfollowingnum();
+                document.getElementsByClassName("favoriteNumber")[0].innerHTML = recipeDetail.recipeFavoriteNumber;
+                document.getElementsByClassName("followperson")[0].innerHTML = recipeDetail.recipeOwnerFollowerNumber;
+                document.getElementsByClassName("likeNumber")[0].innerHTML = recipeDetail.recipeLikeNumber;
 
-                document.getElementById("recipeName").innerHTML = name;
-                document.getElementById("recipeDesciption").innerHTML = description;
+                document.getElementById("recipeName").innerHTML = recipeDetail.recipeName;
+                document.getElementById("recipeDesciption").innerHTML = recipeDetail.recipeDescription;
 
+                document.getElementsByClassName("detailRemark")[0].innerHTML = recipeDetail.recipeDetail;
+                document.getElementsByClassName("detailRemark")[1].innerHTML = recipeDetail.recipeSteps;
 
-                var details = "Ingredient Details<br/>Beef soup<br/>1.Beef mince<br/>2.Onion";
-                var steps = "Steps<br/>1.cut<br/>2.stir";
-
-                document.getElementsByClassName("detailRemark")[0].innerHTML = details;
-                document.getElementsByClassName("detailRemark")[1].innerHTML = steps;
-
-
-
-
-                document.getElementsByClassName("followperson")[0].innerHTML = "following person: " + folloingNumber;
 
             }
 
@@ -81,8 +128,6 @@ $(document).ready(
                     }
 
                 })
-
-
             }
         }
     }
@@ -126,7 +171,7 @@ function likeplus() {
         $.ajax({
             url: "http://127.0.0.1:8080/user/like",
             contentType: 'application/json',
-            data: JSON.stringify({ 'username': currentUserName, 'recipe_name': 'Katherine', 'follow_username': 'kk' }),
+            data: JSON.stringify({ 'username': currentUserName, 'recipe_name': 'Tomato fry eggs', 'follow_username': 'k1' }),
             type: "POST",
             success: function (data) {
                 if (data.status === "success") {
@@ -144,56 +189,46 @@ function likeplus() {
     }
 }
 function favplus() {
-    if (favflag == 0) {
-        $.ajax({
-            url: "http://127.0.0.1:8080/user/favrecipe",
-            contentType: 'application/json',
-            data: JSON.stringify({ 'username': currentUserName, 'recipe_name': 'Katherine', 'follow_username': 'kk' }),
-            type: "POST",
-            success: function (data) {
-                if (data.status === "success") {
-                    alert(data.message);
-                }
-            },
-            error: function (data) {
-                alert("follow failed!")
+    $.ajax({
+        url: "http://127.0.0.1:8080/user/favrecipe",
+        contentType: 'application/json',
+        data: JSON.stringify({ 'username': currentUserName, 'recipe_name': recipeDetail.recipeName, 'recipe_username': recipeDetail.recipeOwnerName }),
+        type: "POST",
+        success: function (data) {
+            if (data.status === "success") {
+                alert(data.message);
             }
+        },
+        error: function (data) {
+            alert("follow failed!")
+        }
 
-        })
-    }
-    else {
-        alert("you already favorited this recipe")
-    }
+    })
 }
 function followplus() {
-    if (followflag == 0) {
-        $.ajax({
-            url: "http://127.0.0.1:8080/user/follow",
-            contentType: 'application/json',
-            data: JSON.stringify({ 'username': currentUserName, 'follow_username': 'kk' }),
-            type: "POST",
-            success: function (data) {
-                if (data.status === "success") {
-                    alert(data.message);
-                }
-            },
-            error: function (data) {
-                alert("follow failed!")
+    $.ajax({
+        url: "http://127.0.0.1:8080/user/follow",
+        contentType: 'application/json',
+        data: JSON.stringify({ 'from_username': currentUserName, 'to_username': recipeDetail.recipeOwnerName }),
+        type: "POST",
+        success: function (data) {
+            if (data.status === "success") {
+                alert(data.message);
             }
+        },
+        error: function (data) {
+            alert("follow failed!")
+        }
 
-        })
-    }
-    else {
-        alert("you already followed this recipe")
-    }
+    })
 }
 function addComment() {
     var value = $("#currentComment").val();
 
     $.ajax({
-        url: "http://127.0.0.1:8080/comment/recipe",
+        url: "http://127.0.0.1:8080/comment/add",
         contentType: 'application/json',
-        data: JSON.stringify({ 'username': currentUserName, 'recipe_username': 'Katherine', 'recipe_name': 'Malatang', 'content': value }),
+        data: JSON.stringify({ 'username': currentUserName, 'recipe_username': recipeDetail.recipeOwnerName, 'recipe_name': recipeDetail.recipeName, 'content': value }),
         type: "POST",
         success: function (data) {
             if (data.status === "success") {
@@ -217,7 +252,7 @@ function getCommentList() {
     $.ajax({
         url: "http://127.0.0.1:8080/recipe/showcomment",
         contentType: 'application/json',
-        data: JSON.stringify({ 'recipe_name': 'Malatang', 'recipe_username': 'Katherine' }),
+        data: JSON.stringify({ 'recipe_name': recipeDetail.recipeName, 'recipe_username': recipeDetail.recipeOwnerName }),
         type: "POST",
         success: function (data) {
             for (var i = 0; i < data.length; i++) {

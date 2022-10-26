@@ -147,6 +147,7 @@ def Recipe_show_one(recipe_name,recipe_username):
     return_re = ''
     db.ping()
     try:
+        print(sql)
         sel_cursor.execute(sql)
         return_re = sel_cursor.fetchone()
     except Exception:
@@ -285,7 +286,7 @@ def User_get_follower_number(username):
 def User_get_following_number(username):
     sql="SELECT count(*) FROM sys.User_Following WHERE Username ='%s';" %(username)
     cursor = db.cursor()
-    re_num = ''
+    re_num = 0
     db.ping()
     try:
         cursor.execute(sql)
@@ -293,7 +294,6 @@ def User_get_following_number(username):
     except Exception:
         db.rollback()
         print("count_following worng!!")
-    re_num = int(re_num)
     db.close()
     return re_num
 def User_insert_favour(username,recipe_name,recipe_username):
@@ -358,7 +358,7 @@ def User_remove_favourite(username,favourite_recipe,favourite_name):
 def User_get_favourite_num(username):
     sql="SELECT COUNT(*) FROM sys.User_Favourite WHERE Favourite_Name='%s';"%(username)
     cursor = db.cursor()
-    re_num=''
+    re_num=0
     db.ping()
     try:
         cursor.execute(sql)
@@ -366,7 +366,6 @@ def User_get_favourite_num(username):
     except Exception:
         db.rollback()
         print("count_favourite worng!!")
-    re_num = int(re_num)
     db.close()
     return re_num
 def Recipe_add_like(username,recipe_name,recipe_username):
@@ -426,18 +425,15 @@ def Recipe_get_like_num(recipe_name,recipe_username):
     except Exception:
         db.rollback()
         print("search recipe id worng!!")
-    re_id = int(re_id)
     sql = "SELECT COUNT(*) FROM sys.Recipe_Like WHERE Recipe_Id='%s';" % (re_id)
     cursor = db.cursor()
-    re_num = ''
+    re_num = 0
     try:
         cursor.execute(sql)
         re_num = cursor.fetchone()[0]
     except Exception:
         db.rollback()
         print("count_favourite worng!!")
-    re_num = int(re_num)
-    print(re_num)
     db.close()
     return re_num
 def Recipe_show_comment(recipe_name,recipe_username):
@@ -590,7 +586,30 @@ def search_user(search_content):
     return re_ur
 
 
-
+def Recipe_show_comment_backup(recipe_name,recipe_username):
+    qury_recipe = "SELECT Recipe_Id FROM sys.Recipe WHERE Recipe_Name = '%s' AND Recipe_Username = '%s';" % (
+    recipe_name, recipe_username)
+    qury_cursor = db.cursor()
+    re_id = ''
+    db.ping()
+    try:
+        qury_cursor.execute(qury_recipe)
+        re_id = qury_cursor.fetchone()[0]
+    except Exception:
+        db.rollback()
+        print("search recipe id worng!!")
+    re_id = int(re_id)
+    sql = "SELECT * FROM sys.Recipe_Comment WHERE Comment_Recipe_Id = '%s';" %(re_id)
+    print(sql)
+    cursor = db.cursor()
+    re = ''
+    try:
+        cursor.execute(sql)
+        re = cursor.fetchall()
+    except Exception:
+        db.rollback()
+        print("show comment id worng!!")
+    return re
 
 re='fry fish'
 fname = 'Ryan'
