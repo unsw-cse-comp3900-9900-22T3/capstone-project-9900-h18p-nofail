@@ -450,7 +450,7 @@ def search_recipe():
             msg = {'status': 'fail', 'message': 'Search recipe failed!'}
     return jsonify(msg)
 
-@app.route('/user/search', methods =['GET'])
+@app.route('/search/user', methods =['GET'])
 #search_content
 def search_user():
     msg = ''
