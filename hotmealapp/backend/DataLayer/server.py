@@ -161,9 +161,25 @@ def show_recipe():
     msg = ''
     if request.method == 'GET' and 'username' in request.json:
         username = request.json['username']
-        msg = DataLayer.Recipe_Show(username)
-    elif request.method == 'GET':
-        msg = {'status': 'fail', 'message': 'Please fill out the form!'}
+        re_list = DataLayer.Recipe_Show(username)
+        if re_list:
+            msg = {'status': 'success', 'message': 'You have successfully got the recipe list!', 'recipe_list': re_list}
+        else:
+            msg = {'status': 'fail', 'message': 'The user has no recipe!'}
+    return jsonify(msg)
+
+@app.route('/recipe/showone', methods =['GET'])  
+#recipe_name,recipe_username
+def show_one_recipe():
+    msg = ''
+    if request.method == 'GET' and 'recipe_name' in request.json and 'recipe_username' in request.json:
+        recipe_name = request.json['recipe_name']
+        recipe_username = request.json['recipe_username']
+        re = DataLayer.Recipe_show_one(recipe_name, recipe_username)
+        if re:
+            msg = {'status': 'success', 'message': 'You have successfully got the recipe!', 'recipe': re}
+        else:
+            msg = {'status': 'fail', 'message': 'The recipe does not exist!'}
     return jsonify(msg)
 
 @app.route('/ingredient/insert', methods =['GET', 'POST'])
