@@ -80,13 +80,6 @@ def login():
         msg = {'status': 'fail', 'message': 'Please fill out the form!'}
     return jsonify(msg)
 
-# define a function of transfer json into text and separate by semicolon
-def json2text(json):
-    text = ''
-    for i in json:
-        text += str(i) + ';'
-    return text
-
 # @cross_origin(supports_credentials=True)
 @app.route('/recipe/create', methods =['GET','POST'])
 # @cross_origin()
@@ -107,17 +100,30 @@ def create_recipe():
         recipe_style = request.json['recipe_style']
         print("recipe_style: ",recipe_style)
         ingredient = request.json['ingredient']
-        ingredient = str(ingredient)
+        # make "{"Egg": ["qwe", "ewq", "tre"], "meat": ["beef", "chicken", "pork"]}" into "qwe,ewq,tre,beef,chicken,pork"
+        str_ingredient = ""
+        for key in ingredient:
+            ingredient[key] = ';'.join(ingredient[key]) # join the list into string
+            str_ingredient += ingredient[key] + ';'
+        # print str_ingredient
+        print("ingredient string: ",str_ingredient)
 
-        print("ingredient: ",ingredient, "ingredient type: ",type(ingredient))
         cooking_time = int(request.json['cooking_time'])
         print("cooking_time: ",cooking_time)
+
         steps = request.json['steps']
-    
+        # make "["qwe","ewq","tre"]" into "qwe,ewq,tre"
+        str_steps = ""
+        for step in steps:
+            str_steps += step + ','
+
+        # print str_steps
+        print("steps string: ",str_steps)
+
         print("steps: ",steps)
         recipe_photo = request.json['recipe_photo']
         print("recipe_photo: ",recipe_photo)
-        if DataLayer.Recipe_Insert_Update(str(recipe_name), str(recipe_username), str(description), str(recipe_style), ingredient, cooking_time,str(steps), str(recipe_photo)):
+        if DataLayer.Recipe_Insert_Update(str(recipe_name), str(recipe_username), str(description), str(recipe_style), str(str_ingredient), cooking_time,str(str_steps), str(recipe_photo)):
             msg = {'status': 'success', 'message': 'You have successfully created a recipe!'}
         else:
             msg = {'status': 'fail', 'message': 'Create recipe failed!'}
