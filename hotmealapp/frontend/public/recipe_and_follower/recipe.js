@@ -42,13 +42,13 @@ $(document).ready(
 
             function getfollowingnum() {
                 $.ajax({
-                    url: "http://127.0.0.1:8080/user/getfollowingnum",
+                    url: "http://127.0.0.1:8080/user/getfollowernum",
                     contentType: 'application/json',
                     data: JSON.stringify({ 'username': recipeDetail.recipeOwnerName }),
                     type: "POST",
                     success: function (data) {
-                        if (data.status == "success") {
-                            recipeDetail.recipeOwnerFollowerNumber = data.following_num;
+                        if (data.status == "success") { 
+                            recipeDetail.recipeOwnerFollowerNumber = data.follower_num;
                         }
                         getLikeNumber();
                     },
@@ -93,7 +93,19 @@ $(document).ready(
 
             function initDetails() {
                 getfollowingnum();
+                console.log(recipeDetail);
+                console.log(recipeDetail);
+                //这里获取到了全部的统计数据，并且赋值给recipeDetail对象了，但是因为此时dom对象已经加载完毕了，所以没刷新dom的数字
+                //getLikeNumber();
+                setTimeout(function(){
+                    //利用延时器，在获取完毕数据后，延迟2秒去加载dom对象
+                    initRecipeDetails();
+                },1000)
 
+
+            }
+
+            function initRecipeDetails(){
                 document.getElementsByClassName("recipeOwnerName")[0].innerHTML = recipeDetail.recipeOwnerName;
                 document.getElementsByClassName("favoriteNumber")[0].innerHTML = recipeDetail.recipeFavoriteNumber;
                 document.getElementsByClassName("followperson")[0].innerHTML = recipeDetail.recipeOwnerFollowerNumber;
@@ -104,8 +116,6 @@ $(document).ready(
 
                 document.getElementsByClassName("detailRemark")[0].innerHTML = recipeDetail.recipeDetail;
                 document.getElementsByClassName("detailRemark")[1].innerHTML = recipeDetail.recipeSteps;
-
-
             }
 
             function initComment() {
@@ -209,6 +219,7 @@ function followplus() {
         data: JSON.stringify({ 'from_username': currentUserName, 'to_username': recipeDetail.recipeOwnerName }),
         type: "POST",
         success: function (data) {
+            console.log(data)
             if (data.status === "success") {
                 alert(data.message);
             }

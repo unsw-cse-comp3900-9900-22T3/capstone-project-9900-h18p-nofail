@@ -225,11 +225,11 @@ def unfollow_user():
         msg = {'status': 'fail', 'message': 'Please fill out the form!'}
     return jsonify(msg)
 
-@app.route('/user/getfollowernum', methods =['GET'])
+@app.route('/user/getfollowernum', methods =['POST'])
 #username,follow_username
 def getfollowernum():
     msg = ''
-    if request.method == 'GET' and 'username' in request.json:
+    if request.method == 'POST' and 'username' in request.json:
         username = request.json['username']
         num = DataLayer.User_get_follower_number(username)
         if num:
