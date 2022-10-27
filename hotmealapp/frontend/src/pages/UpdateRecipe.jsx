@@ -24,22 +24,14 @@ function UpdateRecipe () {
   // };
   const params = useParams();
   const recipeid = params.recipeid
-  const [recipe_name, setName] = React.useState('');
-  const [recipe_style, setCategory] = React.useState('');
-  const [description, setDes] = React.useState('');
-  const [ingredient, setIngre] = React.useState('');
-  const [ingres, setIngres] = React.useState('');
-  const [group, setGrou] = React.useState('');
-  const [steps, setSteps] = React.useState('');
-  const [recipe_photo, setImg] = React.useState('');
-  const [cooking_time, setTime] = React.useState('');
   const [show1, setS1] = React.useState('block');
   const [show2, setS2] = React.useState('none');
   const [show3, setS3] = React.useState('none');
   const [show4, setS4] = React.useState('none');
+  let recipe = React.useState()
   const recipe_username = localStorage.getItem('username');
   const getrecipe = async (id) => {
-    const response = await fetch('http://localhost:8080/recipe/' + recipeid, {
+    const response = await fetch('http://localhost:8080/recipe/showone' + recipeid, {
       method: 'GET',
       headers: {
         'Content-type': 'application/json',
@@ -49,8 +41,18 @@ function UpdateRecipe () {
     const recipe = data.recipe
     localStorage.setItem('recipe', JSON.stringify(recipe))
   }
+  getrecipe(recipeid);
+  recipe = JSON.parse(localStorage.getItem('recipe'));
+  const [recipe_name, setName] = React.useState(recipe.recipe_name);
+  const [recipe_style, setCategory] = React.useState(recipe.recipe_style);
+  const [description, setDes] = React.useState(recipe.description);
+  const [ingredient, setIngre] = React.useState(recipe.ingredient);
+  const [ingres, setIngres] = React.useState('');
+  const [group, setGrou] = React.useState('');
+  const [steps, setSteps] = React.useState(recipe.steps);
+  const [recipe_photo, setImg] = React.useState(recipe.recipe_photo);
+  const [cooking_time, setTime] = React.useState(recipe.cooking_time);
   const updaterecipe = async () => {
-    console.log(ingredient)
     try {
       const response = await fetch('http://localhost:8080/recipe/create', {
         method: 'POST',
@@ -160,7 +162,7 @@ function UpdateRecipe () {
                 <Form.Control placeholder="recipe name" type='text' onChange={e => setName(e.target.value)}/>
               </Form.Group>
               <Form.Group className="mb-3">
-                <Form.Label>Category: </Form.Label>
+                <Form.Label>Style: </Form.Label>
                 <Form.Select aria-label="Default select example" onChange={e => setCategory(e.target.value)}>
                   <option>Open to select</option>
                   <option value="1">One</option>

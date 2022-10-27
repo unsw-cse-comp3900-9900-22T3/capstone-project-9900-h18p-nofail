@@ -1,5 +1,5 @@
 import React from 'react';
-// import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import {
 //   Card,
   Row,
@@ -16,7 +16,7 @@ import Divider from '@mui/material/Divider';
 // import copy from 'copy-to-clipboard';
 
 function CreateRecipe () {
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
   // const [curr, setCurr] = React.useState(0);
   // const go = (val) => {
   //   setCurr(Number(curr) + val);
@@ -54,7 +54,6 @@ function CreateRecipe () {
     try {
       const response = await fetch('http://localhost:8080/recipe/create', {
         method: 'POST',
-        mode: 'no-cors',
         headers: {
           'Content-type': 'application/json',
         },
@@ -73,7 +72,7 @@ function CreateRecipe () {
       console.log(data)
       if(data.status==="success") {
         alert("create successfully!")
-        window.open('https://wenqinghomepage.s3.ap-southeast-2.amazonaws.com/personal-page/index.html')
+        navigate('/recipe_and_follower/recipe.html')
       }
       else {
         alert(data.message)
@@ -162,7 +161,7 @@ function CreateRecipe () {
                 <Form.Control placeholder="recipe name" type='text' onChange={e => setName(e.target.value)}/>
               </Form.Group>
               <Form.Group className="mb-3">
-                <Form.Label>Category: </Form.Label>
+                <Form.Label>Style: </Form.Label>
                 <Form.Select aria-label="Default select example" onChange={e => setCategory(e.target.value)}>
                   <option>Open to select</option>
                   <option value="1">One</option>
