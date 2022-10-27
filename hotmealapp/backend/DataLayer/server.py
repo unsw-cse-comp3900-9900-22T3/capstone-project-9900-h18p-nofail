@@ -95,7 +95,7 @@ def create_recipe():
         print("recipe_name: ",recipe_name)
         recipe_username = request.json['recipe_username']
         print("recipe_username: ",recipe_username)
-        description = request.json['des']
+        description = request.json['description']
         print("description: ",description)
         recipe_style = request.json['recipe_style']
         print("recipe_style: ",recipe_style)
@@ -121,9 +121,14 @@ def create_recipe():
         print("steps string: ",str_steps)
 
         print("steps: ",steps)
-        recipe_photo = request.json['recipe_photo']
-        print("recipe_photo: ",recipe_photo)
-        if DataLayer.Recipe_Insert_Update(str(recipe_name), str(recipe_username), str(description), str(recipe_style), str(str_ingredient), cooking_time,str(str_steps), str(recipe_photo)):
+        recipe_photo_directory = request.json['recipe_photo']
+
+        #change mac directory into json format
+        recipe_photo_directory = recipe_photo_directory.replace("\\","/")
+        print("recipe_photo_directory: ",recipe_photo_directory)
+
+
+        if DataLayer.Recipe_Insert_Update(str(recipe_name), str(recipe_username), str(description), str(recipe_style), str(str_ingredient), cooking_time,str(str_steps), str(recipe_photo_directory)):
             msg = {'status': 'success', 'message': 'You have successfully created a recipe!'}
         else:
             msg = {'status': 'fail', 'message': 'Create recipe failed!'}
@@ -161,20 +166,20 @@ def delete_recipe():
         msg = {'status': 'fail', 'message': 'Please fill out the form!'}
     return jsonify(msg)
 
-@app.route('/recipe/showlist', methods =['POST'])
+@app.route('/recipe/showlist', methods =['GET'])
 #username
 def show_recipe():
     msg = ''
-    if request.method == 'GET' and 'username' in request.json:
-        username = request.json['username']
-        re_list = DataLayer.Recipe_Show(username)
+    if request.method == 'GET' and 'recipe_username' in request.json:
+        recipe_username = request.json['recipe_username']
+        re_list = DataLayer.Recipe_Show(recipe_username)
         if re_list:
             msg = {'status': 'success', 'message': 'You have successfully got the recipe list!', 'recipe_list': re_list}
         else:
             msg = {'status': 'fail', 'message': 'The user has no recipe!'}
     return jsonify(msg)
 
-@app.route('/recipe/showone', methods =['POST'])  
+@app.route('/recipe/showone', methods =['GET'])  
 #recipe_name,recipe_username
 def show_one_recipe():
     msg = ''
