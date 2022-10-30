@@ -1,4 +1,5 @@
 # Store this code in 'app.py' file
+import http
 from os import path
 import sys
 # sys.path.append(path.dirname(path.dirname(path.abspath(__file__))))
@@ -90,43 +91,35 @@ def create_recipe():
     print(request)
     print(request.json)
     if 'recipe_name' in request.json :
-        print("start##########################")
         recipe_name = request.json['recipe_name']
-        print("recipe_name: ",recipe_name)
         recipe_username = request.json['recipe_username']
-        print("recipe_username: ",recipe_username)
         description = request.json['description']
-        print("description: ",description)
         recipe_style = request.json['recipe_style']
-        print("recipe_style: ",recipe_style)
         ingredient = request.json['ingredient']
-        # make "{"Egg": ["qwe", "ewq", "tre"], "meat": ["beef", "chicken", "pork"]}" into "qwe,ewq,tre,beef,chicken,pork"
+        # make "{"Egg": ["qwe", "ewq", "tre"], "meat": ["beef", "chicken", "pork"]}" into "qwe;ewq;tre;beef;chicken;pork;"
         str_ingredient = ""
         for key in ingredient:
             ingredient[key] = ';'.join(ingredient[key]) # join the list into string
             str_ingredient += ingredient[key] + ';'
-        # print str_ingredient
-        print("ingredient string: ",str_ingredient)
-
+        for key in ingredient:
+            in_type = key
+            for i in ingredient[key].split(';'):
+                if i != '':
+                    if DataLayer.Ingredient_Insert(i, in_type):
+                        print('Ingredient Insert Success')
+                    else:
+                        print('Ingredient Insert Fail')
         cooking_time = int(request.json['cooking_time'])
-        print("cooking_time: ",cooking_time)
-
         steps = request.json['steps']
         # make "["qwe","ewq","tre"]" into "qwe,ewq,tre"
         str_steps = ""
         for step in steps:
             str_steps += step + ','
-
-        # print str_steps
-        print("steps string: ",str_steps)
-
-        print("steps: ",steps)
         recipe_photo_directory = request.json['recipe_photo']
 
         #change mac directory into json format
         recipe_photo_directory = recipe_photo_directory.replace("\\","/")
         print("recipe_photo_directory: ",recipe_photo_directory)
-
 
         if DataLayer.Recipe_Insert_Update(str(recipe_name), str(recipe_username), str(description), str(recipe_style), str(str_ingredient), cooking_time,str(str_steps), str(recipe_photo_directory)):
             msg = {'status': 'success', 'message': 'You have successfully created a recipe!'}
@@ -137,33 +130,61 @@ def create_recipe():
     return jsonify(msg),headers
 
 @app.route('/recipe/update', methods =['PUT'])
-# def update_recipe():
-#     msg = ''
-#     # the recipe changes are not all required
-#     if request.method == 'POST':
-#             recipe_id = request.json['recipe_id']
-#             recipe_name = request.json['recipe_name']
-#             recipe_description = request.json['recipe_description']
-#             recipe_ingredients = request.json['recipe_ingredients']
-#             recipe_steps = request.json['recipe_steps']
-#             recipe_image = request.json['recipe_image']
-#             DataLayer.Recipe_Update(recipe_id, recipe_name, recipe_description, recipe_ingredients, recipe_steps, recipe_image)
-#             msg = {'status': 'success', 'message': 'You have successfully updated a recipe!'}
-#     else:
-#         msg = {'status': 'fail', 'message': 'Please fill out the form!'}
-#     return jsonify(msg)
-
-@app.route('/recipe/delete', methods =['GET', 'POST'])
-#recipe_name,recipe_username
-def delete_recipe():
+def update_recipe():
     msg = ''
-    if request.method == 'POST' and 'recipe_name' in request.json and 'recipe_username' in request.json:
+    print(request)
+    print(request.json)
+    if 'recipe_name' in request.json :
         recipe_name = request.json['recipe_name']
         recipe_username = request.json['recipe_username']
-        DataLayer.Recipe_Delete(recipe_name, recipe_username)
-        msg = {'status': 'success', 'message': 'You have successfully deleted a recipe!'}
-    elif request.method == 'GET':
-        msg = {'status': 'fail', 'message': 'Please fill out the form!'}
+        description = request.json['description']
+        recipe_style = request.json['recipe_style']
+        ingredient = request.json['ingredient']
+        # make "{"Egg": ["qwe", "ewq", "tre"], "meat": ["beef", "chicken", "pork"]}" into "qwe,ewq,tre,beef,chicken,pork"
+        str_ingredient = ""
+        for key in ingredient:
+            ingredient[key] = ';'.join(ingredient[key])
+            str_ingredient += ingredient[key] + ';'
+
+        for key in ingredient:
+            in_type = key
+            for i in ingredient[key].split(';'):
+                if i != '':
+                    if DataLayer.Ingredient_Insert(i, in_type):
+                        print('Ingredient Insert Success')
+                    else:
+                        print('Ingredient Insert Fail')
+
+        # print str_ingredient
+        print("ingredient string: ",str_ingredient)
+        cooking_time = int(request.json['cooking_time'])
+        steps = request.json['steps']
+        # make "["qwe","ewq","tre"]" into "qwe,ewq,tre"
+        str_steps = ""
+        for step in steps:
+            str_steps += step + ','
+        recipe_photo_directory = request.json['recipe_photo']
+        #change mac directory into json format
+        recipe_photo_directory = recipe_photo_directory.replace("\\","/")
+        print("recipe_photo_directory: ",recipe_photo_directory)
+        if DataLayer.Recipe_Insert_Update(str(recipe_name), str(recipe_username), str(description), str(recipe_style), str(str_ingredient), cooking_time,str(str_steps), str(recipe_photo_directory)):
+            msg = {'status': 'success', 'message': 'You have successfully updated a recipe!'}
+        else:
+            msg = {'status': 'fail', 'message': 'Update recipe failed!'}
+    return jsonify(msg)
+
+@app.route('/recipe/delete', methods =['DELETE'])
+def delete_recipe():
+    msg = ''
+    print(request)
+    print(request.json)
+    if 'recipe_name' in request.json :
+        recipe_name = request.json['recipe_name']
+        recipe_username = request.json['recipe_username']
+        if DataLayer.Recipe_Delete(str(recipe_name), str(recipe_username)):
+            msg = {'status': 'success', 'message': 'You have successfully deleted a recipe!'}
+        else:
+            msg = {'status': 'fail', 'message': 'Delete recipe failed!'}
     return jsonify(msg)
 
 @app.route('/recipe/showlist', methods =['GET'])
@@ -172,9 +193,12 @@ def show_recipe():
     msg = ''
     if request.method == 'GET' and 'recipe_username' in request.json:
         recipe_username = request.json['recipe_username']
-        re_list = DataLayer.Recipe_Show(recipe_username)
-        if re_list:
-            msg = {'status': 'success', 'message': 'You have successfully got the recipe list!', 'recipe_list': re_list}
+        re_lists = DataLayer.Recipe_Show(recipe_username)
+        if re_lists:
+            re_lists=list(re_lists) #convert tuple into list
+            for i in range(len(re_lists)):
+                re_lists[i] = {"recipe_name": re_lists[i][0], "recipe_username": re_lists[i][1], "recipe_style": re_lists[i][2], "ingredient": re_lists[i][3], "cooking_time": re_lists[i][4], "steps": re_lists[i][5], "recipe_photo": re_lists[i][6], "description": re_lists[i][7]}
+            msg = {'status': 'success', 'message': 'You have successfully get the recipe list!', 'recipe_list': re_lists}
         else:
             msg = {'status': 'fail', 'message': 'The user has no recipe!'}
     return jsonify(msg)
@@ -188,6 +212,8 @@ def show_one_recipe():
         recipe_username = request.json['recipe_username']
         re = DataLayer.Recipe_show_one(recipe_name, recipe_username)
         if re:
+            re=list(re) #convert tuple into list
+            re = {"recipe_name": re[0], "recipe_username": re[1], "recipe_style": re[2], "ingredient": re[3], "cooking_time": re[4], "steps": re[5], "recipe_photo": re[6], "description": re[7]}
             msg = {'status': 'success', 'message': 'You have successfully got the recipe!', 'recipe': re}
         else:
             msg = {'status': 'fail', 'message': 'The recipe does not exist!'}
@@ -236,11 +262,12 @@ def unfollow_user():
         msg = {'status': 'fail', 'message': 'Please fill out the form!'}
     return jsonify(msg)
 
-@app.route('/user/getfollowernum', methods =['POST'])
+@app.route('/user/getfollowernum', methods =['GET'])
 #username,follow_username
 def getfollowernum():
     msg = ''
-    if request.method == 'POST' and 'username' in request.json:
+    if request.method == 'GET' and 'username' in request.json:
+        
         username = request.json['username']
         num = DataLayer.User_get_follower_number(username)
         if num:
@@ -249,16 +276,18 @@ def getfollowernum():
             msg = {'status': 'fail', 'message': 'Get number of followers failed!'}
     return jsonify(msg)
 
-@app.route('/user/getfollowingnum', methods =['POST'])
+@app.route('/user/getfollowingnum', methods =['GET'])
 #username
 #backup_1
 def get_following():
     msg = ''
-    if request.method == 'POST' and 'username' in request.json:
+    if request.method == 'GET' and 'username' in request.json:
         username = request.json['username']
-        # backup_2 
         num = DataLayer.User_get_following_number(username)
-        msg = {'status': 'success', 'message': 'You have successfully got the number of following!','following_num':num}
+        if num:
+            msg = {'status': 'success', 'message': 'You have successfully got the number of following!','following_num':num}
+        else:
+            msg = {'status': 'fail', 'message': 'Get number of following failed!'}
     return jsonify(msg)
 
 
