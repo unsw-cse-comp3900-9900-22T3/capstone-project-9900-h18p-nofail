@@ -51,7 +51,7 @@ headers = {
 
 @app.route('/register', methods =['GET', 'POST'])
 def register():
-    msg = ''
+    msg = 'missing parameter'
     if request.method == 'POST' and 'username' in request.json and 'password' in request.json and 'email' in request.json:
         username = request.json['username']
         password = request.json['password']
@@ -67,7 +67,7 @@ def register():
 
 @app.route('/login', methods =['GET', 'POST'])
 def login():
-    msg = ''
+    msg = 'missing parameter'
     print(request)
     print(request.json)
     if request.method == 'POST' and 'username' in request.json and 'password' in request.json:
@@ -131,7 +131,7 @@ def create_recipe():
 
 @app.route('/recipe/update', methods =['PUT'])
 def update_recipe():
-    msg = ''
+    msg = 'missing parameter'
     print(request)
     print(request.json)
     if 'recipe_name' in request.json :
@@ -175,7 +175,7 @@ def update_recipe():
 
 @app.route('/recipe/delete', methods =['DELETE'])
 def delete_recipe():
-    msg = ''
+    msg = 'missing parameter'
     print(request)
     print(request.json)
     if 'recipe_name' in request.json :
@@ -190,7 +190,7 @@ def delete_recipe():
 @app.route('/recipe/showlist', methods =['GET'])
 #username
 def show_recipe():
-    msg = ''
+    msg = 'missing parameter'
     if request.method == 'GET' and 'recipe_username' in request.json:
         recipe_username = request.json['recipe_username']
         re_lists = DataLayer.Recipe_Show(recipe_username)
@@ -206,7 +206,7 @@ def show_recipe():
 @app.route('/recipe/showone', methods =['GET'])  
 #recipe_name,recipe_username
 def show_one_recipe():
-    msg = ''
+    msg = 'missing parameter'
     if request.method == 'GET' and 'recipe_name' in request.json and 'recipe_username' in request.json:
         recipe_name = request.json['recipe_name']
         recipe_username = request.json['recipe_username']
@@ -222,7 +222,7 @@ def show_one_recipe():
 @app.route('/ingredient/insert', methods =['GET', 'POST'])
 #ingredient,in_type
 def insert_ingredient():
-    msg = ''
+    msg = 'missing parameter'
     if request.method == 'POST' and 'ingredient' in request.json and 'in_type' in request.json:
         ingredient = request.json['ingredient']
         in_type = request.json['in_type']
@@ -235,7 +235,7 @@ def insert_ingredient():
 @app.route('/user/follow', methods =['POST'])
 #username,follow_username
 def follow_user():
-    msg = ''
+    msg = 'missing parameter'
     if request.method == 'POST' and 'from_username' in request.json and 'to_username' in request.json:
         username = request.json['from_username']
         follow_username = request.json['to_username']
@@ -250,7 +250,7 @@ def follow_user():
 @app.route('/user/unfollow', methods =['POST'])
 #username,follow_username
 def unfollow_user():
-    msg = ''
+    msg = 'missing parameter'
     if request.method == 'POST' and 'from_username' in request.json and 'to_username' in request.json:
         username = request.json['from_username']
         follow_username = request.json['to_username']
@@ -265,7 +265,7 @@ def unfollow_user():
 @app.route('/user/getfollowernum', methods =['GET'])
 #username,follow_username
 def getfollowernum():
-    msg = ''
+    msg = 'missing parameter'
     if request.method == 'GET' and 'username' in request.json:
         
         username = request.json['username']
@@ -280,7 +280,7 @@ def getfollowernum():
 #username
 #backup_1
 def get_following():
-    msg = ''
+    msg = 'missing parameter'
     if request.method == 'GET' and 'username' in request.json:
         username = request.json['username']
         num = DataLayer.User_get_following_number(username)
@@ -295,7 +295,7 @@ def get_following():
 @app.route('/user/favrecipe', methods =['POST'])
 # username,recipe_name,recipe_username
 def fav_recipe():
-    msg = ''
+    msg = 'missing parameter'
     if request.method == 'POST' and 'username' in request.json and 'recipe_name' in request.json and 'recipe_username' in request.json:
         username = request.json['username']
         recipe_name = request.json['recipe_name']
@@ -312,7 +312,7 @@ def fav_recipe():
 @app.route('/user/getfavlist', methods =['GET'])
 # username
 def fav_list():
-    msg = ''
+    msg = 'missing parameter'
     if request.method == 'GET' and 'username' in request.json:
         username = request.json['username']
         favlist = DataLayer.User_show_favourite(username)
@@ -328,7 +328,7 @@ def fav_list():
 @app.route('/user/unfavrecipe', methods =['POST'])
 # username,recipe_name,recipe_username
 def remove_fav():
-    msg = ''
+    msg = 'missing parameter'
     if request.method == 'POST' and 'username' in request.json and 'recipe_name' in request.json and 'recipe_username' in request.json:
         username = request.json['username']
         recipe_name = request.json['recipe_name']
@@ -345,7 +345,7 @@ def remove_fav():
 #username
 # backup_1
 def get_fav_recipe_num():
-    msg = ''
+    msg = 'missing parameter'
     if request.method == 'GET' and 'username' in request.json:
         username = request.json['username']
         #backup_2
@@ -356,7 +356,7 @@ def get_fav_recipe_num():
 @app.route('/user/likerecipe', methods =['POST'])
 #username,recipe_name,recipe_username
 def like_recipe():
-    msg = ''
+    msg = 'missing parameter'
     if request.method == 'POST' and 'username' in request.json and 'recipe_name' in request.json and 'recipe_username' in request.json:
         username = request.json['username']
         recipe_name = request.json['recipe_name']
@@ -372,7 +372,7 @@ def like_recipe():
 @app.route('/user/unlikerecipe', methods =['POST'])
 #username,recipe_name,recipe_username
 def unlike_recipe():
-    msg = ''
+    msg = 'missing parameter'
     if request.method == 'POST' and 'username' in request.json and 'recipe_name' in request.json and 'recipe_username' in request.json:
         username = request.json['username']
         recipe_name = request.json['recipe_name']
@@ -389,7 +389,7 @@ def unlike_recipe():
 #recipe_name,recipe_username
 # backup_1
 def get_like_num():
-    msg = ''
+    msg = 'missing parameter'
     if request.method == 'GET' and 'recipe_name' in request.json and 'recipe_username' in request.json:
         recipe_name = request.json['recipe_name']
         recipe_username = request.json['recipe_username']
@@ -398,10 +398,10 @@ def get_like_num():
         msg = {'status': 'success', 'message': 'You have successfully got the number of likes!','re_like_num':re_like_num}
     return jsonify(msg)
 
-@app.route('/comment/showlist', methods =['POST'])
+@app.route('/comment/showlist', methods =['GET'])
 #recipe_name,recipe_username
 def show_comment():
-    msg = ''
+    msg = 'missing parameter'
     if request.method == 'GET' and 'recipe_name' in request.json and 'recipe_username' in request.json:
         recipe_name = request.json['recipe_name']
         recipe_username = request.json['recipe_username']
@@ -415,7 +415,7 @@ def show_comment():
 @app.route('/comment/add', methods =['POST'])
 #username,recipe_name,recipe_username,content
 def add_comment_recipe():
-    msg = ''
+    msg = 'missing parameter'
     if request.method == 'POST' and 'username' in request.json and 'recipe_name' in request.json and 'recipe_username' in request.json and 'content' in request.json:
         username = request.json['username']
         recipe_name = request.json['recipe_name']
@@ -432,7 +432,7 @@ def add_comment_recipe():
 @app.route('/comment/reply', methods =['POST'])
 #username,recipe_name,recipe_username,comment_id,content
 def add_comment_to_user():
-    msg = ''
+    msg = 'missing parameter'
     if request.method == 'POST' and 'username' in request.json and 'recipe_name' in request.json and 'recipe_username' in request.json and 'comment_id' in request.json and 'content' in request.json:
         username = request.json['username']
         recipe_name = request.json['recipe_name']
@@ -450,7 +450,7 @@ def add_comment_to_user():
 @app.route('/comment/delete', methods =['POST'])
 #comment_id
 def delete_comment():
-    msg = ''
+    msg = 'missing parameter'
     if request.method == 'POST' and 'comment_id' in request.json:
         comment_id = request.json['comment_id']
         if DataLayer.Comment_delete(comment_id):
@@ -464,7 +464,7 @@ def delete_comment():
 @app.route('/comment/getnum', methods =['GET'])
 #recipe_name,recipe_username
 def get_comment_num():
-    msg = ''
+    msg = 'missing parameter'
     if request.method == 'GET' and 'recipe_name' in request.json and 'recipe_username' in request.json:
         recipe_name = request.json['recipe_name']
         recipe_username = request.json['recipe_username']
@@ -478,7 +478,7 @@ def get_comment_num():
 @app.route('/search/recipe', methods =['GET'])
 #search_content,difficult='',style_name='',ingredient=''
 def search_recipe():
-    msg = ''
+    msg = 'missing parameter'
     if request.method == 'GET' and 'search_content' in request.json:
         search_content = request.json['search_content']
         difficult = request.json['difficult']
@@ -494,7 +494,7 @@ def search_recipe():
 @app.route('/search/user', methods =['GET'])
 #search_content
 def search_user():
-    msg = ''
+    msg = 'missing parameter'
     if request.method == 'GET' and 'search_content' in request.json:
         search_content = request.json['search_content']
         return_user = DataLayer.search_user(search_content)
@@ -507,7 +507,7 @@ def search_user():
 @app.route('/recipe/showcomment', methods =['POST'])
 #recipe_name,recipe_username
 def show_comment_backup():
-    msg = ''
+    msg = 'missing parameter'
     if request.method == 'POST' and 'recipe_name' in request.json and 'recipe_username' in request.json:
         recipe_name = request.json['recipe_name']
         recipe_username = request.json['recipe_username']
