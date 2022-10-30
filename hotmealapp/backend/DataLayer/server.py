@@ -465,13 +465,14 @@ def delete_comment():
 #recipe_name,recipe_username
 def get_comment_num():
     msg = 'missing parameter'
-    recipe_name = request.json['recipe_name']
-    recipe_username = request.json['recipe_username']
-    comm_num = DataLayer.Recipe_get_comment_num(recipe_name,recipe_username)
-    if comm_num:
-        msg = {'status': 'success', 'message': 'You have successfully got the number of comments!','comm_num':comm_num}
-    else:
-        msg = {'status': 'fail', 'message': 'Get number of comments failed!'}
+    if request.method == 'GET' and 'recipe_name' in request.json and 'recipe_username' in request.json:
+        recipe_name = request.json['recipe_name']
+        recipe_username = request.json['recipe_username']
+        comm_num = DataLayer.Recipe_get_comment_num(recipe_name,recipe_username)
+        if comm_num:
+            msg = {'status': 'success', 'message': 'You have successfully got the number of comments!','comm_num':comm_num}
+        else:
+            msg = {'status': 'fail', 'message': 'Get number of comments failed!'}
     return jsonify(msg)
 
 @app.route('/search/recipe', methods =['GET'])
@@ -485,6 +486,9 @@ def search_recipe():
         ingredient = request.json['ingredient']
         return_recipe = DataLayer.Search_Recipe(search_content,difficult,style_name,ingredient)
         if return_recipe:
+            return_recipe = list(return_recipe) #convert tuple to list
+            for i in range(len(return_recipe)):
+                return_recipe[i] = {'recipe_id':return_recipe[i][0],'recipe_name':return_recipe[i][1],'recipe_username':return_recipe[i][2],'recipe_style':return_recipe[i][3],'ingredient':return_recipe[i][4],'cooking_time':return_recipe[i][5],'steps':return_recipe[i][6],'recipe_photo':return_recipe[i][7],'recipe_create_time':return_recipe[i][8],'description':return_recipe[i][9]} #convert tuple to dict
             msg = {'status': 'success', 'message': 'You have successfully searched a recipe!','return_recipe':return_recipe}
         else:
             msg = {'status': 'fail', 'message': 'Search recipe failed!'}
@@ -498,20 +502,23 @@ def search_user():
         search_content = request.json['search_content']
         return_user = DataLayer.search_user(search_content)
         if return_user:
+            return_user = list(return_user) #convert tuple to list
+            for i in range(len(return_user)):
+                return_user[i] = {'username':return_user[i][0],'email':return_user[i][1],'bio':return_user[i][2],'user_photo':return_user[i][3]}
             msg = {'status': 'success', 'message': 'You have successfully searched a user!','return_user':return_user}
         else:
             msg = {'status': 'fail', 'message': 'Search user failed!'}
     return jsonify(msg)
 
-@app.route('/recipe/showcomment', methods =['POST'])
-#recipe_name,recipe_username
-def show_comment_backup():
-    msg = 'missing parameter'
-    if request.method == 'POST' and 'recipe_name' in request.json and 'recipe_username' in request.json:
-        recipe_name = request.json['recipe_name']
-        recipe_username = request.json['recipe_username']
-        msg = DataLayer.Recipe_show_comment_backup(recipe_name,recipe_username)
-    return jsonify(msg)
+# @app.route('/recipe/showcomment', methods =['POST'])
+# #recipe_name,recipe_username
+# def show_comment_backup():
+#     msg = 'missing parameter'
+#     if request.method == 'POST' and 'recipe_name' in request.json and 'recipe_username' in request.json:
+#         recipe_name = request.json['recipe_name']
+#         recipe_username = request.json['recipe_username']
+#         msg = DataLayer.Recipe_show_comment_backup(recipe_name,recipe_username)
+#     return jsonify(msg)
 
 
 
