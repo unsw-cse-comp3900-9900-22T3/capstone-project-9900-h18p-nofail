@@ -447,11 +447,11 @@ def add_comment_to_user():
         msg = {'status': 'fail', 'message': 'Please fill out the form!'}
     return jsonify(msg)
 
-@app.route('/comment/delete', methods =['POST'])
+@app.route('/comment/delete', methods =['DELETE'])
 #comment_id
 def delete_comment():
     msg = 'missing parameter'
-    if request.method == 'POST' and 'comment_id' in request.json:
+    if request.method == 'DELETE' and 'comment_id' in request.json:
         comment_id = request.json['comment_id']
         if DataLayer.Comment_delete(comment_id):
             msg = {'status': 'success', 'message': 'You have successfully deleted a comment!'}
@@ -465,14 +465,13 @@ def delete_comment():
 #recipe_name,recipe_username
 def get_comment_num():
     msg = 'missing parameter'
-    if request.method == 'GET' and 'recipe_name' in request.json and 'recipe_username' in request.json:
-        recipe_name = request.json['recipe_name']
-        recipe_username = request.json['recipe_username']
-        comm_num = DataLayer.Recipe_get_comment_num(recipe_name,recipe_username)
-        if comm_num:
-            msg = {'status': 'success', 'message': 'You have successfully got the number of comments!','comm_num':comm_num}
-        else:
-            msg = {'status': 'fail', 'message': 'Get number of comments failed!'}
+    recipe_name = request.json['recipe_name']
+    recipe_username = request.json['recipe_username']
+    comm_num = DataLayer.Recipe_get_comment_num(recipe_name,recipe_username)
+    if comm_num:
+        msg = {'status': 'success', 'message': 'You have successfully got the number of comments!','comm_num':comm_num}
+    else:
+        msg = {'status': 'fail', 'message': 'Get number of comments failed!'}
     return jsonify(msg)
 
 @app.route('/search/recipe', methods =['GET'])

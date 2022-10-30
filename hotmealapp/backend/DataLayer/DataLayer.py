@@ -545,7 +545,7 @@ def Recipe_get_comment_num(recipe_name,recipe_username):
         print("get comment num worng!!")
     db.close()
     print(re_num)
-    return True
+    return re_num
 def Search_Recipe(search_content='',difficult='',style_name='',ingredient=''):
     db.ping()
     if difficult!='':
