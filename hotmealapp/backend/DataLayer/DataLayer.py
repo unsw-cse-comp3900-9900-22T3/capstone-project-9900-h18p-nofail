@@ -909,9 +909,11 @@ def Follow_Show(username):
         re_id = cur.fetchall()
     except Exception:
         db.rollback()
+        db.close()
         print("show follower worng!!")
         return False
     print(re_id)
+    db.close()
     return re_id
 
 def Following_Show(username):
@@ -924,11 +926,44 @@ def Following_Show(username):
         re_id = cur.fetchall()
     except Exception:
         db.rollback()
+        db.close()
         print("show following worng!!")
         return False
     # print(re_id)
+    db.close()
     return re_id
 
+def User_show(username):
+    sql="SELECT * From sys.User WHERE Username = '%s' ;" %(username)
+    db.ping()
+    cur = db.cursor()
+    re=''
+    try:
+        cur.execute(sql)
+        re = cur.fetchall()
+    except Exception:
+        db.rollback()
+        print("show user worng!!")
+        db.close()
+        return False
+    # print(re_id)
+    db.close()
+    print(re)
+    return re
+def User_update(username,email, password, describe, user_photo):
+    sql="UPDATE sys.User SET email = '%s', Password = '%s', `Describe`='%s', User_photo='%s' WHERE Username='%s';"%(email,password,describe,user_photo,username)
+    db.ping()
+    cur = db.cursor()
+    try:
+        cur.execute(sql)
+        db.commit()
+        db.close()
+        return True
+    except Exception:
+        db.rollback()
+        print("update user worng!!")
+        db.close()
+        return False
 
 
 
@@ -938,9 +973,11 @@ fname = 'Ryan'
 uname='Ryan'
 frecipe = 'fry fish'
 
+User_update('k1','k1','123','hhhhh','hhhh')
+# User_show('Ryan')
 # check_user_following('Ryan','Katherine')
 # Follow_Show('Ryan')
-Following_Show('Ryan')
+# Following_Show('Ryan')
 # check_user_following('Ryan','Katherine')
 # check_user_favourite(1,'Ryan')
 # check_recipe_like(2,'Ryan')
