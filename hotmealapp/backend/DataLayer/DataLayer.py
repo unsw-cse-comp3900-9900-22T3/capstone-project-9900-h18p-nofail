@@ -513,13 +513,14 @@ def Comment_delete(comment_id):
     cursor = db.cursor()
     db.ping()
     try:
-        cursor.execute(sql)
-        db.commit()
+        if cursor.execute(sql):
+            db.commit()
+            return True
     except Exception:
         db.rollback()
         print("delete comment worng!!")
     db.close()
-    return True
+    
 def Recipe_get_comment_num(recipe_name,recipe_username):
     qury_recipe = "SELECT Recipe_Id FROM sys.Recipe WHERE Recipe_Name = '%s' AND Recipe_Username = '%s';" % (
         recipe_name, recipe_username)
