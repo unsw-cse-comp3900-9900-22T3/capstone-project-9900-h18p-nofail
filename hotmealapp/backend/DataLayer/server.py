@@ -318,7 +318,7 @@ def fav_list():
         favlist = DataLayer.User_show_favourite(username)
         favlist = list(favlist)
         for i in range(len(favlist)):
-            favlist[i] = {"recipe_id": favlist[i][0], "recipe_name": favlist[i][1], "recipe_username": favlist[i][2], "recipe_style": favlist[i][3], "ingredient": favlist[i][4], "cooking_time": favlist[i][5], "steps": favlist[i][6], "recipe_photo": favlist[i][7], "description": favlist[i][8]}
+            favlist[i] = {"recipe_id": favlist[i][0], "recipe_name": favlist[i][1], "recipe_username": favlist[i][2], "recipe_style": favlist[i][3], "ingredient": favlist[i][4], "cooking_time": favlist[i][5], "steps": favlist[i][6], "recipe_photo": favlist[i][7], "recipe_create_time": favlist[i][8]}
         if favlist:
             msg = {'status': 'success', 'message': 'You have successfully got your favorite list!','fav_list':favlist}
         else:

@@ -3,17 +3,25 @@
 <!-- /user/getfollowernum  GET-->
 <!-- Query Parameters: username -->
 <!-- return: status, message,  follower_num-->
-|API|Description|HTTP Method|query|return|Errors
-|:---|:----|:---|:---|:----|:---|
-|```/user/favrecipe```|Add a recipe to user's favorite list|POST|```{username,recipe_name,recipe_username}```|status, message||
-<!-- |```/unfollow```|Unfollow a user|POST|```{from_username,to_username}```|status, message||
-|```/user/follow```|Follow a user|POST|```{from_username,to_username}```|status, message||
-|```/user/getfollowernum```|Get the number of followers of a user|GET|```{username}```|status, message, follower_num||
-|```/user/getfollowingnum```|Get the number of users that a user is following|GET|```{username}```|status, message, following_num||
-|```/user/getfollowinglist```|Get the list of users that a user is following|GET|```{username}```|status, message, following_list||
-|```/user/getfollowerlist```|Get the list of followers of a user|GET|```{username}```|status, message, follower_list||
-|```/user/getfavrecipelist```|Get the list of favorite recipes of a user|GET|```{username}```|status, message, fav_recipe_list||
-|```/user/getfavrecipenum```|Get the number of favorite recipes of a user|GET|```{username}```|status, message, fav_recipe_num|| -->
+<!-- |API|HTTP Method|query|return|
+|:---|:---|:---|:---|
+|```/login```|POST|```{username, password}```|```{status, message}```||
+|```/register```|POST|```{username, password}```|```{status, message}```||
+|```/recipe/create```|POST|```{username, password}```|```{status, message}```||
+|```/recipe/delete```|POST|```{username, password}```|```{status, message}```||
+|```/recipe/update```|PUT||```{status, message}```||
+|```/recipe/get```|POST|```{username, password}```|```{status, message}```||
+|```/recipe/getall```|POST|```{username, password}```|```{status, message}```||
+|```/recipe/getallbyuser```|POST|```{username, password}```|```{status, message}```||
+|```/recipe/getallbytag```|POST|```{username, password}```|```{status, message}```||
+|```/recipe/getallbytag```|POST|```{username, password}```|```{status, message}```||
+|```/recipe/getallbytag```|POST|```{username, password}```|```{status, message}```||
+|```/recipe/getallbytag```|POST|```{username, password}```|```{status, message}```||
+|```/recipe/getallbytag```|POST|```{username, password}```|```{status, message}```||
+|```/recipe/getallbytag```|POST|```{username, password}```|```{status, message}```||
+|```/recipe/getallbytag```|POST|```{username, password}```|```{status, message}```||
+|```/recipe/getallbytag```|POST|```{username, password}```|```{status, message}```||| -->
+
 
 
 
@@ -72,7 +80,7 @@
     </td>
     <td>
         <b>Query Parameters</b><br/>
-        <code>{Recipe_Name, Recipe_Username, Recipe_Style, Ingredient, Cooking_Time, Steps, Recipe_Photo}</code>
+        <code>{recipe_name, recipe_username, recipe_style, ingredient, cooking_time, steps, recipe_photo, description}</code>
         <br/><br/>
         <b>Return Object</b><br/>
         <code>{status, message, recipe_id}</code>
@@ -81,13 +89,6 @@
         Throw <code>HTTPError</code> (status <code>fail</code>) when
         <ul>
             <li>Recipe_Name is an empty string <code>""</code></li>
-            <li>Recipe_Username is an empty string <code>""</code></li>
-            <li>Recipe_Style is an empty string <code>""</code></li>
-            <li>Ingredient is an empty string <code>""</code></li>
-            <li>Cooking_Time is an empty string <code>""</code></li>
-            <li>Steps is an empty string <code>""</code></li>
-            <li>Recipe_Photo is an empty string <code>""</code></li>
-        </ul>
     </td>
 </tr>
 <!-- update recipe -->
@@ -101,7 +102,7 @@
     </td>
     <td>
         <b>Query Parameters</b><br/>
-        <code>{Recipe_Name, Recipe_Username, Recipe_Style, Ingredient, Cooking_Time, Steps, Recipe_Photo}</code>
+        <code>{recipe_name, recipe_username, recipe_style, ingredient, cooking_time, steps, recipe_photo, description}</code>
         <br/><br/>
         <b>Return Object</b><br/>
         <code>{status, message}</code>
@@ -121,7 +122,7 @@
     </td>
     <td>
         <b>Query Parameters</b><br/>
-        <code>{Recipe_Id}</code>
+        <code>{recipe_name, recipe_username}</code>
         <br/><br/>
         <b>Return Object</b><br/>
         <code>{status, message}</code>
@@ -129,9 +130,10 @@
     <td>
         Throw <code>HTTPError</code> (status <code>fail</code>) when
         <ul>
-            <li>Recipe_Id does not refer to a recipe</li>
+            <li>recipe_name does not refer to a recipe</li>
+            <li>recipe_username does not refer to a user</li>
         </ul>
-    </td>  
+    </td>
   </tr>
 <!-- /recipe/showlist -->
 <!-- Query Parameters: username -->
@@ -146,10 +148,30 @@
     </td>
     <td>
         <b>Query Parameters</b><br/>
-        <code>{username}</code>
+        <code>{recipe_username}</code>
         <br/><br/>
         <b>Return Object</b><br/>
-        <code>{status, message, recipe_list}</code>
+        <code>
+            <pre>
+exp.
+{
+    "message": "You have successfully get the recipe list!",
+    "recipe_list": [
+        {
+            "cooking_time": 20,
+            "description": "good",
+            "ingredient": "Potato; cabbage; chili",
+            "recipe_name": "Malatang",
+            "recipe_photo": "spicy",
+            "recipe_style": "Sichuan cuisine",
+            "recipe_username": "Katherine",
+            "steps": "Put potato and cabbage into boiling water, then put chili, and it will finish in 20 minutes"
+        }
+    ],
+    "status": "success"
+}
+        </pre>
+    </code>
     </td>
     <td>
         Throw <code>HTTPError</code> (status <code>fail</code>) when
@@ -175,7 +197,23 @@
         <code>{username, Recipe_Name}</code>
         <br/><br/>
         <b>Return Object</b><br/>
-        <code><json>{status:"success", message:"you have successfully get the one recipe", recipe:{Recipe_Name,Recipe_Username,Recipe_Style,Ingredient,Cooking_Time,Steps,Recipe_Photo, Description}}</json></code>
+        <code>
+            <pre>
+exp.
+{
+    "message": "You have successfully got the recipe!",
+    "recipe": {
+        "cooking_time": 12,
+        "description": "qwe",
+        "ingredient": "qwe;ewq;tre;beef;chicken;pork;",
+        "recipe_name": "qwe",
+        "recipe_photo": "C:/fakepath/3671C38C-A544-436A-B61A-CE7FC2E3293A.jpeg",
+        "recipe_style": "two",
+        "recipe_username": "kk",
+        "steps": "qwe,ewq,tre,"
+    },
+    "status": "success"
+}
     </td>
     <td>
         Throw <code>HTTPError</code> (status <code>fail</code>) when
@@ -185,32 +223,6 @@
     </td>
 </tr>
 
-<!-- /ingredient/create -->
-<!-- Query Parameters: ingredient, in_type -->
-<!-- return: status, message -->
-<tr>
-    <td>
-        <code>/ingredient/insert</code><br/><br/>
-        Insert an ingredient
-    </td>
-    <td>
-        POST
-    </td>
-    <td>
-        <b>Query Parameters</b><br/>
-        <code>{ingredient, in_type}</code>
-        <br/><br/>
-        <b>Return Object</b><br/>
-        <code>{status, message}</code>
-    </td>
-    <td>
-        Throw <code>HTTPError</code> (status <code>fail</code>) when
-        <ul>
-            <li>ingredient is an empty string <code>""</code></li>
-            <li>in_type is an empty string <code>""</code></li>
-        </ul>
-    </td>
-</tr>
 <!-- /follow  POST-->
 <!-- Query Parameters: username, follow_username -->
 <!-- return: status, message -->
@@ -349,30 +361,54 @@
 <!-- Query Parameters: username -->
 <!-- return: status, message, fav_list-->
 <tr>
-    <td>
-        <code>/user/getfavlist</code><br/><br/>
-        Get the favorite list of a user
-    </td>
-    <td>
-        GET
-    </td>
-    <td>
-        <b>Query Parameters</b><br/>
-        <code>{username}</code>
-        <br/><br/>
-        <b>Return Object</b><br/>
-        <code>{status, message, fav_list}</code>
-    </td>
-    <td>
-        Throw <code>HTTPError</code> (status <code>fail</code>) when
-        <ul>
-            <li>username is an empty string <code>""</code></li>
-        </ul>
-    </td>
+<td>
+    <code>/user/getfavlist</code><br/><br/>
+    Get the favorite list of a user
+</td>
+<td>
+    GET
+</td>
+<td>
+    <b>Query Parameters</b><br/>
+    <code>{username}</code>
+    <br/><br/>
+    <b>Return Object</b><br/>
+    <code>
+        <pre>
+exp.
+{
+    "fav_list": [
+        {
+            "cooking_time": 20,
+            "ingredient": "Potato; cabbage; chili",
+            "recipe_create_time": "Wed, 05 Oct 2022 07:19:12 GMT",
+            "recipe_id": 2,
+            "recipe_name": "Malatang",
+            "recipe_photo": "spicy",
+            "recipe_style": "Sichuan cuisine",
+            "recipe_username": "Katherine",
+            "steps": "Put potato and cabbage into boiling water, then put chili, and it will finish in 20 minutes"
+        },
+        ...
+    ],
+    "message": "You have successfully got your favorite list!",
+    "status": "success"
+}
+        </pre>
+    </code>
+
+</td>
+
+<td>
+    Throw <code>HTTPError</code> (status <code>fail</code>) when
+    <ul>
+        <li>username is an empty string <code>""</code></li>
+    </ul>
+</td>
 </tr>
 
 <!-- /user/unfavrecipe  POST-->
-<!-- Query Parameters: username,favourite_recipe,favourite_name -->
+<!-- Query Parameters: username,recipe_name,recipe_username -->
 <!-- return: status, message-->
 <tr>
     <td>
@@ -384,7 +420,7 @@
     </td>
     <td>
         <b>Query Parameters</b><br/>
-        <code>{username,favourite_recipe,favourite_name}</code>
+        <code>{username,recipe_name,recipe_username}</code>
         <br/><br/>
         <b>Return Object</b><br/>
         <code>{status, message}</code>
@@ -393,8 +429,8 @@
         Throw <code>HTTPError</code> (status <code>fail</code>) when
         <ul>
             <li>username is an empty string <code>""</code></li>
-            <li>favourite_recipe is an empty string <code>""</code></li>
-            <li>favourite_name is an empty string <code>""</code></li>
+            <li>recipe_name is an empty string <code>""</code></li>
+            <li>recipe_username is an empty string <code>""</code></li>
         </ul>
     </td>
 </tr>
@@ -594,7 +630,7 @@
     </td>
 </tr>
 
-<!-- /comment/delete  POST-->
+<!-- /comment/delete  DELETE-->
 <!-- Query Parameters: comment_id-->
 <!-- return: status, message-->
 <tr>
@@ -603,7 +639,7 @@
         Delete a comment
     </td>
     <td>
-        POST
+        DELETE
     </td>
     <td>
         <b>Query Parameters</b><br/>
@@ -663,7 +699,30 @@
         <code>{search_content,difficult,style_name,ingredient}</code>
         <br/><br/>
         <b>Return Object</b><br/>
-        <code>{status, message, return_recipe}</code>
+        <code>
+        <pre>
+exp.
+{
+    "status": "success"
+    "message": "You have successfully searched a recipe!",
+    "return_recipe": [
+        {
+            "cooking_time": 20,
+            "description": "good",
+            "ingredient": "Potato; cabbage; chili",
+            "recipe_create_time": "Wed, 05 Oct 2022 07:19:12 GMT",
+            "recipe_id": 2,
+            "recipe_name": "Malatang",
+            "recipe_photo": "spicy",
+            "recipe_style": "Sichuan cuisine",
+            "recipe_username": "Katherine",
+            "steps": "Put potato and cabbage into boiling water, then put chili, and it will finish in 20 minutes"
+        },
+        ...
+    ]
+}
+        </pre>
+        </code>
     </td>
     <td>
         Throw <code>HTTPError</code> (status <code>fail</code>) when
@@ -692,7 +751,24 @@
         <code>{search_content}</code>
         <br/><br/>
         <b>Return Object</b><br/>
-        <code>{status, message, return_user}</code>
+         <code>
+        <pre>
+exp.
+{
+    "message": "You have successfully searched a user!",
+    "status": "success"
+    "return_user": [
+        {
+            "bio": "shixinyi",
+            "email": "z5324823@ad.unsw.edu.au",
+            "user": "Hungry",
+            "username": "Katherine"
+        },
+        ...
+    ]
+}
+        </pre>
+        </code>
     </td>
     <td>
         Throw <code>HTTPError</code> (status <code>fail</code>) when
