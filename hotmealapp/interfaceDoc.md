@@ -118,7 +118,7 @@
         Delete a recipe
     </td>
     <td>
-        DELETE
+        POST
     </td>
     <td>
         <b>Query Parameters</b><br/>
@@ -937,7 +937,7 @@ exp.
     </td>
 </tr>
 
-<!-- /comment/delete  DELETE-->
+<!-- /comment/delete  POST-->
 <!-- Query Parameters: comment_id-->
 <!-- return: status, message-->
 <tr>
@@ -946,7 +946,7 @@ exp.
         Delete a comment
     </td>
     <td>
-        DELETE
+        POST
     </td>
     <td>
         <b>Query Parameters</b><br/>
