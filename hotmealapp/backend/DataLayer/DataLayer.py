@@ -862,7 +862,6 @@ def check_user_favourite(reicpe_id,username):
         return True
     else:
         return False
-
 def check_user_follow(username,follower_name):
     sql = "SELECT * FROM sys.User_Follower WHERE Username = '%s' AND Follower_name = '%s';" %(username,follower_name)
     db.ping()
@@ -880,7 +879,6 @@ def check_user_follow(username,follower_name):
         return True
     else:
         return False
-
 def check_user_following(username,following_name):
     sql = "SELECT * FROM sys.User_Following WHERE Username = '%s' AND Following_name = '%s';" %(username,following_name)
     db.ping()
@@ -898,7 +896,6 @@ def check_user_following(username,following_name):
         return True
     else:
         return False
-
 def Follow_Show(username):
     sql = "SELECT Follower_name,Follow_Time FROM sys.User_Follower WHERE Username='%s';" %(username)
     db.ping()
@@ -912,10 +909,9 @@ def Follow_Show(username):
         db.close()
         print("show follower worng!!")
         return False
-    print(re_id)
+    # print(re_id)
     db.close()
     return re_id
-
 def Following_Show(username):
     sql = "SELECT Following_name,Following_Time FROM sys.User_Following WHERE Username='%s';" %(username)
     db.ping()
@@ -932,7 +928,6 @@ def Following_Show(username):
     # print(re_id)
     db.close()
     return re_id
-
 def User_show(username):
     sql="SELECT * From sys.User WHERE Username = '%s' ;" %(username)
     db.ping()
@@ -948,7 +943,7 @@ def User_show(username):
         return False
     # print(re_id)
     db.close()
-    print(re)
+    # print(re)
     return re
 def User_update(username,email, password, describe, user_photo):
     sql="UPDATE sys.User SET email = '%s', Password = '%s', `Describe`='%s', User_photo='%s' WHERE Username='%s';"%(email,password,describe,user_photo,username)
@@ -964,6 +959,23 @@ def User_update(username,email, password, describe, user_photo):
         print("update user worng!!")
         db.close()
         return False
+def Recipe_show_all():
+    sql = "SELECT * FROM sys.Recipe"
+    db.ping()
+    cur = db.cursor()
+    re = ''
+    try:
+        cur.execute(sql)
+        re = cur.fetchall()
+    except Exception:
+        db.rollback()
+        print("show recipe all worng!!")
+        db.close()
+        return False
+    # print(re_id)
+    db.close()
+    # print(re)
+    return re
 
 
 
@@ -973,7 +985,8 @@ fname = 'Ryan'
 uname='Ryan'
 frecipe = 'fry fish'
 
-User_update('k1','k1','123','hhhhh','hhhh')
+# Recipe_show_all()
+# User_update('k1','k1','123','hhhhh','hhhh')
 # User_show('Ryan')
 # check_user_following('Ryan','Katherine')
 # Follow_Show('Ryan')
