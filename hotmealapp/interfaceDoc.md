@@ -1,6 +1,6 @@
 ### Interface: Routes
 
-<!-- /user/getfollowernum  GET-->
+<!-- /user/getfollowernum  POST-->
 <!-- Query Parameters: username -->
 <!-- return: status, message,  follower_num-->
 <!-- |API|HTTP Method|query|return|
@@ -144,7 +144,7 @@
         Show recipe list for user
     </td>
     <td>
-        GET
+        POST
     </td>
     <td>
         <b>Query Parameters</b><br/>
@@ -190,7 +190,7 @@ exp.
         Show one recipe for user
     </td>
     <td>
-        GET
+        POST
     </td>
     <td>
         <b>Query Parameters</b><br/>
@@ -277,7 +277,7 @@ exp.
     </td>
 </tr>
 
-<!-- /user/getfollowernum  GET-->
+<!-- /user/getfollowernum  POST-->
 <!-- Query Parameters: username -->
 <!-- return: status, message,  follower_num-->
 <tr>
@@ -286,7 +286,7 @@ exp.
         Get the number of followers of a user
     </td>
     <td>
-        GET
+        POST
     </td>
     <td>
         <b>Query Parameters</b><br/>
@@ -303,7 +303,7 @@ exp.
     </td>
 </tr>
 
-<!-- /user/getfollowingnum  GET-->
+<!-- /user/getfollowingnum  POST-->
 <!-- Query Parameters: username -->
 <!-- return: status, message,  following_num-->
 <tr>
@@ -312,7 +312,7 @@ exp.
         Get the number of following of a user
     </td>
     <td>
-        GET
+        POST
     </td>
     <td>
         <b>Query Parameters</b><br/>
@@ -357,7 +357,7 @@ exp.
     </td>
 </tr>
 
-<!-- /user/getfavlist  GET-->
+<!-- /user/getfavlist  POST-->
 <!-- Query Parameters: username -->
 <!-- return: status, message, fav_list-->
 <tr>
@@ -366,7 +366,7 @@ exp.
     Get the favorite list of a user
 </td>
 <td>
-    GET
+    POST
 </td>
 <td>
     <b>Query Parameters</b><br/>
@@ -435,7 +435,7 @@ exp.
     </td>
 </tr>
 
-<!-- /user/getfavrecipenum  GET-->
+<!-- /user/getfavrecipenum  POST-->
 <!-- Query Parameters: username -->
 <!-- return: status, message, fav_num-->
 <tr>
@@ -444,7 +444,7 @@ exp.
         Get the number of favorite recipes of a user
     </td>
     <td>
-        GET
+        POST
     </td>
     <td>
         <b>Query Parameters</b><br/>
@@ -517,7 +517,7 @@ exp.
     </td>
 </tr>
 
-<!-- /recipe/getlikenum  GET-->
+<!-- /recipe/getlikenum  POST-->
 <!-- Query Parameters: recipe_name,recipe_username -->
 <!-- return: status, message, re_like_num-->
 <tr>
@@ -526,7 +526,7 @@ exp.
         Get the number of likes of a recipe
     </td>
     <td>
-        GET
+        POST
     </td>
     <td>
         <b>Query Parameters</b><br/>
@@ -544,7 +544,7 @@ exp.
     </td>
 </tr>
 
-<!-- /recipe/getcommentlist  GET-->
+<!-- /recipe/getcommentlist  POST-->
 <!-- Query Parameters: recipe_name,recipe_username -->
 <!-- return: status, message, comm-->
 <tr>
@@ -553,7 +553,7 @@ exp.
         Get the comment list of a recipe
     </td>
     <td>
-        GET
+        POST
     </td>
     <td>
         <b>Query Parameters</b><br/>
@@ -656,7 +656,7 @@ exp.
     </td>
 </tr>
 
-<!-- /comment/getnum  GET-->
+<!-- /comment/getnum  POST-->
 <!-- Query Parameters: recipe_name,recipe_username-->
 <!-- return: status, message, comm_num-->
 <tr>
@@ -665,7 +665,7 @@ exp.
         Get the number of comments of a recipe
     </td>
     <td>
-        GET
+        POST
     </td>
     <td>
         <b>Query Parameters</b><br/>
@@ -683,7 +683,7 @@ exp.
     </td>
 </tr>
 
-<!-- /recipe/search  GET-->
+<!-- /recipe/search  POST-->
 <!-- Query Parameters: search_content,difficult,style_name,ingredient -->
 <!-- return: status, message, return_recipe-->
 <tr>
@@ -692,7 +692,7 @@ exp.
         Search recipes
     </td>
     <td>
-        GET
+        POST
     </td>
     <td>
         <b>Query Parameters</b><br/>
@@ -735,7 +735,7 @@ exp.
     </td>
 </tr>
 
-<!-- /search/user  GET-->
+<!-- /search/user  POST-->
 <!-- Query Parameters: search_content -->
 <!-- return: status, message, return_user-->
 <tr>
@@ -744,7 +744,7 @@ exp.
         Search users
     </td>
     <td>
-        GET
+        POST
     </td>
     <td>
         <b>Query Parameters</b><br/>

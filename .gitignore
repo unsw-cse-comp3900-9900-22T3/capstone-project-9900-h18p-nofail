@@ -1,4 +1,6 @@
 **/.DS_Store
+**/.idea/*
+.idea/.gitignore
 **/__pycache__/*
 backend/node_modules/@babel/.DS_Store
 hotmealapp/backend/DataLayer/__pycache__/ConnectDB.cpython-38.pyc

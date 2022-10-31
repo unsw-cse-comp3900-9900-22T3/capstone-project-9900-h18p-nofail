@@ -561,7 +561,7 @@ def Recipe_get_like_num(recipe_name,recipe_username):
         db.rollback()
         print("count_favourite worng!!")
     re_num = int(re_num)
-    print(re_num)
+    # print(re_num)
     db.close()
     return re_num
 def Recipe_get_like_num_byid(recipe_id):
@@ -840,7 +840,7 @@ def check_recipe_like(reicpe_id,username):
         print("search recipe like worng!!")
     db.close()
     # print(re_id)
-    if re_id==None:
+    if re_id!=None:
         return True
     else:
         return False
@@ -858,7 +858,7 @@ def check_user_favourite(reicpe_id,username):
         print("search recipe like worng!!")
     db.close()
     # print(re_id)
-    if re_id==None:
+    if re_id!=None:
         return True
     else:
         return False
@@ -875,7 +875,7 @@ def check_user_follow(username,follower_name):
         print("search user follower worng!!")
     db.close()
     # print(re_id)
-    if re_id==None:
+    if re_id!=None:
         return True
     else:
         return False
@@ -892,7 +892,7 @@ def check_user_following(username,following_name):
         print("search user following worng!!")
     db.close()
     # print(re_id)
-    if re_id==None:
+    if re_id!=None:
         return True
     else:
         return False
