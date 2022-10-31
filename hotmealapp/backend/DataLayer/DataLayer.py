@@ -178,7 +178,7 @@ def Recipe_Delete_byid(recipe_id):
     return True
 
 def Recipe_Show(username):
-    sql = "SELECT Recipe_Name,Recipe_Username,Recipe_Style,Ingredient,Cooking_Time,Steps,Recipe_Photo,Description FROM sys.Recipe \
+    sql = "SELECT * FROM sys.Recipe \
           WHERE Recipe_Username = '%s';" %(username)
     sel_cursor = db.cursor()
     return_re = ''
@@ -195,7 +195,7 @@ def Recipe_Show(username):
     else:
         return return_re
 def Recipe_show_one(recipe_name,recipe_username):
-    sql = "SELECT Recipe_Name,Recipe_Username,Recipe_Style,Ingredient,Cooking_Time,Steps,Recipe_Photo,Description FROM sys.Recipe \
+    sql = "SELECT * FROM sys.Recipe \
           WHERE Recipe_Username = '%s' AND Recipe_Name = '%s';" %(recipe_username,recipe_name)
     sel_cursor = db.cursor()
     return_re = ''
@@ -213,7 +213,7 @@ def Recipe_show_one(recipe_name,recipe_username):
     else:
         return return_re
 def Recipe_show_one_byid(recipe_id):
-    sql = "SELECT Recipe_Name,Recipe_Username,Recipe_Style,Ingredient,Cooking_Time,Steps,Recipe_Photo,Description FROM sys.Recipe \
+    sql = "SELECT Recipe_Id Recipe_Name,Recipe_Username,Recipe_Style,Ingredient,Cooking_Time,Steps,Recipe_Photo,Description FROM sys.Recipe \
           WHERE Recipe_Id = '%s';" %(recipe_id)
     sel_cursor = db.cursor()
     return_re = ''

@@ -217,11 +217,11 @@ def show_recipe():
         if re_lists:
             re_lists=list(re_lists) #convert tuple into list
             for i in range(len(re_lists)):
-                like_num = DataLayer.Recipe_get_like_num(re_lists[i][0],re_lists[i][1])
+                like_num = DataLayer.Recipe_get_like_num( re_lists[i][1],re_lists[i][2])
                 if like_num:
-                    re_lists[i] = {"recipe_name": re_lists[i][0], "recipe_username": re_lists[i][1], "recipe_style": re_lists[i][2], "ingredient": re_lists[i][3], "cooking_time": re_lists[i][4], "steps": re_lists[i][5], "recipe_photo": re_lists[i][6], "description": re_lists[i][7],"like_num":like_num} #convert tuple into dictionary
+                    re_lists[i] = {"recipe_id": re_lists[i][0], "recipe_name": re_lists[i][1], "recipe_username": re_lists[i][2], "recipe_style": re_lists[i][3], "ingredient": re_lists[i][4], "cooking_time": re_lists[i][5], "steps": re_lists[i][6], "recipe_photo": re_lists[i][7],"description": re_lists[i][9],"like_num":like_num}
                 else:
-                    re_lists[i] = {"recipe_name": re_lists[i][0], "recipe_username": re_lists[i][1], "recipe_style": re_lists[i][2], "ingredient": re_lists[i][3], "cooking_time": re_lists[i][4], "steps": re_lists[i][5], "recipe_photo": re_lists[i][6], "description": re_lists[i][7],"like_num":0}
+                    re_lists[i] = {"recipe_id": re_lists[i][0], "recipe_name": re_lists[i][1], "recipe_username": re_lists[i][2], "recipe_style": re_lists[i][3], "ingredient": re_lists[i][4], "cooking_time": re_lists[i][5], "steps": re_lists[i][6], "recipe_photo": re_lists[i][7],"description": re_lists[i][9],"like_num":0}
             msg = {'status': 'success', 'message': 'You have successfully get the recipe list!', 'recipe_list': re_lists}
         else:
             msg = {'status': 'fail', 'message': 'The user has no recipe!'}
@@ -239,9 +239,9 @@ def show_one_recipe():
             like_num = DataLayer.Recipe_get_like_num(recipe_name,recipe_username)
             re=list(re) #convert tuple into list
             if like_num:
-                re = {"recipe_name": re[0], "recipe_username": re[1], "recipe_style": re[2], "ingredient": re[3], "cooking_time": re[4], "steps": re[5], "recipe_photo": re[6], "description": re[7],"like_num":like_num} #convert tuple into dictionary
+                re = {"recipe_id": re[0], "recipe_name": re[1], "recipe_username": re[2], "recipe_style": re[3], "ingredient": re[4], "cooking_time": re[5], "steps": re[6], "recipe_photo": re[7], "description": re[9],"like_num":like_num} #convert tuple into dictionary
             else:
-                re = {"recipe_name": re[0], "recipe_username": re[1], "recipe_style": re[2], "ingredient": re[3], "cooking_time": re[4], "steps": re[5], "recipe_photo": re[6], "description": re[7],"like_num":0}
+                re = {"recipe_id": re[0], "recipe_name": re[1], "recipe_username": re[2], "recipe_style": re[3], "ingredient": re[4], "cooking_time": re[5], "steps": re[6], "recipe_photo": re[7], "description": re[9],"like_num":0}
             msg = {'status': 'success', 'message': 'You have successfully got the recipe!', 'recipe': re}
         else:
             msg = {'status': 'fail', 'message': 'The recipe does not exist!'}
@@ -329,13 +329,13 @@ def follow_user():
 #username,follow_username
 def check_follower_status():
     msg = 'missing parameter'
-    if request.method == 'POST' and 'from_username' in request.json and 'to_username' in request.json:
-        username = request.json['from_username']
-        follow_username = request.json['to_username']
+    if request.method == 'POST' and 'self_username' in request.json and 'query_username' in request.json:
+        username = request.json['self_username']
+        follow_username = request.json['query_username']
         if DataLayer.check_user_follow(username,follow_username):
-            msg = {'status': 'success', 'message': 'You have followed this user!'}
+            msg = {'status': 'success', 'message': 'You have this user in your follower list!'}
         else:
-            msg = {'status': 'fail', 'message': 'You have not followed this user!'}
+            msg = {'status': 'fail', 'message': 'You do not have this user in your follower list!'}
     elif request.method == 'GET':
         msg = {'status': 'fail', 'message': 'Please fill out the form!'}
     return jsonify(msg)
@@ -344,9 +344,9 @@ def check_follower_status():
 #username,follow_username
 def check_following_status():
     msg = 'missing parameter'
-    if request.method == 'POST' and 'from_username' in request.json and 'to_username' in request.json:
-        username = request.json['from_username']
-        follow_username = request.json['to_username']
+    if request.method == 'POST' and 'self_username' in request.json and 'query_username' in request.json:
+        follow_username = request.json['self_username']
+        username = request.json['query_username']
         if DataLayer.check_user_following(follow_username,username):
             msg = {'status': 'success', 'message': 'This user is following you!'}
         else:

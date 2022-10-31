@@ -522,12 +522,62 @@ exp.
             "cooking_time": 20,
             "description": "good",
             "ingredient": "Potato; cabbage; chili",
+            "like_num": 1,
+            "recipe_id": 2,
             "recipe_name": "Malatang",
             "recipe_photo": "spicy",
             "recipe_style": "Sichuan cuisine",
             "recipe_username": "Katherine",
             "steps": "Put potato and cabbage into boiling water, then put chili, and it will finish in 20 minutes"
         }
+    ],
+    "status": "success"
+}
+        </pre>
+    </code>
+    </td>
+    <td>
+        Throw <code>HTTPError</code> (status <code>fail</code>) when
+        <ul>
+            <li>no recipe is referring to the username</li>
+        </ul>
+    </td>
+</tr>
+<!-- /recipe/showall -->
+<!-- Query Parameters: username -->
+<!-- return: Recipe_Name,Recipe_Username,Recipe_Style,Ingredient,Cooking_Time,Steps,Recipe_Photo, Description  -->
+<tr>
+    <td>
+        <code>/recipe/showall</code><br/><br/>
+        Show recipe list for user
+    </td>
+    <td>
+        POST
+    </td>
+    <td>
+        <b>Query Parameters</b><br/>
+        <code>{}</code>
+        <br/><br/>
+        <b>Return Object</b><br/>
+        <code>
+            <pre>
+exp.
+{
+    "message": "You have successfully get the recipe list!",
+    "recipe_list": [
+        {
+            "cooking_time": 20,
+            "description": "good",
+            "ingredient": "Potato; cabbage; chili",
+            "like_num": 1,
+            "recipe_id": 2,
+            "recipe_name": "Malatang",
+            "recipe_photo": "spicy",
+            "recipe_style": "Sichuan cuisine",
+            "recipe_username": "Katherine",
+            "steps": "Put potato and cabbage into boiling water, then put chili, and it will finish in 20 minutes"
+        },
+        ...
     ],
     "status": "success"
 }
@@ -566,6 +616,8 @@ exp.
         "cooking_time": 12,
         "description": "qwe",
         "ingredient": "qwe;ewq;tre;beef;chicken;pork;",
+        "like_num": 0,
+        "recipe_id": 19,
         "recipe_name": "qwe",
         "recipe_photo": "C:/fakepath/3671C38C-A544-436A-B61A-CE7FC2E3293A.jpeg",
         "recipe_style": "two",
@@ -574,6 +626,52 @@ exp.
     },
     "status": "success"
 }
+        </pre>
+    </code>
+    </td>
+    <td>
+        Throw <code>HTTPError</code> (status <code>fail</code>) when
+        <ul>
+            <li>no recipe is referring to the username</li>
+        </ul>
+    </td>
+</tr>
+<!-- /user/getpersonalinfo -->
+<!-- Query Parameters: username -->
+<!-- return: username, email, phone, address, profile_photo -->
+<tr>
+    <td>
+        <code>/user/getpersonalinfo</code><br/><br/>
+        Get personal information for user
+    </td>
+    <td>
+        POST
+    </td>
+    <td>
+        <b>Query Parameters</b><br/>
+        <code>{username}</code>
+        <br/><br/>
+        <b>Return Object</b><br/>
+        <code>
+            <pre>
+exp.
+{
+    "message": "You have successfully got the user information!",
+    "personal_info": [
+        {
+            "description": "Hungry!",
+            "email": "z5324823@ad.unsw.edu.au",
+            "follower_num": 3,
+            "following_num": 3,
+            "update_time": "Wed, 05 Oct 2022 07:15:00 GMT",
+            "user_photo": "cool",
+            "username": "Katherine"
+        }
+    ],
+    "status": "success"
+}
+        </pre>
+    </code>
     </td>
     <td>
         Throw <code>HTTPError</code> (status <code>fail</code>) when
@@ -608,6 +706,150 @@ exp.
         </ul>
     </td>
 </tr>
+<!-- /user/checkfollowerstatus -->
+<!-- Query Parameters: self_username, aim_username -->
+<!-- return: status, message -->
+<tr>
+    <td>
+        <code>/user/checkfollowerstatus</code><br/><br/>
+        Check follower status
+    </td>
+    <td>
+        POST
+    </td>
+    <td>
+        <b>Query Parameters</b><br/>
+        <code>{self_username, aim_username}</code>
+        <br/><br/>
+        <b>Return Object</b><br/>
+        <code>{status, message}</code>
+    </td>
+    <td>
+        Throw <code>HTTPError</code> (status <code>fail</code>) when
+        <ul>
+            <li>self_username is an empty string <code>""</code></li>
+            <li>aim_username is an empty string <code>""</code></li>
+        </ul>
+    </td>
+</tr>
+<!-- /user/checkfollowingstatus -->
+<!-- Query Parameters: self_username, query_username -->
+<!-- return: status, message -->
+<tr>
+    <td>
+        <code>/user/checkfollowingstatus</code><br/><br/>
+        Check following status
+    </td>
+    <td>
+        POST
+    </td>
+    <td>
+        <b>Query Parameters</b><br/>
+        <code>{self_username, query_username}</code>
+        <br/><br/>
+        <b>Return Object</b><br/>
+        <code>
+            <pre>
+exp.
+{
+    "message": "You have this user in your follower list!",
+    "status": "success"
+}
+        </pre>
+    </code>
+    </td>
+    <td>
+        Throw <code>HTTPError</code> (status <code>fail</code>) when
+        <ul>
+            <li>self_username is an empty string <code>""</code></li>
+            <li>query_username is an empty string <code>""</code></li>
+        </ul>
+    </td>
+</tr>
+<!-- /user/checkfollowingstatus -->
+<!-- Query Parameters: self_username, query_username -->
+<!-- return: status, message -->
+<tr>
+    <td>
+        <code>/user/checkfollowingstatus</code><br/><br/>
+        Check following status
+    </td>
+    <td>
+        POST
+    </td>
+    <td>
+        <b>Query Parameters</b><br/>
+        <code>{self_username, query_username}</code>
+        <br/><br/>
+        <b>Return Object</b><br/>
+        <code>
+            <pre>
+exp.
+{
+    "message": "This user is following you!",
+    "status": "success"
+}
+        </pre>
+    </code>
+    </td>
+    <td>
+        Throw <code>HTTPError</code> (status <code>fail</code>) when
+        <ul>
+            <li>self_username is an empty string <code>""</code></li>
+            <li>query_username is an empty string <code>""</code></li>
+        </ul>
+    </td>
+</tr>
+<!-- /user/getfollower -->
+<!-- Query Parameters: username -->
+<!-- return: follower_username -->
+<tr>
+    <td>
+        <code>/user/getfollower</code><br/><br/>
+        Get follower for user
+    </td>
+    <td>
+        POST
+    </td>
+    <td>
+        <b>Query Parameters</b><br/>
+        <code>{username}</code>
+        <br/><br/>
+        <b>Return Object</b><br/>
+        <code>
+            <pre>
+exp.
+{
+    "follower": [
+        {
+            "follower_username": "Katherine"
+        },
+        {
+            "follower_username": "Katherine"
+        },
+        {
+            "follower_username": "Katherine"
+        }
+    ],
+    "message": "You have successfully got the follower!",
+    "status": "success"
+}
+        </pre>
+    </code>
+    </td>
+    <td>
+        Throw <code>HTTPError</code> (status <code>fail</code>) when
+        <ul>
+            <li>no follower is referring to the username</li>
+        </ul>
+    </td>
+</tr>
+<!-- /user/getfollowing -->
+<!-- Query Parameters: username -->
+<!-- return: following_username -->
+<tr>
+    <td>
+        <code>/user
 <!-- /unfollow  POST-->
 <!-- Query Parameters: from_username, to_username -->
 <!-- return: status, message -->
@@ -708,6 +950,32 @@ exp.
             <li>username is an empty string <code>""</code></li>
             <li>recipe_name is an empty string <code>""</code></li>
             <li>recipe_username is an empty string <code>""</code></li>
+        </ul>
+    </td>
+</tr>
+<!-- /user/checkfav -->
+<!-- Query Parameters: username,recipe_id -->
+<!-- return: status, message -->
+<tr>
+    <td>
+        <code>/user/checkfav</code><br/><br/>
+        Check if a recipe is favorited by a user
+    </td>
+    <td>
+        POST
+    </td>
+    <td>
+        <b>Query Parameters</b><br/>
+        <code>{username,recipe_id}</code>
+        <br/><br/>
+        <b>Return Object</b><br/>
+        <code>{status, message}</code>
+    </td>
+    <td>
+        Throw <code>HTTPError</code> (status <code>fail</code>) when
+        <ul>
+            <li>username is an empty string <code>""</code></li>
+            <li>recipe_id is an empty string <code>""</code></li>
         </ul>
     </td>
 </tr>
@@ -834,6 +1102,32 @@ exp.
             <li>username is an empty string <code>""</code></li>
             <li>recipe_name is an empty string <code>""</code></li>
             <li>recipe_username is an empty string <code>""</code></li>
+        </ul>
+    </td>
+</tr>
+<!-- /user/checklike -->
+<!-- Query Parameters: username,recipe_id -->
+<!-- return: status, message -->
+<tr>
+    <td>
+        <code>/user/checklike</code><br/><br/>
+        Check if a recipe is liked by a user
+    </td>
+    <td>
+        POST
+    </td>
+    <td>
+        <b>Query Parameters</b><br/>
+        <code>{username,recipe_id}</code>
+        <br/><br/>
+        <b>Return Object</b><br/>
+        <code>{status, message}</code>
+    </td>
+    <td>
+        Throw <code>HTTPError</code> (status <code>fail</code>) when
+        <ul>
+            <li>username is an empty string <code>""</code></li>
+            <li>recipe_id is an empty string <code>""</code></li>
         </ul>
     </td>
 </tr>
