@@ -730,7 +730,7 @@ def Recipe_get_comment_num(recipe_name,recipe_username):
         print("get comment num worng!!")
     db.close()
     print(re_num)
-    return True
+    return re_num
 def Recipe_get_comment_num_byid(recipe_id):
     db.ping()
     re_id = int(recipe_id)
