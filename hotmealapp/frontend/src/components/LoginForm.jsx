@@ -9,6 +9,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 function LoginForm () {
   const [username, setName] = React.useState('');
   const [password, setPassword] = React.useState('');
+  const id = 10;
   const navigate = useNavigate();
   const login = async () => {
     try {
@@ -96,6 +97,7 @@ function LoginForm () {
       </Form.Group>
       <Button variant="success" type="submit" onClick={login}>Login</Button>
       <Button variant="success" type="submit" href={`/update_personal_info/${username}`}>try</Button>
+      <Button variant="success" type="submit" href={`/updaterecipe/${id}`}>try1</Button>
     </div>
     </>);
 }

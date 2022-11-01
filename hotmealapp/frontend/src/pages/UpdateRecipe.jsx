@@ -31,10 +31,14 @@ function UpdateRecipe () {
   let recipe = React.useState()
   const recipe_username = localStorage.getItem('username');
   const getrecipe = async (id) => {
-    const response = await fetch('http://localhost:8080/recipe/showone' + recipeid, {
-      method: 'GET',
+    console.log(id)
+    const response = await fetch('http://localhost:8080/recipe/showone/byid', {
+      method: 'POST',
       headers: {
         'Content-type': 'application/json',
+      },
+      body: {
+        id,
       }
     })
     const data = await response.json();
