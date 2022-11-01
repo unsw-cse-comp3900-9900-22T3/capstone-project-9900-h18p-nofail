@@ -738,7 +738,7 @@ exp.
     </td>
     <td>
         <b>Query Parameters</b><br/>
-        <code>{username, email, user_phone, description, password}</code>
+        <code>{username, email, user_photo, description, password}</code>
         <br/><br/>
         <b>Return Object</b><br/>
         <code>
@@ -921,7 +921,45 @@ exp.
 <!-- return: following_username -->
 <tr>
     <td>
-        <code>/user
+        <code>/user/getfollowing</code><br/><br/>
+        Get following for user
+    </td>
+    <td>
+        POST
+    </td>
+    <td>
+        <b>Query Parameters</b><br/>
+        <code>{username}</code>
+        <br/><br/>
+        <b>Return Object</b><br/>
+        <code>
+            <pre>
+exp.
+{
+    "following": [
+        {
+            "following_username": "Katherine"
+        },
+        {
+            "following_username": "Katherine"
+        },
+        {
+            "following_username": "Katherine"
+        }
+    ],
+    "message": "You have successfully got the following!",
+    "status": "success"
+}
+        </pre>
+    </code>
+    </td>
+    <td>
+        Throw <code>HTTPError</code> (status <code>fail</code>) when
+        <ul>
+            <li>no following is referring to the username</li>
+        </ul>
+    </td>
+</tr>
 <!-- /unfollow  POST-->
 <!-- Query Parameters: from_username, to_username -->
 <!-- return: status, message -->

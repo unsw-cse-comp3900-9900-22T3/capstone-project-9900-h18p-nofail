@@ -385,7 +385,7 @@ exp.
     </td>
     <td>
         <b>Query Parameters</b><br/>
-        <code>{username, email, user_phone, description, password}</code>
+        <code>{username, email, user_photo, description, password}</code>
         <br/><br/>
         <b>Return Object</b><br/>
         <code>
