@@ -479,7 +479,7 @@ code {
         Delete a recipe
     </td>
     <td>
-        DELETE
+        POST
     </td>
     <td>
         <b>Query Parameters</b><br/>
@@ -672,6 +672,33 @@ exp.
 }
         </pre>
     </code>
+    </td>
+    <td>
+        Throw <code>HTTPError</code> (status <code>fail</code>) when
+        <ul>
+            <li>no recipe is referring to the username</li>
+        </ul>
+    </td>
+</tr>
+<!-- /user/updatepersonalinfo -->
+<!-- Query Parameters: username, email, user_phone, description, password -->
+<!-- return: status, message -->
+<tr>
+    <td>
+        <code>/user/updatepersonalinfo</code><br/><br/>
+        Update personal information for user
+    </td>
+    <td>
+        POST
+    </td>
+    <td>
+        <b>Query Parameters</b><br/>
+        <code>{username, email, user_phone, description, password}</code>
+        <br/><br/>
+        <b>Return Object</b><br/>
+        <code>
+        {status, message}
+        </code>
     </td>
     <td>
         Throw <code>HTTPError</code> (status <code>fail</code>) when
@@ -1267,7 +1294,7 @@ exp.
         </ul>
     </td>
 </tr>
-<!-- /comment/delete  DELETE-->
+<!-- /comment/delete  POST-->
 <!-- Query Parameters: comment_id-->
 <!-- return: status, message-->
 <tr>
@@ -1276,7 +1303,7 @@ exp.
         Delete a comment
     </td>
     <td>
-        DELETE
+        POST
     </td>
     <td>
         <b>Query Parameters</b><br/>

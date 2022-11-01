@@ -325,6 +325,34 @@ exp.
     </td>
 </tr>
 
+<!-- /user/updatepersonalinfo -->
+<!-- Query Parameters: username, email, user_phone, description, password -->
+<!-- return: status, message -->
+<tr>
+    <td>
+        <code>/user/updatepersonalinfo</code><br/><br/>
+        Update personal information for user
+    </td>
+    <td>
+        POST
+    </td>
+    <td>
+        <b>Query Parameters</b><br/>
+        <code>{username, email, user_phone, description, password}</code>
+        <br/><br/>
+        <b>Return Object</b><br/>
+        <code>
+        {status, message}
+        </code>
+    </td>
+    <td>
+        Throw <code>HTTPError</code> (status <code>fail</code>) when
+        <ul>
+            <li>no recipe is referring to the username</li>
+        </ul>
+    </td>
+</tr>
+
 <!-- /follow  POST-->
 <!-- Query Parameters: username, follow_username -->
 <!-- return: status, message -->
