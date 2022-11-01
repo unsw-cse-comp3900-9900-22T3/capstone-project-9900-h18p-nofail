@@ -54,7 +54,7 @@ function App () {
           <Route path="/homepage" element={<Homepage />} />
           <Route path="/personalpage" element={<Personalpage />} />
           <Route path="/updaterecipe:recipeid" element={<UpdateRecipe />} />
-          <Route path="/update_personal_info" element={<Updatepersonalinfo />} />
+          <Route path="/update_personal_info:username" element={<Updatepersonalinfo />} />
         </Routes>
       </BrowserRouter>
     </>
