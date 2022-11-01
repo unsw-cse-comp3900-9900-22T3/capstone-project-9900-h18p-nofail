@@ -5,9 +5,9 @@ import Login from './pages/Login';
 import Dashboard from './pages/Dashboard';
 import Logout from './pages/Logout';
 import CreateRecipe from './pages/CreateRecipe';
-import Homepage from './pages/Homepage'
-import Personalpage from './pages/Personalpage'
-import Viewpersonalpage from './pages/Viewpersonalpage'
+import Homepage from './pages/Homepage';
+import Personalpage from './pages/Personalpage';
+import Viewpersonalpage from './pages/Viewpersonalpage';
 import UpdateRecipe from './pages/UpdateRecipe';
 import Updatepersonalinfo from './pages/Updatepersoninfo';
 
@@ -53,8 +53,8 @@ function App () {
           <Route path="/createrecipe" element={<CreateRecipe />} />
           <Route path="/homepage" element={<Homepage />} />
           <Route path="/personalpage" element={<Personalpage />} />
-          <Route path="/updaterecipe:recipeid" element={<UpdateRecipe />} />
-          <Route path="/update_personal_info:username" element={<Updatepersonalinfo />} />
+          <Route path="/updaterecipe/:recipeid" element={<UpdateRecipe />} />
+          <Route path="/update_personal_info/:username" element={<Updatepersonalinfo />} />
         </Routes>
       </BrowserRouter>
     </>

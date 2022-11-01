@@ -6,8 +6,11 @@ import {
   //   Modal
   } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import {useParams} from 'react-router-dom';
 
 function Updatepersonalinfo () {
+  const params = useParams();
+  const username = params.username
   const [des, setDes] = React.useState('');
   const [email, setEmail] = React.useState('');
   const [img, setImg] = React.useState('');
@@ -42,6 +45,7 @@ function Updatepersonalinfo () {
   return (
     <>
       <div className='Container'>
+      <div>{username}</div>
       <Form.Group className="mb-3">
         <Form.Label>Email: </Form.Label>
         <Form.Control placeholder="email" type='text' onChange={e => setEmail(e.target.value)} />
