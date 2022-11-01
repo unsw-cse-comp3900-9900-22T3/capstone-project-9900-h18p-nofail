@@ -95,6 +95,7 @@ function LoginForm () {
         <Form.Control placeholder="password" type='password' onChange={e => setPassword(e.target.value)} />
       </Form.Group>
       <Button variant="success" type="submit" onClick={login}>Login</Button>
+      <Button variant="success" type="submit" href={`/update_personal_info/${username}`}>try</Button>
     </div>
     </>);
 }
