@@ -213,7 +213,7 @@ def Recipe_show_one(recipe_name,recipe_username):
     else:
         return return_re
 def Recipe_show_one_byid(recipe_id):
-    sql = "SELECT Recipe_Id Recipe_Name,Recipe_Username,Recipe_Style,Ingredient,Cooking_Time,Steps,Recipe_Photo,Description FROM sys.Recipe \
+    sql = "SELECT * FROM sys.Recipe \
           WHERE Recipe_Id = '%s';" %(recipe_id)
     sel_cursor = db.cursor()
     return_re = ''
@@ -386,24 +386,26 @@ def User_insert_favour(username,recipe_name,recipe_username):
     try:
         insert_cursor.execute(insert_favour)
         db.commit()
+        return True
     except Exception:
         db.rollback()
         print("insert favour worng!!")
     db.close()
-    return True
+    return False
 def User_insert_favour_byid(username,recipe_id):
-    db.ping()
     re_id = int(recipe_id)
     insert_favour = "INSERT INTO sys.User_Favourite(Favourite_Name,Favourite_Recipe) VALUE('%s','%s');" %(username,re_id)
     insert_cursor = db.cursor()
+    db.ping()
     try:
         insert_cursor.execute(insert_favour)
         db.commit()
+        return True
     except Exception:
         db.rollback()
         print("insert favour worng!!")
     db.close()
-    return True
+    return False
 def User_show_favourite(username):
     sql = "SELECT * FROM sys.Recipe WHERE Recipe_Id IN(SELECT Favourite_Recipe FROM sys.User_Favourite WHERE Favourite_Name = '%s');" %(username)
     cursor = db.cursor()
@@ -445,6 +447,7 @@ def User_remove_favourite_byid(username,recipe_id):
     re_id = int(recipe_id)
     insert_favour = "DELETE FROM sys.User_Favourite WHERE Favourite_Name='%s' AND Favourite_Recipe = '%s';" % (username, re_id)
     insert_cursor = db.cursor()
+    db.ping()
     try:
         insert_cursor.execute(insert_favour)
         db.commit()
@@ -745,7 +748,7 @@ def Recipe_get_comment_num_byid(recipe_id):
         print("get comment num worng!!")
     db.close()
     print(re_num)
-    return True
+    return re_num
 def Search_Recipe(search_content='',difficult='',style_name='',ingredient=''):
     db.ping()
     if difficult!='':
