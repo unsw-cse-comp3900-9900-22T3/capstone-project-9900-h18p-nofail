@@ -23,6 +23,12 @@ function MyRecipeCard () {
         window.location.href = '/recipe_and_follower/recipe.html';
       }
 
+    function editRecipe() {
+        window.location.href = 'http://localhost:3000/updaterecipe';
+      }
+
+    const recipes = JSON.parse(localStorage.getItem('recipes'));
+
     
     return(
         <>
@@ -60,7 +66,7 @@ function MyRecipeCard () {
                 <option value="Vegetable">Vegetable</option>
                 <option value="Other">Other</option>
               </select>
-              <label htmlFor="Sorting" style={{ marginLeft: 195}}>
+              <label htmlFor="Sorting" style={{ marginLeft: 190}}>
                 Sort By:
               </label>
               <select>
@@ -75,17 +81,21 @@ function MyRecipeCard () {
           <div className='Container2'>
             <br />
             <Row xs={1} md={4} className="g-4">
+              {recipes.map(recipes =>(
                     <Col >
                       <Card>
                         <Card.Img variant="top" />
                         <Card.Body>
                           <Card.Img variant="top" src={Zajiangmian} onClick={viewRecipe}/>
-                          <Card.Title>Zajiangmian</Card.Title>
+                          <Card.Title>{recipes.recipe_name}</Card.Title>
                           <LikeBtn />
-                          <Button variant="outline-success" size="sm">Edit</Button>
+                          <Button variant="outline-success" size="sm" href={`/updaterecipe${recipes.recipeid}`}>
+                            Edit
+                          </Button>
                         </Card.Body>
                       </Card>
                     </Col>
+              ))}
             </Row>
 
           {/*

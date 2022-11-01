@@ -30,7 +30,6 @@ function Personalpage() {
     function favoriteRecipe() {
       window.location.href = 'http://localhost:3000/personalpage';
     }
-    
 
 
     return (
@@ -67,18 +66,13 @@ function Personalpage() {
         <tr>
           <td>
             <br />
-            <Button type="editSaveBtn" variant="outline-success" style={{ marginLeft: 50 }}>
+            <Button id="editSaveBtn" href={`/update_personal_info${username}`} variant="outline-success" style={{ marginLeft: 100 }}>
               Edit/Save
             </Button>
           </td>
           <td></td>
           <td>
-            <Button
-              type="createRecipeBtn"
-              onClick={createRecipe}
-              variant="success"
-              style={{ marginLeft: 800 }}
-            >
+            <Button type="createRecipeBtn" onClick={createRecipe} variant="success" style={{ marginLeft: 730 }}>
               Create New Recipe
             </Button>
           </td>
