@@ -24,28 +24,7 @@ function RecipeCard () {
         window.location.href = '/recipe_and_follower/recipe.html';
     }
 
-    const params = useParams();
-    const id = params.Recipe_Id
-    let recipes = React.useState();
-    const token = localStorage.getItem('token');
-    const getRecipe = async (id) => {
-      const response = await fetch('http://localhost:8080/recipe/showlist' + id, {
-        method: 'GET',
-        headers: {
-          'Content-type': 'application/json',
-          Authorization: 'Bearer ' + token,
-        }
-      })
-      const data = await response.json();
-      const recipes = data.recipes
-      localStorage.setItem('recipes', JSON.stringify(recipes))
-    }
-    getRecipe(id)
-    recipes = JSON.parse(localStorage.getItem('recipes'))
-    const fresh = async () => {
-      await getRecipe(id)
-      location.reload()
-    }
+    const recipes = localStorage.getItem('recipes');
 
 
     return (
@@ -84,7 +63,7 @@ function RecipeCard () {
                           <option value="Vegetable">Vegetable</option>
                           <option value="Other">Other</option>
                         </select>
-                        <label htmlFor="Sorting" style={{ marginLeft: 195}}>
+                        <label htmlFor="Sorting" style={{ marginLeft: 190}}>
                           Sort By: 
                         </label>
                         <select>

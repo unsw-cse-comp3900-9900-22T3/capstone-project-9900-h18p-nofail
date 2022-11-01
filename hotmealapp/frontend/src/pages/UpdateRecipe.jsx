@@ -120,11 +120,26 @@ function UpdateRecipe () {
   const ifshow4 = {
     display: show4
   }
-  const list1 = [[1]]
-  const list1_ = [1]
+  const groupsname = Object.keys(ingredient);
+  let ori_list = []
+  for (let i = 0; i < Object.keys(ingredient).length; i++) {
+    let sublist = [];
+    for (let j = 0; j < ingredient[Object.keys(ingredient)[i]].length; j++) {
+      sublist.push(1);
+    }
+    ori_list.push(sublist)
+  }
+  let orilist1_ = [1]
+  for (let i = 0; i < steps.length; i++) {
+    orilist1_.push(1)
+  }
   // for (let i = 0; i < answer.length; i++) {
   //   list1.push(1)
   // }
+  const [o_list, setListo] = React.useState(ori_list);
+  const [o_list2, setListo2] = React.useState(orilist1_);
+  const list1 = [[1]];
+  const list1_ = [1];
   const [list, setList] = React.useState(list1);
   const [list2, setList2] = React.useState(list1_);
 
@@ -135,12 +150,20 @@ function UpdateRecipe () {
     setList([...list, [1]])
     setIngre({...ingredient, [group]: ingres})
   }
+  const todelete_ori = () => {
+    setListo(o_list.filter((item, index) => index != list.length - 1));
+    setIngre(_.omit(ingredient, [group]))
+  }
   const todelete = () => {
     setList(list.filter((item, index) => index != list.length - 1));
     setIngre(_.omit(ingredient, [group]))
   }
   const addstep = () => {
     setList2([...list2, 1])
+  }
+  const todelete1_ori = (num) => {
+    setListo2(o_list2.filter((item, index) => index != list2.length - 1));
+    setSteps(steps.map((item, index) => index === num ? null : item))
   }
   const todelete1 = () => {
     setList2(list2.filter((item, index) => index != list2.length - 1));
@@ -159,11 +182,11 @@ function UpdateRecipe () {
             <div className='Container1'>
               <Form.Group className="mb-3">
                 <Form.Label>Recipe Name: </Form.Label>
-                <Form.Control placeholder="recipe name" type='text' onChange={e => setName(e.target.value)}/>
+                <Form.Control placeholder="recipe name" value={recipe_name} type='text' onChange={e => setName(e.target.value)}/>
               </Form.Group>
               <Form.Group className="mb-3">
                 <Form.Label>Style: </Form.Label>
-                <Form.Select aria-label="Default select example" onChange={e => setCategory(e.target.value)}>
+                <Form.Select aria-label="Default select example" value={recipe_style} onChange={e => setCategory(e.target.value)}>
                   <option>Open to select</option>
                   <option value="1">One</option>
                   <option value="2">Two</option>
@@ -180,6 +203,7 @@ function UpdateRecipe () {
           as="textarea"
           placeholder="description"
           style={{ height: '150px' }}
+          value={description}
           onChange={e => setDes(e.target.value)}
         />
         </FloatingLabel>
@@ -195,10 +219,43 @@ function UpdateRecipe () {
           <div className='Container2'>
             <h3>Indredient Details</h3>
             <Form.Group className="mb-3">
-              {list.map((item, index) => (
+              {o_list.map((item, index) => (
                 <div key={index} id={item}>
                   <Row>
                     <Form.Label>Group Title {index + 1}: </Form.Label>
+                    <InputGroup className="mb-3">
+                    <Form.Select aria-label="Default select example" value={groupsname[index]} disabled>
+                      <option>Open to select</option>
+                      <option value="Meat">Meat</option>
+                      <option value="Egg">Egg</option>
+                      <option value="Vegetable">Vegetable</option>
+                      <option value="Milk">Milk</option>
+                      <option value="Seafood">Seafood</option>
+                      <option value="Seasoning">Seasoning</option>
+                      <option value="Grain">Grain</option>
+                    </Form.Select>
+                    <Button variant="outline-secondary" onClick={todelete_ori}>Delete</Button>
+                    </InputGroup>
+                  </Row>
+                  <p></p>
+                  <Form.Group className="mb-3" controlId="formHorizontalEmail">
+                    {list[index].map((item1, index1) => (
+                      <Row key={index1} id={item1} className="align-items-center">
+                        <Form.Label column sm={2}>
+                          Ingredient{index1 + 1}
+                        </Form.Label>
+                        <Col sm={6}>
+                          <Form.Control type="email" value={ingredient[groupsname[index]][index1]} placeholder={`ingredient${index1 + 1}`} readOnly/>
+                        </Col>
+                      </Row>
+                    ))}
+                  </Form.Group>
+                </div>
+              ))}
+              {list.map((item, index) => (
+                <div key={index} id={item}>
+                  <Row>
+                    <Form.Label>Group Title {index + o_list.length + 1}: </Form.Label>
                     <InputGroup className="mb-3">
                     <Form.Select aria-label="Default select example" onChange={e => setGrou(e.target.value)}>
                       <option>Open to select</option>
@@ -245,10 +302,27 @@ function UpdateRecipe () {
       <div style={ifshow3}>
         <div className='createstep'>
           <div className='Container2'>
-            {list2.map((item, index) => (
+          {o_list2.map((item, index) => (
               <div key={index} id={item}>
                 <Row>
                   <Form.Label>Step {index + 1}: </Form.Label>
+                  <InputGroup className="mb-3">
+                  <Form.Control
+                    as="textarea"
+                    placeholder="description"
+                    style={{ height: '150px' }}
+                    value={steps[index]}
+                    disabled
+                    />
+                  <Button variant="outline-secondary" onClick={todelete1_ori(index)}>Delete</Button>
+                  </InputGroup>
+                </Row>
+              </div>
+            ))}
+            {list2.map((item, index) => (
+              <div key={index} id={item}>
+                <Row>
+                  <Form.Label>Step {index + 1 + o_list2.length}: </Form.Label>
                   <InputGroup className="mb-3">
                   <Form.Control
                     as="textarea"
@@ -279,7 +353,7 @@ function UpdateRecipe () {
           <div className='Container2'>
             <Form.Group controlId="formFile" className="mb-3">
               <FormLabel>Upload A Picture</FormLabel>
-              <Form.Control type="file" onChange={e => setImg(e.target.value)}/>
+              <Form.Control type="file" value={recipe_photo} onChange={e => setImg(e.target.value)}/>
             </Form.Group>
             <Divider textAlign="left">Other Details</Divider>
               <FormLabel id="demo-row-radio-buttons-group-label">Prepare Time</FormLabel>
@@ -287,6 +361,7 @@ function UpdateRecipe () {
               <Form.Control
                 placeholder="time"
                 aria-describedby="basic-addon2"
+                value={cooking_time}
                 onChange={e => setTime(e.target.value)}
               />
             <InputGroup.Text id="basic-addon2">Minutes</InputGroup.Text>
@@ -296,7 +371,7 @@ function UpdateRecipe () {
         </div>
         <div className='createfoot2_2'>
             <div><Button variant="outline-success" onClick={click3}>prev</Button>&nbsp; &nbsp; &nbsp; &nbsp;</div>
-            <div><Button variant="outline-success" onClick={updaterecipe}>submit</Button></div>
+            <div><Button variant="outline-success" onClick={updaterecipe}>update</Button></div>
           </div>
       </div>
     </>);

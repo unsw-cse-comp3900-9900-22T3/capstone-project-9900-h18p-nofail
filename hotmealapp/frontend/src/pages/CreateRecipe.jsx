@@ -71,8 +71,8 @@ function CreateRecipe () {
       const data = await response.json();
       console.log(data)
       if(data.status==="success") {
-        alert("create successfully!")
-        navigate('/recipe_and_follower/recipe.html')
+        alert("create successfully!");
+        window.open('/recipe_and_follower/recipe.html');
       }
       else {
         alert(data.message)

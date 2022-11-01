@@ -1,13 +1,18 @@
 import { render } from "@testing-library/react";
 import React from "react";
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 class LikeBtn extends React.Component {
+
+    recipes = JSON.parse(localStorage.getItem('recipes'));
+    
     constructor(props){
         super(props)
         this.state = {
-            likes : 0
+            likes : this.recipes.likes
         }
     }
+    
     increaseLikes() {
         this.setState({
             likes : ++ this.state.likes
