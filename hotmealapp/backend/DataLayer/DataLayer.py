@@ -979,6 +979,23 @@ def Recipe_show_all():
     db.close()
     # print(re)
     return re
+def Ingredient_find(ingredient):
+    sql="SELECT * From sys.Ingredients_type WHERE Ingredient = '%s'"%(ingredient)
+    db.ping()
+    cur=db.cursor()
+    re = ''
+    try:
+        cur.execute(sql)
+        re = cur.fetchone()
+    except Exception:
+        db.rollback()
+        print("search user follower worng!!")
+        return False
+    db.close()
+    print(re)
+    return re
+
+# Ingredient_find('chicken')
 
 
 
