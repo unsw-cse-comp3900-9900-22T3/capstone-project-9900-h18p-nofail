@@ -159,7 +159,7 @@ function UpdateRecipe () {
             <div className='Container1'>
               <Form.Group className="mb-3">
                 <Form.Label>Recipe Name: </Form.Label>
-                <Form.Control placeholder="recipe name" type='text' onChange={e => setName(e.target.value)}/>
+                <Form.Control placeholder="recipe name" value={recipe_name} type='text' onChange={e => setName(e.target.value)}/>
               </Form.Group>
               <Form.Group className="mb-3">
                 <Form.Label>Style: </Form.Label>
