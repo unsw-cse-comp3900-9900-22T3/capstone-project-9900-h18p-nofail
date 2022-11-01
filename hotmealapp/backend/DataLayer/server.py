@@ -250,6 +250,8 @@ def show_one_recipe():
 @app.route('/recipe/showone/byid', methods =['POST'])  
 #recipe_name,recipe_username
 def show_one_recipe_byid():
+    print(request.json,"##################")
+    print(request)
     msg = 'missing parameter'
     if request.method == 'POST' and 'recipe_id' in request.json:
         recipe_id = request.json['recipe_id']
@@ -417,7 +419,37 @@ def get_following():
             msg = {'status': 'fail', 'message': 'Get number of following failed!'}
     return jsonify(msg)
 
+@app.route('/user/getfollowinglist', methods =['POST'])
+#username
+def getfollowinglist():
+    msg = 'missing parameter'
+    if request.method == 'POST' and 'username' in request.json:
+        username = request.json['username']
+        re = DataLayer.Following_Show(username)
+        if re:
+            re = list(re)
+            for i in range(len(re)):
+                re[i] = {'following_username':re[i][0],'time':re[i][1]}
+            msg = {'status': 'success', 'message': 'You have successfully got the following list!','following_list':re}
+        else:
+            msg = {'status': 'fail', 'message': 'Get following list failed!'}
+    return jsonify(msg)
 
+@app.route('/user/getfollowerlist', methods =['POST'])
+#username
+def getfollowerlist():
+    msg = 'missing parameter'
+    if request.method == 'POST' and 'username' in request.json:
+        username = request.json['username']
+        re = DataLayer.Follow_Show(username)
+        if re:
+            re = list(re)
+            for i in range(len(re)):
+                re[i] = {'follower_username':re[i][0],'time':re[i][1]}
+            msg = {'status': 'success', 'message': 'You have successfully got the follower list!','follower_list':re}
+        else:
+            msg = {'status': 'fail', 'message': 'Get follower list failed!'}
+    return jsonify(msg)
 
 @app.route('/user/favrecipe', methods =['POST'])
 # username,recipe_name,recipe_username

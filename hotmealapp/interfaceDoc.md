@@ -88,7 +88,7 @@
     <td>
         Throw <code>HTTPError</code> (status <code>fail</code>) when
         <ul>
-            <li>Recipe_Name is an empty string <code>""</code></li>
+            <li>recipe_name is an empty string <code>""</code></li>
     </td>
 </tr>
 <!-- update recipe -->
@@ -246,7 +246,7 @@ exp.
     </td>
     <td>
         <b>Query Parameters</b><br/>
-        <code>{username, Recipe_Name}</code>
+        <code>{recipe_username, recipe_name}</code>
         <br/><br/>
         <b>Return Object</b><br/>
         <code>
@@ -690,6 +690,89 @@ exp.
         Throw <code>HTTPError</code> (status <code>fail</code>) when
         <ul>
             <li>username is an empty string <code>""</code></li>
+        </ul>
+    </td>
+</tr>
+
+<!-- /user/getfollowerlist -->
+<!-- Query Parameters: username -->
+<!-- return: follower_username time -->
+<tr>
+    <td>
+        <code>/user/getfollowerlist</code><br/><br/>
+        Get follower list for user
+    </td>
+    <td>
+        POST
+    </td>
+    <td>
+        <b>Query Parameters</b><br/>
+        <code>{username}</code>
+        <br/><br/>
+        <b>Return Object</b><br/>
+        <code>
+            <pre>
+exp.
+{
+	"follower_list": [
+		{
+			"follower_username": "kk",
+			"time": "Wed, 26 Oct 2022 15:29:05 GMT"
+		},
+        ...
+	],
+	"message": "You have successfully got the follower list!",
+	"status": "success"
+}
+        </pre>
+    </code>
+    </td>
+    <td>
+        Throw <code>HTTPError</code> (status <code>fail</code>) when
+        <ul>
+            <li>no follower is referring to the username</li>
+        </ul>
+    </td>
+</tr>
+
+
+<!-- /user/getfollowinglist -->
+<!-- Query Parameters: username -->
+<!-- return: following_username time -->
+<tr>
+    <td>
+        <code>/user/getfollowinglist</code><br/><br/>
+        Get following list for user
+    </td>
+    <td>
+        POST
+    </td>
+    <td>
+        <b>Query Parameters</b><br/>
+        <code>{username}</code>
+        <br/><br/>
+        <b>Return Object</b><br/>
+        <code>
+            <pre>
+exp.
+{
+	"following_list": [
+		{
+			"following_username": "Katherine",
+			"time": "Wed, 26 Oct 2022 15:29:05 GMT"
+		},
+        ...
+	],
+	"message": "You have successfully got the following list!",
+	"status": "success"
+}
+        </pre>
+    </code>
+    </td>
+    <td>
+        Throw <code>HTTPError</code> (status <code>fail</code>) when
+        <ul>
+            <li>no following is referring to the username</li>
         </ul>
     </td>
 </tr>
