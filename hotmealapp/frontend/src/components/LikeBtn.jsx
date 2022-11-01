@@ -9,7 +9,7 @@ class LikeBtn extends React.Component {
     constructor(props){
         super(props)
         this.state = {
-            likes : this.recipes.likes
+            likes : 0
         }
     }
     
