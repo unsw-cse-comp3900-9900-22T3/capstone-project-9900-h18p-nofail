@@ -93,6 +93,38 @@ def Recipe_Insert_Update(recipe_name,recipe_username,recipe_discrption,recipe_st
         print("create recipe worng!!")
         db.close()
         return False
+
+
+# def Recipe_Update_byid(recipe_id, recipe_discrption,recipe_style,ingredient,cooking_time,steps,recipe_photo):
+#     sql=""
+#     creat_cursor = db.cursor()
+#     sql_check = "SELECT Recipe_Id FROM sys.Recipe WHERE Recipe_Id= '%s';" %(recipe_id)
+#     select_cursor = db.cursor()
+#     return_re = ''
+#     db.ping()
+#     try:
+#         select_cursor.execute(sql_check)
+#         return_re = select_cursor.fetchone()
+#     except Exception:
+#         db.rollback()
+#         print("select_recipe worng!!")
+#     if return_re==None:
+#         return False
+#     else:
+#         return_re = int(return_re[0])
+#         sql = "UPDATE sys.Recipe SET Recipe_Name = '%s',Recipe_Username = '%s',Description= '%s',Recipe_Style = '%s',Ingredient = '%s',Cooking_Time = '%s',\
+#         Steps = '%s',Recipe_Photo = '%s' WHERE Recipe_Id = '%s';" %(recipe_name,recipe_username,recipe_discrption,recipe_style,ingredient,cooking_time,steps,recipe_photo,return_re)
+#     try:
+#         creat_cursor.execute(sql)
+#         db.commit()
+#         db.close()
+#         return True
+#     except Exception:
+#         db.rollback()
+#         print("create recipe worng!!")
+#         db.close()
+#         return False
+
 def Recipe_Insert_Update_repeate(recipe_name,recipe_username,recipe_discrption,recipe_style,ingredient,cooking_time,steps,recipe_photo):
     sql=""
     creat_cursor = db.cursor()

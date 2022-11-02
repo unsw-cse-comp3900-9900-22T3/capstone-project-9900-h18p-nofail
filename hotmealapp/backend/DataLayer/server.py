@@ -4,6 +4,7 @@ from os import path
 import sys
 # sys.path.append(path.dirname(path.dirname(path.abspath(__file__))))
 # sys.path.append('..')
+from collections import ChainMap
 
 from flask import Flask, jsonify, render_template, request, redirect, url_for, session, Blueprint, Response
 from flask_cors import CORS, cross_origin
@@ -12,6 +13,8 @@ import json
 import pymysql
 
 import DataLayer
+
+from DataLayer import db as db
 
 app = Flask(__name__)
 # app.config['CORS_HEADERS'] = 'Content-Type'
@@ -236,12 +239,27 @@ def show_one_recipe():
         recipe_username = request.json['recipe_username']
         re = DataLayer.Recipe_show_one(recipe_name, recipe_username)
         if re:
+            ingredients = re[4].split(';') #convert str into list
+            print("ingredients: ",ingredients)
+            for i in range(len(ingredients)):
+                ingredients[i] = ingredients[i].strip()
+                print("ingredients: ",ingredients[i])
+                db.ping(reconnect=True)
+                re_ingre = db.cursor().execute("SELECT type FROM Ingredients_type WHERE Ingredient = %s", (ingredients[i]))
+                if re_ingre:
+                    print("re_ingre: ", re_ingre)
+                    # ingredients[i] = {re_ingre: ingredients[i]}
+                else:
+                    continue
+            # if the key in ingredients is the same, merge them into one key
+            # ingredients = dict(ChainMap(*ingredients)) #convert list into dict
+
             like_num = DataLayer.Recipe_get_like_num(recipe_name,recipe_username)
             re=list(re) #convert tuple into list
             if like_num:
-                re = {"recipe_id": re[0], "recipe_name": re[1], "recipe_username": re[2], "recipe_style": re[3], "ingredient": re[4], "cooking_time": re[5], "steps": re[6], "recipe_photo": re[7], "description": re[9],"like_num":like_num} #convert tuple into dictionary
+                re = {"recipe_id": re[0], "recipe_name": re[1], "recipe_username": re[2], "recipe_style": re[3], "ingredient": ingredients, "cooking_time": re[5], "steps": re[6], "recipe_photo": re[7], "description": re[9],"like_num":like_num} #convert tuple into dictionary
             else:
-                re = {"recipe_id": re[0], "recipe_name": re[1], "recipe_username": re[2], "recipe_style": re[3], "ingredient": re[4], "cooking_time": re[5], "steps": re[6], "recipe_photo": re[7], "description": re[9],"like_num":0}
+                re = {"recipe_id": re[0], "recipe_name": re[1], "recipe_username": re[2], "recipe_style": re[3], "ingredient": ingredients, "cooking_time": re[5], "steps": re[6], "recipe_photo": re[7], "description": re[9],"like_num":0}
             msg = {'status': 'success', 'message': 'You have successfully got the recipe!', 'recipe': re}
         else:
             msg = {'status': 'fail', 'message': 'The recipe does not exist!'}
@@ -549,10 +567,10 @@ def remove_fav_byid():
 # backup_1
 def get_fav_recipe_num():
     msg = 'missing parameter'
-    if request.method == 'POST' and 'username' in request.json:
-        username = request.json['username']
+    if request.method == 'POST' and 'recipe_id' in request.json:
+        recipe_id = request.json['recipe_id']
         #backup_2
-        fav_num = DataLayer.User_get_favourite_num(username)
+        fav_num = DataLayer.Recipe_get_fav_num(recipe_id)
         if fav_num:
             msg = {'status': 'success', 'message': 'You have successfully got your favorite recipe number!','fav_num':fav_num}
         else:
