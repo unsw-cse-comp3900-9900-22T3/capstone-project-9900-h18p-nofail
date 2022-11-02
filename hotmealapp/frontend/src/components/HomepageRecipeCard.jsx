@@ -18,7 +18,7 @@ import Zajiangmian from '../images/zajiangmian.jpeg';
 
 
 const all_recipes = JSON.parse(localStorage.getItem('all_recipes'));
-console.log(all_recipes[0].like_num);
+//console.log(all_recipes[0].like_num);
 
 function HomepageRecipeCard () {
 

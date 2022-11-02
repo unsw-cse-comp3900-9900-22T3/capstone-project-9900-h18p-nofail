@@ -6,11 +6,12 @@ import {
   //   Modal
   } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import {useParams} from 'react-router-dom';
+import {useParams,useNavigate } from 'react-router-dom';
 
 function Updatepersonalinfo () {
   const params = useParams();
   const username = params.username;
+  const navigate = useNavigate();
   const getinfo = async () => {
     const response = await fetch('http://localhost:8080/user/getpersonalinfo', {
       method: 'POST',
@@ -32,18 +33,22 @@ function Updatepersonalinfo () {
   }, []); 
   const info = JSON.parse(localStorage.getItem('info'));
   const userinfo = info[0];
+  console.log(userinfo)
   const [description, setDes] = React.useState(userinfo.description);
   const [email, setEmail] = React.useState(userinfo.email);
-  let [user_photo, setImg] = React.useState(userinfo.photo);
+  let [user_photo, setImg] = React.useState(userinfo.user_photo);
   const [password, setPassword] = React.useState(userinfo.password);
   // const [description, setDes] = React.useState('');
   // const [email, setEmail] = React.useState('');
   // const [user_photo, setImg] = React.useState('');
   // const [password, setPassword] = React.useState('');
   const updateinfo = async () => {
-    const pics = user_photo.split('\\')
-    user_photo = 'imgs/' + pics[pics.length-1];
     console.log(user_photo)
+    if(user_photo.length!=0){
+      const pics = user_photo.split('\\')
+      user_photo = 'imgs/' + pics[pics.length-1];
+      console.log(user_photo)
+    }
     try {
       const response = await fetch('http://localhost:8080//user/updatepersonalinfo', {
         method: 'POST',
@@ -61,6 +66,7 @@ function Updatepersonalinfo () {
       const data = await response.json();
       if(data.status==="success") {
         alert("update successfully!")
+        navigate('/personalpage')
       }
       else {
         alert(data.message)
@@ -74,7 +80,7 @@ function Updatepersonalinfo () {
   return (
     <>
       <div className='Container'>
-      <div className='Title'><h3>{username}'s' information</h3></div>
+      <div className='Title'><h3>{username}'s information</h3></div>
       {/* <img src='/logo192.png'></img> */}
       <Form.Group className="mb-3">
         <Form.Label>Email: </Form.Label>
@@ -90,7 +96,7 @@ function Updatepersonalinfo () {
       </Form.Group>
       <Form.Group className="mb-3">
         <Form.Label>User_photo: </Form.Label>
-        <Form.Control placeholder="confirm password" type='file' value={user_photo} onChange={e => setImg(e.target.value)} />
+        <Form.Control placeholder="confirm password" type='file' onChange={e => setImg(e.target.value)} />
       </Form.Group>
       <Button variant="success" type="submit" onClick={updateinfo}>Update</Button>
     </div>

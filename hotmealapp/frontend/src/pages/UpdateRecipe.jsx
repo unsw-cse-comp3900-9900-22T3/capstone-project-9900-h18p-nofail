@@ -30,7 +30,6 @@ function UpdateRecipe () {
   const [show4, setS4] = React.useState('none');
   const recipe_username = localStorage.getItem('username');
   const getrecipe = async () => {
-    console.log(recipe_id)
     const response = await fetch('http://localhost:8080/recipe/showone/byid', {
       method: 'POST',
       headers: {
@@ -43,7 +42,7 @@ function UpdateRecipe () {
     const data = await response.json();
     if(data.status==="success") {
       const recipe = data.recipe
-      console.log(recipe)
+      //console.log(recipe)
       localStorage.setItem('recipe', JSON.stringify(recipe))
     }
     else {
@@ -58,24 +57,25 @@ function UpdateRecipe () {
   }, []); 
   const recipe = JSON.parse(localStorage.getItem('recipe'));
   console.log(recipe)
-  // const [recipe_name, setName] = React.useState(recipe.recipe_name);
-  // const [recipe_style, setCategory] = React.useState(recipe.recipe_style);
-  // const [description, setDes] = React.useState(recipe.description);
-  // const [ingredient, setIngre] = React.useState(recipe.ingredient);
-  // const [ingres, setIngres] = React.useState('');
-  // const [group, setGrou] = React.useState('');
-  // const [steps, setSteps] = React.useState(recipe.steps);
-  // const [recipe_photo, setImg] = React.useState(recipe.recipe_photo);
-  // const [cooking_time, setTime] = React.useState(recipe.cooking_time);
-  const [recipe_name, setName] = React.useState('');
-  const [recipe_style, setCategory] = React.useState('');
-  const [description, setDes] = React.useState('');
-  const [ingredient, setIngre] = React.useState('');
+  const [recipe_name, setName] = React.useState(recipe.recipe_name);
+  const [recipe_style, setCategory] = React.useState(recipe.recipe_style);
+  const [description, setDes] = React.useState(recipe.description);
+  const [ingredient, setIngre] = React.useState(recipe.ingredient);
   const [ingres, setIngres] = React.useState('');
   const [group, setGrou] = React.useState('');
-  const [steps, setSteps] = React.useState([]);
-  let [recipe_photo, setImg] = React.useState('');
-  const [cooking_time, setTime] = React.useState(0);
+  const [steps, setSteps] = React.useState(recipe.steps);
+  let [recipe_photo, setImg] = React.useState(recipe.recipe_photo);
+  const [cooking_time, setTime] = React.useState(recipe.cooking_time);
+
+  // const [recipe_name, setName] = React.useState('');
+  // const [recipe_style, setCategory] = React.useState('');
+  // const [description, setDes] = React.useState('');
+  // const [ingredient, setIngre] = React.useState('');
+  // const [ingres, setIngres] = React.useState('');
+  // const [group, setGrou] = React.useState('');
+  // const [steps, setSteps] = React.useState([]);
+  // let [recipe_photo, setImg] = React.useState('');
+  // const [cooking_time, setTime] = React.useState(0);
   const updaterecipe = async () => {
     if (recipe_photo.split('/').length!=2) {
       const pics = recipe_photo.split('\\')
@@ -83,8 +83,8 @@ function UpdateRecipe () {
       recipe_photo = 'imgs/' + pics[pics.length-1]
     }
     try {
-      const response = await fetch('http://localhost:8080/recipe/create', {
-        method: 'POST',
+      const response = await fetch('http://localhost:8080/recipe/update', {
+        method: 'PUT',
         headers: {
           'Content-type': 'application/json',
         },
@@ -101,7 +101,7 @@ function UpdateRecipe () {
       });
       const data = await response.json();
       if(data.status==="success") {
-        alert("create successfully!")
+        alert("update successfully!")
         window.open('https://wenqinghomepage.s3.ap-southeast-2.amazonaws.com/personal-page/index.html')
       }
       else {
@@ -158,7 +158,7 @@ function UpdateRecipe () {
     }
     ori_list.push(sublist)
   }
-  let orilist1_ = [1]
+  let orilist1_ = []
   for (let i = 0; i < steps.length; i++) {
     orilist1_.push(1)
   }
@@ -166,12 +166,14 @@ function UpdateRecipe () {
   //   list1.push(1)
   // }
   const [o_list, setListo] = React.useState(ori_list);
-  const [o_list2, setListo2] = React.useState(orilist1_);
+  console.log(orilist1_)
+  const [o_list1, setListo2] = React.useState(orilist1_);
+  console.log(o_list1)
+
   const list1 = [[1]];
   const list1_ = [1];
   const [list, setList] = React.useState(list1);
   const [list2, setList2] = React.useState(list1_);
-
   const addingre = () => {
     setList(list.map((item, index) => index === list.length - 1 ? [...item, 1] : item))
   }
@@ -180,7 +182,7 @@ function UpdateRecipe () {
     setIngre({...ingredient, [group]: ingres})
   }
   const todelete_ori = () => {
-    setListo(o_list.filter((item, index) => index != list.length - 1));
+    setListo(o_list.filter((item, index) => index != o_list.length - 1));
     setIngre(_.omit(ingredient, [group]))
   }
   const todelete = () => {
@@ -190,9 +192,9 @@ function UpdateRecipe () {
   const addstep = () => {
     setList2([...list2, 1])
   }
-  const todelete1_ori = (num) => {
-    setListo2(o_list2.filter((item, index) => index != list2.length - 1));
-    setSteps(steps.map((item, index) => index === num ? null : item))
+  const todelete1_ori = () => {
+    setListo2(o_list1.filter((item, index) => index != o_list1.length - 1));
+    setSteps(steps.filter((item, index) => index != steps.length - 1))
   }
   const todelete1 = () => {
     setList2(list2.filter((item, index) => index != list2.length - 1));
@@ -253,7 +255,7 @@ function UpdateRecipe () {
                   <Row>
                     <Form.Label>Group Title {index + 1}: </Form.Label>
                     <InputGroup className="mb-3">
-                    <Form.Select aria-label="Default select example" value={groupsname[index]} disabled>
+                    <Form.Select aria-label="Default select example" value={groupsname.length === 0 ? null : groupsname[index]} disabled>
                       <option>Open to select</option>
                       <option value="Meat">Meat</option>
                       <option value="Egg">Egg</option>
@@ -262,19 +264,22 @@ function UpdateRecipe () {
                       <option value="Seafood">Seafood</option>
                       <option value="Seasoning">Seasoning</option>
                       <option value="Grain">Grain</option>
+                      <option value="Others">Others</option>
                     </Form.Select>
-                    <Button variant="outline-secondary" onClick={todelete_ori}>Delete</Button>
+                    {index===o_list.length-1?
+                    <Button variant="outline-secondary" onClick={todelete_ori}>Delete</Button>:
+                    <Button variant="outline-secondary" disabled onClick={todelete_ori}>Delete</Button>}
                     </InputGroup>
                   </Row>
                   <p></p>
                   <Form.Group className="mb-3" controlId="formHorizontalEmail">
-                    {list[index].map((item1, index1) => (
+                    {o_list[index].map((item1, index1) => (
                       <Row key={index1} id={item1} className="align-items-center">
                         <Form.Label column sm={2}>
                           Ingredient{index1 + 1}
                         </Form.Label>
                         <Col sm={6}>
-                          <Form.Control type="email" value={ingredient[groupsname[index]][index1]} placeholder={`ingredient${index1 + 1}`} readOnly/>
+                          <Form.Control type="email" value={groupsname.length === 0 ? null : ingredient[groupsname[index]][index1]} placeholder={`ingredient${index1 + 1}`} readOnly/>
                         </Col>
                       </Row>
                     ))}
@@ -295,8 +300,11 @@ function UpdateRecipe () {
                       <option value="Seafood">Seafood</option>
                       <option value="Seasoning">Seasoning</option>
                       <option value="Grain">Grain</option>
+                      <option value="Grain">Grain</option>
                     </Form.Select>
-                    <Button variant="outline-secondary" onClick={todelete}>Delete</Button>
+                    {index===list.length-1?
+                    <Button variant="outline-secondary" onClick={todelete}>Delete</Button>:
+                    <Button variant="outline-secondary" disabled onClick={todelete}>Delete</Button>}
                     </InputGroup>
                   </Row>
                   <p></p>
@@ -331,7 +339,7 @@ function UpdateRecipe () {
       <div style={ifshow3}>
         <div className='createstep'>
           <div className='Container2'>
-          {o_list2.map((item, index) => (
+          {o_list1.map((item, index) => (
               <div key={index} id={item}>
                 <Row>
                   <Form.Label>Step {index + 1}: </Form.Label>
@@ -340,10 +348,12 @@ function UpdateRecipe () {
                     as="textarea"
                     placeholder="description"
                     style={{ height: '150px' }}
-                    value={steps[index]}
+                    value={steps.length === 0 ? null : steps[index]}
                     disabled
                     />
-                  <Button variant="outline-secondary" onClick={todelete1_ori(index)}>Delete</Button>
+                  {index===o_list1.length-1?
+                  <Button variant="outline-secondary" onClick={todelete1_ori}>Delete</Button>:
+                  <Button variant="outline-secondary" disabled onClick={todelete1_ori}>Delete</Button>}
                   </InputGroup>
                 </Row>
               </div>
@@ -351,7 +361,7 @@ function UpdateRecipe () {
             {list2.map((item, index) => (
               <div key={index} id={item}>
                 <Row>
-                  <Form.Label>Step {index + 1 + o_list2.length}: </Form.Label>
+                  <Form.Label>Step {index + 1 + o_list1.length}: </Form.Label>
                   <InputGroup className="mb-3">
                   <Form.Control
                     as="textarea"
@@ -359,7 +369,9 @@ function UpdateRecipe () {
                     style={{ height: '150px' }}
                     onBlur={e => setSteps([...steps, e.target.value])}
                     />
-                  <Button variant="outline-secondary" onClick={todelete1}>Delete</Button>
+                  {index===list2.length-1?
+                  <Button variant="outline-secondary" onClick={todelete1}>Delete</Button>:
+                  <Button variant="outline-secondary" disabled onClick={todelete1}>Delete</Button>}
                   </InputGroup>
                 </Row>
               </div>
@@ -382,7 +394,7 @@ function UpdateRecipe () {
           <div className='Container2'>
             <Form.Group controlId="formFile" className="mb-3">
               <FormLabel>Upload A Picture</FormLabel>
-              <Form.Control type="file" value={recipe_photo} onChange={e => setImg(e.target.value)}/>
+              <Form.Control type="file"  onChange={e => setImg(e.target.value)}/>
             </Form.Group>
             <Divider textAlign="left">Other Details</Divider>
               <FormLabel id="demo-row-radio-buttons-group-label">Prepare Time</FormLabel>
