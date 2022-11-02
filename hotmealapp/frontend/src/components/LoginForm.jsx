@@ -51,6 +51,30 @@ function LoginForm () {
         })
       });
       const data_recipe = await response_recipe.json();
+
+      //get a user's fav recipe list
+      const response_fav_recipe = await fetch('http://localhost:8080/user/getfavlist', {
+        method: 'POST',
+        headers: {
+          'Content-type': 'application/json',
+        },
+        body: JSON.stringify({
+          username
+        })
+      });
+      const data_fav_recipe = await response_fav_recipe.json();
+
+      //get all recipe list
+      const response_all_recipe = await fetch('http://localhost:8080/recipe/showall', {
+        method: 'POST',
+        headers: {
+          'Content-type': 'application/json',
+        },
+        body: JSON.stringify({
+          
+        })
+      });
+      const data_all_recipe = await response_all_recipe.json();
       //////////////////////////////////////////////////////////////////////////
 
       if(data.status==="success") {
@@ -64,7 +88,7 @@ function LoginForm () {
         let personal_info = data_personal_info.personal_info
         localStorage.setItem('personal_info', JSON.stringify(personal_info[0]))
         
-        //get recipe list
+        //get a user's recipe list
         let recipes = data_recipe.recipe_list
         localStorage.setItem('recipes', JSON.stringify(recipes))
         //get a user's recipe num
@@ -74,6 +98,16 @@ function LoginForm () {
         else {
           localStorage.setItem('recipe_num', recipes.length)
         }
+
+        //get a user's fav recipe list
+        let fav_recipes = data_fav_recipe.fav_list
+        localStorage.setItem('fav_recipes', JSON.stringify(fav_recipes))
+
+        //get all recipe list
+        let all_recipes = data_all_recipe.recipe_list
+        localStorage.setItem('all_recipes', JSON.stringify(all_recipes))
+        //console.log(all_recipes)
+        
         //////////////////////////////////////////////////////////
 
       }
