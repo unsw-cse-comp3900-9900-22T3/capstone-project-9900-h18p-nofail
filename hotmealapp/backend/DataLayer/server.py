@@ -953,7 +953,7 @@ def search_user():
         if return_user:
             return_user = list(return_user) #convert tuple to list
             for i in range(len(return_user)):
-                return_user[i] = {'username':return_user[i][0],'email':return_user[i][1],'bio':return_user[i][2],'user_photo':return_user[i][3]}
+                return_user[i] = {'username':return_user[i][0],'email':return_user[i][1],'bio':return_user[i][3],'user_photo':return_user[i][4]}
             msg = {'status': 'success', 'message': 'You have successfully searched a user!','return_user':return_user}
         else:
             msg = {'status': 'fail', 'message': 'Search user failed!'}
