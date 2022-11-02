@@ -994,9 +994,25 @@ def Ingredient_find(ingredient):
     db.close()
     print(re)
     return re
+def Recipe_get_fav_num(recipe_id):
+    db.ping()
+    re_id = int(recipe_id)
+    sql = "SELECT COUNT(*) FROM sys.User_Favourite WHERE Favourite_Recipe='%s';" % (re_id)
+    cursor = db.cursor()
+    re_num = ''
+    try:
+        cursor.execute(sql)
+        re_num = cursor.fetchone()[0]
+    except Exception:
+        db.rollback()
+        print("count_favourite worng!!")
+    re_num = int(re_num)
+    print(re_num)
+    db.close()
+    return re_num
 
 # Ingredient_find('chicken')
-
+Recipe_get_fav_num(2)
 
 
 
