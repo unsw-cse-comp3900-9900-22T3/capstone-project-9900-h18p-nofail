@@ -15,7 +15,7 @@
                 <div class="logoContainer">
                     <div class="logoBorder">
                         <img class="logoImg"
-                            src="https://wenqinghomepage.s3.ap-southeast-2.amazonaws.com/personal-page/logo-social.png"
+                            src="http://localhost:3000/personal-page"
                             onclick="logoJump()" />
                     </div>
                 </div>
@@ -23,10 +23,10 @@
                     <button type="button" onclick="CreateRecipe()">Create New Recipe</button>
                 </div>
                 <div class="title">
-                    <label class="currentUserName"></label>'s Recipe
+                    <label id="whosrecipe"></label>'s Recipe
                 </div>
                 <div class="loginRemark">
-                    <a href="https://wenqinghomepage.s3.ap-southeast-2.amazonaws.com/personal-page/index.html">Welcome
+                    <a href="http://localhost:3000/homepage">Welcome
                         <label style="color: red;" class="currentUserName">Ryan</label></a>
                 </div>
                 <div class="loginOut">
@@ -40,12 +40,12 @@
                     </div>
                     <div class="favoriteAndLike">
                         <div class="favorite">
-                            <div id="like_button_container" class="favoriteNumberBorder" onclick="favplus()"> favorite
+                            <div id="fav" class="favoriteNumberBorder" onclick="validateOperate('favorite')"> favorite
                             </div>
                             <div class='favoriteNumber'> </div>
                         </div>
                         <div class="like">
-                            <div id="like" class="likeNumberBorder" onclick="likeplus()"> like</div>
+                            <div id="like" class="likeNumberBorder" onclick="validateOperate('like')"> like</div>
                             <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
                             <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"
                                 crossorigin></script>
@@ -71,10 +71,10 @@
                 </div>
                 <div class="personMessage">
                     <div class="personName">
-                        <img src="images/avatar.png" class="avatar" /> <span class="recipeOwnerName"></span>
+                        <img src="images/avatar.png" class="avatar" /> <span class="recipeOwnerName" onclick="topersonalpage()"></span>
                     </div>
                     <div class="follow">
-                        <div id="follow" class="personFollowing" onclick="followplus()"> follow </div>
+                        <div id="follow" class="personFollowing" onclick="validateOperate('follow')"> follow </div>
                         <script src="follow.js"></script>
 
                         <div class='followperson'> </div>
@@ -82,13 +82,16 @@
                 </div>
             </div>
             <div class="bottom">
+                <div class="commentContainer">
+                    <div class="commentInput">
+                        <textarea rows="3" cols="30" id="currentComment"></textarea>
+                        <input type="submit" value="comment" onclick="addComment()">
+                    </div>
+                </div>
                 <div id="commentContainer">
 
                 </div>
-                <div class="commentInput">
-                    <textarea rows="3" cols="30" id="currentComment"></textarea>
-                    <input type="submit" value="comment" onclick="addComment()">
-                </div>
+
             </div>
         </div>
 </body>

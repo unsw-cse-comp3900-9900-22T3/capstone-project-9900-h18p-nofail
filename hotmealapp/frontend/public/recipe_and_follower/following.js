@@ -18,18 +18,18 @@ $(document).ready(
             function init() {
 
                 $.ajax({
-                    url: "http://127.0.0.1:8080/user/getfollowerlist",
+                    url: "http://127.0.0.1:8080/user/getfollowinglist",
                     contentType: 'application/json',
                     data: JSON.stringify({ 'username': currentUserName }),
                     type: "POST",
                     success: function (data) {
                         if (data.status === "success") {
-                            for (var i = 0; i < data.follower_list.length; i++) {
-                                let obj = data.follower_list[i];
+                            for (var i = 0; i < data.following_list.length; i++) {
+                                let obj = data.following_list[i];
                                 obj.avatarUrl = "images/logo.png";
 
                                 var commentContainer =
-                                    "<div class='commentDiv'><div class='commentAvatar'><div class='commentImgBorder'><img src='" + obj.avatarUrl + "' class='commentImg'/></div></div><div class='commentMain'><div class='commentUserName'>" + obj.follower_username + "</div></div><div class='commentTime'>" + obj.time + "</div></div>";
+                                    "<div class='commentDiv'><div class='commentAvatar'><div class='commentImgBorder'><img src='" + obj.avatarUrl + "' class='commentImg'/></div></div><div class='commentMain'><div class='commentUserName'>" + obj.following_username + "</div></div><div class='commentTime'>" + obj.time + "</div></div>";
 
                                 document.getElementById("commentContainer").innerHTML += commentContainer;
                             }
