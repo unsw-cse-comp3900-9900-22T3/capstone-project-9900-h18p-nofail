@@ -7,16 +7,12 @@ import {
     InputGroup,
   } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
-
-import RecipeCard from '../components/RecipeCard';
+import HomepageRecipeCard from '../components/HomepageRecipeCard';
+import Logout from '../pages/Logout';
 
 function Homepage() {
   function logoJump() {
     window.location.href = 'http://localhost:3000/homepage';
-  }
-
-  function logout() {
-    window.location.href = 'http://localhost:3000/login';
   }
 
   function personalPage() {
@@ -65,11 +61,10 @@ function Homepage() {
       <Button onClick={personalPage} variant="outline-success" style={{ marginLeft: 180 }}>
         Personal Page
       </Button>
-      <Button onClick={logout} variant="secondary" style={{ marginLeft: 30 }}>
-        Log Out
-      </Button>
 
-      <RecipeCard />
+      <Logout />
+
+      <HomepageRecipeCard />
       
       {/*script*/}
       <p />

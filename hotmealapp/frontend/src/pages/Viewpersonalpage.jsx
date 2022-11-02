@@ -4,19 +4,70 @@ import {
     Form,
   } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import FollowBtn from '../components/FollowBtn';
-import RecipeCard from '../components/RecipeCard';
+import PersonalRecipeCard from '../components/PersonalRecipeCard';
 import PersonalDetail from '../components/PersonalDetail';
+import Logout from '../pages/Logout';
+
+class FollowBtn extends React.Component {
+  constructor(){
+      super()
+      this.state={
+          isLiked:false
+      }
+  }
+
+  from_username = localStorage.getItem('username')
+  //to_username = view_username////////////////////
+
+  handleFollow = async() =>{
+    try{
+      const response = await fetch('http://localhost:8080/user/follow', {
+        method: 'POST',
+        headers: {
+          'Content-type': 'application/json',
+        },
+        body: JSON.stringify({
+          from_username,
+          to_username
+        })
+      });
+      const data = await response.json();
+
+      this.setState((prevState)=>{
+          //console.log(prevState)
+          return{
+              isLiked:!prevState.isLiked
+          }
+      },()=>{
+          //console.log(this.state.isLiked) //获取最新的状态
+          if(data.status==="success"){
+            this.state.isLiked=='true'
+          }
+          else {
+            alert(data.message)
+          }
+      })
+    }catch (err) {
+      alert(err)
+    }
+  }
+
+  render() {
+    return (
+            <Button variant="outline-success" style={{ marginLeft: 50 }} onClick={this.handleFollow.bind(this)}>
+                {
+                this.state.isLiked ? 'Followed' :'Follow'
+                }
+            </Button>
+    )
+  }
+}
 
 function Viewpersonalpage() {
     const username = localStorage.getItem('username');
 
     function logoJump() {
         window.location.href = 'http://localhost:3000/homepage';
-      }
-
-    function logout() {
-        window.location.href = 'http://localhost:3000/login';
       }
 
     function myRecipe() {
@@ -27,7 +78,8 @@ function Viewpersonalpage() {
         window.location.href = 'http://localhost:3000/viewpersonalpage';
       }
 
-    
+
+
 
     return (
         <>
@@ -50,16 +102,14 @@ function Viewpersonalpage() {
     <div class="loginRemark" style={{ marginLeft: 1200 }}>
       <Form>
         <Form.Text>Welcome {username}</Form.Text>
-        <Button onClick={logout} variant="secondary" style={{ marginLeft: 30 }}>
-          Log Out
-        </Button>
+        <Logout />
         </Form>
     </div>
 
   {/*Personal Details*/}
   <PersonalDetail />
 
-  <div style={{ marginLeft: 100 }}>
+  <div style={{ marginLeft: 150 }}>
     <table border={0}>
       <tbody>
         <tr>
@@ -72,30 +122,14 @@ function Viewpersonalpage() {
     </table>
   </div>
 
-  {/*Recipe List*/}
-  <br />
-  <table bgcolor="#7DA395">
-      <tbody>
-        <tr>
-          <td>
-            <a onClick={myRecipe} style={{ marginLeft: 380}}>My Recipe</a>
-          </td>
-          <td>
-            <a onClick={favoriteRecipe} style={{ margin: 434 }}>Favorite Recipe</a>
-          </td>
-          </tr>
-      </tbody>
-    </table>
-  <br />
+<PersonalRecipeCard />
 
-<RecipeCard />
-  
   {/*script*/}
 </>
 
 
       );
     }
-  
+
 
 export default Viewpersonalpage;

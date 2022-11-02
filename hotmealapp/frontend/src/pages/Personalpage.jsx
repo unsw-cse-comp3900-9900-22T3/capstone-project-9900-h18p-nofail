@@ -4,9 +4,9 @@ import {
     Form,
   } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import Logo from '../images/logo-social.png';
-import MyRecipeCard from '../components/MyRecipeCard';
+import PersonalRecipeCard from '../components/PersonalRecipeCard';
 import PersonalDetail from '../components/PersonalDetail';
+import Logout from '../pages/Logout';
 
 function Personalpage() {
   const username = localStorage.getItem('username');
@@ -15,21 +15,11 @@ function Personalpage() {
       window.location.href = 'http://localhost:3000/homepage';
     }
 
-    function logout() {
-      window.location.href = 'http://localhost:3000/login';
-    }
-
     function createRecipe() {
       window.location.href = 'http://localhost:3000/createrecipe';
     }
 
-    function myRecipe() {
-      window.location.href = 'http://localhost:3000/personalpage';
-    }
-
-    function favoriteRecipe() {
-      window.location.href = 'http://localhost:3000/personalpage';
-    }
+  
 
 
     return (
@@ -51,9 +41,7 @@ function Personalpage() {
     <div class="loginRemark" style={{ marginLeft: 1200 }}>
       <Form>
         <Form.Text>Welcome {username}</Form.Text>
-        <Button onClick={logout} variant="secondary" style={{ marginLeft: 30 }}>
-          Log Out
-        </Button>
+        <Logout />
         </Form>
     </div>
 
@@ -66,7 +54,7 @@ function Personalpage() {
         <tr>
           <td>
             <br />
-            <Button id="editSaveBtn" href={`/update_personal_info${username}`} variant="outline-success" style={{ marginLeft: 100 }}>
+            <Button id="editSaveBtn" href={`/update_personal_info/${username}`} variant="outline-success" style={{ marginLeft: 100 }}>
               Edit/Save
             </Button>
           </td>
@@ -81,23 +69,8 @@ function Personalpage() {
     </table>
   </div>
 
-  {/*Recipe List*/}
-  <br />
-  <table bgcolor="#7DA395">
-      <tbody>
-        <tr>
-          <td>
-            <a onClick={myRecipe} style={{ marginLeft: 380}}>My Recipe</a>
-          </td>
-          <td>
-            <a onClick={favoriteRecipe} style={{ margin: 434 }}>Favorite Recipe</a>
-          </td>
-          </tr>
-      </tbody>
-    </table>
-  <br />
 
-<MyRecipeCard />
+<PersonalRecipeCard />
 
   {/*script*/}
 </>

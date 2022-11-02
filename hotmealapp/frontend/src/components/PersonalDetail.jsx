@@ -25,6 +25,41 @@ function PersonalDetail () {
     const recipe_num = localStorage.getItem('recipe_num');
 
 
+//     const username = localStorage.getItem('username');
+//     const getinfo = async () => {
+//         try {
+//         const response = await fetch('http://localhost:8080/user/getpersonalinfo', {
+//             method: 'POST',
+//             headers: {
+//             'Content-type': 'application/json',
+//             },
+//             body: JSON.stringify({
+//             username  // username: username
+//             })
+            
+//         });
+//         const data = await response.json();
+//         const info = data.personal_info;
+//         localStorage.setItem('info',JSON.stringify(info));
+//         console.log(data);
+//         console.log(info);
+//         return data;
+//         } catch (error) {
+//         console.log(error);
+//         return error;
+//         }
+//     }
+  
+//    React.useEffect(() => {
+//      (async () => {
+//       await getinfo();
+//    })(); // IIFE
+//   }, []);
+
+//   const personal_info = JSON.parse(localStorage.getItem('info'));
+//   console.log(personal_info);
+
+
     return (
         <>
         <div id="Personal Details" style={{ marginLeft: 150 }}>

@@ -4,31 +4,32 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 class LikeBtn extends React.Component {
 
-    recipes = JSON.parse(localStorage.getItem('recipes'));
-    
-    constructor(props){
-        super(props)
-        this.state = {
-            likes : 0
+    constructor(){
+        super()
+        this.state={
+            isLiked:false
         }
     }
-    
-    increaseLikes() {
-        this.setState({
-            likes : ++ this.state.likes
-        })
-    }
     render() {
-        return(
-            <div className="likes-button-component">
-                <button type="button" 
-                    onClick={() => { this.increaseLikes() }}
-                    
-                >
-                    ❤️ {this.state.likes}
-                </button>
-            </div>
+        return (
+                <span onClick={this.handleLike.bind(this)}>
+                    {
+                    this.state.isLiked ? '❤️' :'🖤'
+                    }
+                </span>
         )
     }
+ 
+    handleLike(){
+        this.setState((prevState)=>{
+            console.log(prevState)
+            return{
+                isLiked:!prevState.isLiked
+            }
+        },()=>{
+            console.log(this.state.isLiked) //setState回调 获取最新的状态
+        })
+    }
+
 }
 export default LikeBtn
