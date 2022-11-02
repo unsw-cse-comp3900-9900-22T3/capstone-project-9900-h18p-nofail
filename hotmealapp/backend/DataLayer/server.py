@@ -5,6 +5,9 @@ import sys
 # sys.path.append(path.dirname(path.dirname(path.abspath(__file__))))
 # sys.path.append('..')
 from collections import ChainMap
+from tokenize import group
+from flask_login import current_user
+# from flask_qiniustorage import Qiniu
 
 from flask import Flask, jsonify, render_template, request, redirect, url_for, session, Blueprint, Response
 from flask_cors import CORS, cross_origin
@@ -42,6 +45,41 @@ cors = CORS(app, resources={r"*": {"origins": "*"}})
 #                         password='12345678',
 #                         database='sys')
 
+
+
+# QINIU_ACCESS_KEY = 'ia2_Xh4kW0_6fK5cvrACV6ICkv_Wvjo1tqmvM5OS'
+# QINIU_SECRET_KEY = 'sfN9dqTYsi5Sm4K3IKJguIPauzz6zysMzbDrzpdw'
+# QINIU_BUCKET_NAME = 'no-fail-image-bucket'
+# QINIU_BUCKET_DOMAIN = 'rkipgq0yn.sabkt.gdipper.com'
+
+# # app = Flask(__name__)
+# app.config.from_object(__name__)
+# qiniu_store = Qiniu(app)
+# # 或者
+# # qiniu_store = Qiniu()
+# # qiniu_store.init_app(app)
+
+# # 保存文件到七牛
+# @app.route('/save')
+# def save(data,filename):
+#     # data = 'data to save'
+#     # filename = 'filename'
+#     print('here')
+#     ret, info = qiniu_store.save(data, filename)
+#     return str(ret)
+
+# # 删除七牛空间中的文件
+# @app.route('/delete')
+# def delete():
+#     filename = 'filename'
+#     ret, info = qiniu_store.delete(filename)
+#     return str(ret)
+
+# # 根据文件名获取对应的公开URL
+# @app.route('/url')
+# def url():
+#     filename = 'filename'
+#     return qiniu_store.url(filename)
 
 #######End connect to database#######====================
 
@@ -240,26 +278,51 @@ def show_one_recipe():
         re = DataLayer.Recipe_show_one(recipe_name, recipe_username)
         if re:
             ingredients = re[4].split(';') #convert str into list
+            # get rid of the last empty element
+            ingredients.pop()
             print("ingredients: ",ingredients)
             for i in range(len(ingredients)):
                 ingredients[i] = ingredients[i].strip()
                 print("ingredients: ",ingredients[i])
                 db.ping(reconnect=True)
-                re_ingre = db.cursor().execute("SELECT type FROM Ingredients_type WHERE Ingredient = %s", (ingredients[i]))
-                if re_ingre:
-                    print("re_ingre: ", re_ingre)
-                    # ingredients[i] = {re_ingre: ingredients[i]}
-                else:
-                    continue
-            # if the key in ingredients is the same, merge them into one key
-            # ingredients = dict(ChainMap(*ingredients)) #convert list into dict
+                cursur = db.cursor()
+                sql = "SELECT `Type` FROM sys.Ingredients_type WHERE Ingredient = \"%s\"" %(ingredients[i])
+                try:
+                    print("sql: ",sql)
+                    cursur.execute(sql)
+                    # db.commit()
+                    result = cursur.fetchone()
+                    if result:
+                        ingredients[i] = {result[0]:ingredients[i]}
+                        print("result: ",ingredients[i])
+                    else:
+                        ingredients[i] = {"Others":ingredients[i]}
+                        # print("result: ", ingredients[i])
+                except:
+                    db.rollback()
+                    print("sql error")
+            group_ingredient = {}
+            for i in range(len(ingredients)):
+                for key in ingredients[i]:
+                    if key in group_ingredient:
+                        group_ingredient[key].append(ingredients[i][key])
+                    else:
+                        group_ingredient[key] = [ingredients[i][key]]
+
+            steps = re[6].split(',') #convert str into list
+            group_steps = []
+            # get rid of the last empty element
+            steps.pop()
+            for key in steps:
+                group_steps.append(key.strip())
+            # print("group_steps: ",group_steps)
 
             like_num = DataLayer.Recipe_get_like_num(recipe_name,recipe_username)
             re=list(re) #convert tuple into list
             if like_num:
-                re = {"recipe_id": re[0], "recipe_name": re[1], "recipe_username": re[2], "recipe_style": re[3], "ingredient": ingredients, "cooking_time": re[5], "steps": re[6], "recipe_photo": re[7], "description": re[9],"like_num":like_num} #convert tuple into dictionary
+                re = {"recipe_id": re[0], "recipe_name": re[1], "recipe_username": re[2], "recipe_style": re[3], "ingredient": group_ingredient, "cooking_time": re[5], "steps": group_steps, "recipe_photo": re[7], "description": re[9],"like_num":like_num} #convert tuple into dictionary
             else:
-                re = {"recipe_id": re[0], "recipe_name": re[1], "recipe_username": re[2], "recipe_style": re[3], "ingredient": ingredients, "cooking_time": re[5], "steps": re[6], "recipe_photo": re[7], "description": re[9],"like_num":0}
+                re = {"recipe_id": re[0], "recipe_name": re[1], "recipe_username": re[2], "recipe_style": re[3], "ingredient": group_ingredient, "cooking_time": re[5], "steps": group_steps, "recipe_photo": re[7], "description": re[9],"like_num":0}
             msg = {'status': 'success', 'message': 'You have successfully got the recipe!', 'recipe': re}
         else:
             msg = {'status': 'fail', 'message': 'The recipe does not exist!'}
@@ -275,12 +338,52 @@ def show_one_recipe_byid():
         recipe_id = request.json['recipe_id']
         re = DataLayer.Recipe_show_one_byid(recipe_id)
         if re:
+            ingredients = re[4].split(';') #convert str into list
+            # get rid of the last empty element
+            ingredients.pop()
+            print("ingredients: ",ingredients)
+            for i in range(len(ingredients)):
+                ingredients[i] = ingredients[i].strip()
+                print("ingredients: ",ingredients[i])
+                db.ping(reconnect=True)
+                cursur = db.cursor()
+                sql = "SELECT `Type` FROM sys.Ingredients_type WHERE Ingredient = \"%s\"" %(ingredients[i])
+                try:
+                    print("sql: ",sql)
+                    cursur.execute(sql)
+                    # db.commit()
+                    result = cursur.fetchone()
+                    if result:
+                        ingredients[i] = {result[0]:ingredients[i]}
+                        print("result: ",ingredients[i])
+                    else:
+                        ingredients[i] = {"Others":ingredients[i]}
+                        # print("result: ", ingredients[i])
+                except:
+                    db.rollback()
+                    print("sql error")
+            group_ingredient = {}
+            for i in range(len(ingredients)):
+                for key in ingredients[i]:
+                    if key in group_ingredient:
+                        group_ingredient[key].append(ingredients[i][key])
+                    else:
+                        group_ingredient[key] = [ingredients[i][key]]
+
+            steps = re[6].split(',') #convert str into list
+            group_steps = []
+            # get rid of the last empty element
+            steps.pop()
+            for key in steps:
+                group_steps.append(key.strip())
+            # print("group_steps: ",group_steps)
+
             like_num = DataLayer.Recipe_get_like_num_byid(recipe_id)
             re=list(re) #convert tuple into list
             if like_num:
-                re = {"recipe_id": re[0], "recipe_name": re[1], "recipe_username": re[2], "recipe_style": re[3], "ingredient": re[4], "cooking_time": re[5], "steps": re[6], "recipe_photo": re[7], "description": re[9],"like_num":like_num} #convert tuple into dictionary
+                re = {"recipe_id": re[0], "recipe_name": re[1], "recipe_username": re[2], "recipe_style": re[3], "ingredient": group_ingredient, "cooking_time": re[5], "steps": group_steps, "recipe_photo": re[7], "description": re[9],"like_num":like_num} #convert tuple into dictionary
             else:
-                re = {"recipe_id": re[0], "recipe_name": re[1], "recipe_username": re[2], "recipe_style": re[3], "ingredient": re[4], "cooking_time": re[5], "steps": re[6], "recipe_photo": re[7], "description": re[9],"like_num":0}
+                re = {"recipe_id": re[0], "recipe_name": re[1], "recipe_username": re[2], "recipe_style": re[3], "ingredient": group_ingredient, "cooking_time": re[5], "steps": group_steps, "recipe_photo": re[7], "description": re[9],"like_num":0}
             msg = {'status': 'success', 'message': 'You have successfully got the recipe!', 'recipe': re}
         else:
             msg = {'status': 'fail', 'message': 'The recipe does not exist!'}
@@ -862,127 +965,7 @@ def logout():
     return jsonify({'status': 'success', 'message': 'You have successfully logged out!'})
 
 
-
-from flask_qiniustorage import Qiniu
-
-QINIU_ACCESS_KEY = 'ia2_Xh4kW0_6fK5cvrACV6ICkv_Wvjo1tqmvM5OS'
-QINIU_SECRET_KEY = 'sfN9dqTYsi5Sm4K3IKJguIPauzz6zysMzbDrzpdw'
-QINIU_BUCKET_NAME = 'no-fail-image-bucket'
-QINIU_BUCKET_DOMAIN = 'rkipgq0yn.sabkt.gdipper.com'
-
-# app = Flask(__name__)
-app.config.from_object(__name__)
-qiniu_store = Qiniu(app)
-# 或者
-# qiniu_store = Qiniu()
-# qiniu_store.init_app(app)
-
-# 保存文件到七牛
-@app.route('/save')
-def save(data,filename):
-    # data = 'data to save'
-    # filename = 'filename'
-    print('here')
-    ret, info = qiniu_store.save(data, filename)
-    return str(ret)
-
-# 删除七牛空间中的文件
-@app.route('/delete')
-def delete():
-    filename = 'filename'
-    ret, info = qiniu_store.delete(filename)
-    return str(ret)
-
-# 根据文件名获取对应的公开URL
-@app.route('/url')
-def url():
-    filename = 'filename'
-    return qiniu_store.url(filename)
-
-
-
-
-from flask_qiniustorage import Qiniu
-
-QINIU_ACCESS_KEY = 'ia2_Xh4kW0_6fK5cvrACV6ICkv_Wvjo1tqmvM5OS'
-QINIU_SECRET_KEY = 'sfN9dqTYsi5Sm4K3IKJguIPauzz6zysMzbDrzpdw'
-QINIU_BUCKET_NAME = 'no-fail-image-bucket'
-QINIU_BUCKET_DOMAIN = 'rkipgq0yn.sabkt.gdipper.com'
-
-# app = Flask(__name__)
-app.config.from_object(__name__)
-qiniu_store = Qiniu(app)
-# 或者
-# qiniu_store = Qiniu()
-# qiniu_store.init_app(app)
-
-# 保存文件到七牛
-@app.route('/save')
-def save(data,filename):
-    # data = 'data to save'
-    # filename = 'filename'
-    print('here')
-    ret, info = qiniu_store.save(data, filename)
-    return str(ret)
-
-# 删除七牛空间中的文件
-@app.route('/delete')
-def delete():
-    filename = 'filename'
-    ret, info = qiniu_store.delete(filename)
-    return str(ret)
-
-# 根据文件名获取对应的公开URL
-@app.route('/url')
-def url():
-    filename = 'filename'
-    return qiniu_store.url(filename)
 #######End of Business Layer#######======================================================
-
-#######Datalayer########================================================================
-
-# def User_Register(username, email, password):
-#     sql = "INSERT INTO sys.User(Username, Email, Password) \
-#             VALUES ('%s', '%s', '%s');" % (username, email, password)
-#     insert_cursor = db.cursor()
-#     try:
-#         insert_cursor.execute(sql)
-#         db.commit()
-#     except Exception:
-#         db.rollback()
-#         print("register wrong!!")
-
-# def User_Login(username, password):
-#     sql = "SELECT Password FROM sys.User WHERE Username = '%s';" % (username)
-#     insert_cursor = db.cursor()
-#     return_password = ''
-#     try:
-#         insert_cursor.execute(sql)
-#         return_password = insert_cursor.fetchone()[0]
-#     except Exception:
-#         db.rollback()
-#         print("login wrong!!")
-#     if return_password == password:
-#         return True
-#     else:
-#         return False
-        
-# def Username_Check(username):
-#     sql = "SELECT * FROM sys.User WHERE Username = '%s';" % (username)
-#     insert_cursor = db.cursor()
-#     return_password = ''
-#     try:
-#         insert_cursor.execute(sql)
-#         return_password = insert_cursor.fetchone()[0]
-#     except Exception:
-#         db.rollback()
-#         print("check wrong!!")
-#     if return_password == '':
-#         return True
-#     else:
-#         return False
-
-#######End of Datalayer########================================================================
 
 
 if __name__ == '__main__':
