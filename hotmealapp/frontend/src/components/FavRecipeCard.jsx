@@ -17,24 +17,44 @@ import Tomatofriedegges from '../images/tomatofriedeggs.jpeg';
 import Zajiangmian from '../images/zajiangmian.jpeg';
 
 
-function HomepageRecipeCard () {
+function FavRecipeCard () {
 
   function viewRecipe(id) {
     if (id)
       window.location.href = `/recipe_and_follower/recipe.html?receipId=${id}`;
   }
 
-  function hanle_CookingTime(){
-    
-  }
+  function myRecipe() {
+    window.location.href = 'http://localhost:3000/personalpage';
+    }
 
-  const all_recipes = JSON.parse(localStorage.getItem('all_recipes'));
+  function favoriteRecipe() {
+    window.location.href = 'http://localhost:3000/favrecipepage';
+    }
+
+  const fav_recipes = JSON.parse(localStorage.getItem('fav_recipes'));
   //console.log(all_recipes);
 
 
 
     return (
             <>
+            {/*Recipe List*/}
+            <br />
+            <table bgcolor="#7DA395">
+                <tbody>
+                  <tr>
+                    <td>
+                      <a href = 'http://localhost:3000/personalpage' style={{ marginLeft: 380, color:'black'}}>My Recipe</a>
+                    </td>
+                    <td>
+                      <a href = 'http://localhost:3000/favrecipepage' style={{ margin: 434 , color:'black'}}>Favorite Recipe</a>
+                    </td>
+                    </tr>
+                </tbody>
+              </table>
+            <br />
+
             {/*Filters*/}
               <div className='Container2'>
                   <div id="Filters">
@@ -84,15 +104,15 @@ function HomepageRecipeCard () {
               <div className='Container2'>
                 <br />
                 <Row xs={1} md={4} className="g-4">
-                  {all_recipes.map(all_recipe =>(
+                  {fav_recipes.map(fav_recipe =>(
                     <Col >
                       <Card>
                         <Card.Body>
-                          <Button variant="outline-success" href = {`/recipe_and_follower/recipe.html?receipId=${all_recipe.recipe_id}`}>
-                            <Card.Img variant="top" src={all_recipe.recipe_photo}/>
+                          <Button variant="outline-success" href = {`/recipe_and_follower/recipe.html?receipId=${fav_recipe.recipe_id}`}>
+                            <Card.Img variant="top" src={fav_recipe.recipe_photo}/>
                           </Button>
-                          <Card.Title>{all_recipe.recipe_name}</Card.Title>
-                          <Card.Text>❤️{all_recipe.like_num}</Card.Text>
+                          <Card.Title>{fav_recipe.recipe_name}</Card.Title>
+                          <Card.Text>❤️{fav_recipe.like_num}</Card.Text>
                         </Card.Body>
                       </Card>
                     </Col>
@@ -103,4 +123,4 @@ function HomepageRecipeCard () {
         );
 }
 
-export default HomepageRecipeCard;
+export default FavRecipeCard;

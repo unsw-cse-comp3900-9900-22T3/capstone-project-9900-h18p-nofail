@@ -10,10 +10,8 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import HomepageRecipeCard from '../components/HomepageRecipeCard';
 import Logout from '../pages/Logout';
 
+
 function Homepage() {
-  function logoJump() {
-    window.location.href = 'http://localhost:3000/homepage';
-  }
 
   function personalPage() {
     window.location.href = 'http://localhost:3000/personalpage';
@@ -22,6 +20,73 @@ function Homepage() {
   function viewRecipe() {
     window.location.href = '/recipe_and_follower/recipe.html';
   }
+  
+    const myfunciton = async () => {
+      // const username_search_url="/usar/s";
+      // const recipe_saerch_url="/safd";
+      const radio_box = document.getElementsByName("searchType");
+      var search_box_content = document.getElementById("SearchBox");
+      console.log("#####search_box_content:", search_box_content.value)
+      const search_box_value = search_box_content.value
+      
+      // search_content_real = search_content_real.search_content_real
+
+      const search_content = JSON.stringify({"search_content":search_box_value,"difficult":"","style_name":"","ingredient":""})
+      console.log("search_content:",search_content.search_content, "type:", typeof(search_content))
+
+      var search_content_real = JSON.parse(search_content)
+      console.log("search_content_real:", search_content_real)
+
+      console.log("radio_box: ",radio_box);
+      console.log("radio_box.length:",radio_box.length);
+      // document.getElementById("result").innerHTML = "Gender: "+radio_box[i].value;
+        if(radio_box[0].checked){
+          console.log("radiobox[0]")
+          // const search_user = async () => {
+              const response = await fetch('http://localhost:8080/search/user', {
+              method: 'POST',
+              headers: {
+                'Content-type': 'application/json',
+              },
+              body: JSON.stringify(
+                {
+                  search_content_real
+                }.search_content_real
+              )
+            });
+            // search_user();
+            const data = await response.json();
+            console.log("user data: ",data);
+            let user_search_return = data.return_user
+            localStorage.setItem('user_search_return', JSON.stringify(user_search_return))
+
+            window.location.href = 'http://localhost:3000/searchuserpage';
+
+
+        } else if (radio_box[1].checked){
+          console.log("radiobox[1]")
+          // const search_recipe = async () => {
+            const response = await fetch('http://localhost:8080/search/recipe', {
+            method: 'POST',
+            headers: {
+              'Content-type': 'application/json',
+            },
+            body: JSON.stringify({
+              search_content_real
+            }.search_content_real)
+          });
+          // search_recipe();
+          const data = await response.json();
+          console.log("recipe data: ",data);
+          localStorage.setItem('recipe_search_return', JSON.stringify(data.return_recipe))
+
+          window.location.href = 'http://localhost:3000/searchrecipepage';
+        // }
+
+        }
+        
+
+    }
 
       return (
         <>
@@ -51,12 +116,15 @@ function Homepage() {
       </a>
 
       {/*Search Box*/}
-      <input type="radio" name="Search Type" defaultValue="Username" style={{ marginLeft: 200}}/>
-        Username
-      <input type="radio" name="Search Type" defaultValue="Recipe" />
-        Recipe
-      <input type="text" name="Search Box" />
-      <input type="Submit" defaultValue="Search" />
+       <input type="radio" id="username_box" name="searchType" defaultValue="Username" style={{ marginLeft: 200}} />
+         Username
+       <input type="radio" id="recipe_box" name="searchType" defaultValue="Recipe" />
+         Recipe
+       <input type="text" id="SearchBox" />
+       <input type="Submit" defaultValue="Search" onClick={myfunciton}/>
+
+      
+
       
       <Button onClick={personalPage} variant="outline-success" style={{ marginLeft: 180 }}>
         Personal Page

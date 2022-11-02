@@ -4,7 +4,7 @@ import {
     Form,
   } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import PersonalRecipeCard from '../components/PersonalRecipeCard';
+import ViewPersonalRecipeCard from '../components/ViewPersonalRecipeCard';
 import PersonalDetail from '../components/PersonalDetail';
 import Logout from '../pages/Logout';
 
@@ -122,7 +122,7 @@ function Viewpersonalpage() {
     </table>
   </div>
 
-<PersonalRecipeCard />
+<ViewPersonalRecipeCard />
 
   {/*script*/}
 </>

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useParams} from 'react-router-dom';
 import {
   Button
@@ -21,43 +21,53 @@ function PersonalDetail () {
       }
 
     const username = localStorage.getItem('username');
-    const personal_info = JSON.parse(localStorage.getItem('personal_info'));
     const recipe_num = localStorage.getItem('recipe_num');
 
+    
+    //  const infos = JSON.parse(localStorage.getItem('info'));
+    //  const personal_info_from_infos = infos[0];
+    const personal_info_from_infos = JSON.parse(localStorage.getItem('personal_info'));
 
-//     const username = localStorage.getItem('username');
-//     const getinfo = async () => {
-//         try {
-//         const response = await fetch('http://localhost:8080/user/getpersonalinfo', {
-//             method: 'POST',
-//             headers: {
-//             'Content-type': 'application/json',
-//             },
-//             body: JSON.stringify({
-//             username  // username: username
-//             })
+    // const getinfo = async (username) => {
+    //     try {
+    //       const response = await fetch('http://localhost:8080/user/getpersonalinfo', {
+    //         method: 'POST',
+    //         headers: {
+    //           'Content-type': 'application/json',
+    //         },
+    //         body: JSON.stringify({
+    //           username  // username: username
+    //         })
             
-//         });
-//         const data = await response.json();
-//         const info = data.personal_info;
-//         localStorage.setItem('info',JSON.stringify(info));
-//         console.log(data);
-//         console.log(info);
-//         return data;
-//         } catch (error) {
-//         console.log(error);
-//         return error;
-//         }
-//     }
-  
-//    React.useEffect(() => {
-//      (async () => {
-//       await getinfo();
-//    })(); // IIFE
-//   }, []);
+    //       });
+    //       const data = await response.json();
+    //       console.log(data);
+    //       return data;
+    //     } catch (error) {
+    //       console.log(error);
+    //       return error;
+    //     }
+    //   }
+      
 
-//   const personal_info = JSON.parse(localStorage.getItem('info'));
-//   console.log(personal_info);
+    //   useEffect(() => {
+    //     (async () => {
+    //       let info = await getinfo(username);
+    //       if (info.status === 'success') {
+    //         localStorage.setItem('info', JSON.stringify(info.personal_info));
+            
+    //         console.log(info.personal_info);
+            
+    //       } else {
+    //         alert(info.message);
+    //       }
+    //     })(); // IIFE
+    //   }, []); // [] means no dependency
+
+        
+
+
+  
 
 
     return (
@@ -67,7 +77,7 @@ function PersonalDetail () {
             <tbody>
                 <tr>
                 <td>
-                    <img src={Portrait} width={180} height={180} />
+                    <img src={personal_info_from_infos.user_photo} width={180} height={180} />
                 </td>
                 <td>
                     <b>
@@ -75,12 +85,12 @@ function PersonalDetail () {
                     </b>
                     <br />
                     <label>
-                        {personal_info.description}
+                        {personal_info_from_infos.description}
                     </label>
                 </td>
                 <td>
                     <label style={{ marginLeft: 550 }}>
-                        {personal_info.following_num}
+                        {personal_info_from_infos.following_num}
                     </label>
                     <br />
                     <Button onClick={following} variant="outline-secondary" style={{ marginLeft: 550 }}>
@@ -89,7 +99,7 @@ function PersonalDetail () {
                 </td>
                 <td>
                     <label style={{ marginLeft: 50 }}>
-                        {personal_info.follower_num}
+                        {personal_info_from_infos.follower_num}
                     </label>
                     <br />
                     <Button onClick={follower} variant="outline-secondary" style={{ marginLeft: 50 }}>

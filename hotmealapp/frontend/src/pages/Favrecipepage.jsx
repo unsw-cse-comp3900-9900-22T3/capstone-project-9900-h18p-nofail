@@ -1,51 +1,15 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import {
     Button,
     Form,
   } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import PersonalRecipeCard from '../components/PersonalRecipeCard';
+import FavRecipeCard from '../components/FavRecipeCard';
 import PersonalDetail from '../components/PersonalDetail';
 import Logout from '../pages/Logout';
 
 function Personalpage() {
   const username = localStorage.getItem('username');
-
-  const getinfo = async (username) => {
-    try {
-      const response = await fetch('http://localhost:8080/user/getpersonalinfo', {
-        method: 'POST',
-        headers: {
-          'Content-type': 'application/json',
-        },
-        body: JSON.stringify({
-          username  // username: username
-        })
-        
-      });
-      const data = await response.json();
-      console.log(data);
-      return data;
-    } catch (error) {
-      console.log(error);
-      return error;
-    }
-  }
-  
-
-  useEffect(() => {
-    (async () => {
-      let info = await getinfo(username);
-      if (info.status === 'success') {
-        localStorage.setItem('info', JSON.stringify(info.personal_info));
-        
-        console.log(info.personal_info);
-        
-      } else {
-        alert(info.message);
-      }
-    })(); // IIFE
-  }, []); // [] means no dependency
   
   function logoJump() {
       window.location.href = 'http://localhost:3000/homepage';
@@ -106,7 +70,7 @@ function Personalpage() {
   </div>
 
 
-<PersonalRecipeCard />
+<FavRecipeCard />
 
   {/*script*/}
 </>

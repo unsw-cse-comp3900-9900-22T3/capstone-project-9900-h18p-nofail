@@ -18,9 +18,9 @@ import Zajiangmian from '../images/zajiangmian.jpeg';
 
 
 
-function PersonalRecipeCard () {
+function ViewPersonalRecipeCard () {
     const recipes = JSON.parse(localStorage.getItem('recipes'));
-    //console.log(recipes);
+    console.log(recipes);
 
     function viewRecipe(id) {
       if (id)
@@ -115,9 +115,6 @@ function PersonalRecipeCard () {
                           </Button>
                           <Card.Title>{recipe.recipe_name}</Card.Title>
                           <Card.Text>❤️{recipe.like_num}</Card.Text>
-                          <Button variant="outline-success" size="sm" href={`/updaterecipe/${recipe.recipe_id}`}>
-                            Edit
-                          </Button>
                         </Card.Body>
                       </Card>
                     </Col>
@@ -130,4 +127,4 @@ function PersonalRecipeCard () {
 
 }
 
-export default PersonalRecipeCard;
+export default ViewPersonalRecipeCard;

@@ -25,10 +25,11 @@ function Logout () {
   // localStorage.removeItem('token')
 
   function logout(){
-    localStorage.removeItem('personal_info');
-    localStorage.removeItem('recipes');
-    localStorage.removeItem('fav_recipes');
-    localStorage.removeItem('all_recipes');
+    // localStorage.removeItem('personal_info');
+    // localStorage.removeItem('recipes');
+    // localStorage.removeItem('recipe_num');
+    // localStorage.removeItem('fav_recipes');
+    // localStorage.removeItem('all_recipes');
     window.location.href = 'http://localhost:3000/login';
   }
 

@@ -25,9 +25,7 @@ function LoginForm () {
       });
       const data = await response.json();
       localStorage.setItem('token', data.username)
-      if(data.status==="success") {
-        navigate('/personalpage');
-      }
+
       ////////////////////// Wenqing Yi /////////////////////////////////////
       //get personal info
       const response_personal_info = await fetch('http://localhost:8080/user/getpersonalinfo', {
