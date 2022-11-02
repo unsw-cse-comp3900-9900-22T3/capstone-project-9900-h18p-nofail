@@ -109,7 +109,7 @@ $(document).ready(
                 $.ajax({
                     url: "http://127.0.0.1:8080/user/getfavrecipenum",
                     contentType: 'application/json',
-                    data: JSON.stringify({ 'username': recipeDetail.id }),
+                    data: JSON.stringify({ 'recipe_id': recipeDetail.id }),
                     type: "POST",
                     success: function (data) {
                         if (data.status == "success") {
@@ -172,7 +172,7 @@ $(document).ready(
                         if (data.status == "success") {
                             followed=1;
                             if (followed==1) {
-                               
+                               document.getElementById("follow").innerHTML = 'You followed';  
                             }
                         }
                         initDetails();
@@ -186,7 +186,7 @@ $(document).ready(
                 //console.log("type is "+typeof currenttime);
                 pastaday=0;
                 pastamonth=0;
-                console.log(currenttime);
+                //console.log(currenttime);
                 timelist=currenttime.split(' ');
                 //console.log(timelist[1]);
                 exacttimelist=timelist[4].split(':')
@@ -200,7 +200,7 @@ $(document).ready(
                 hour=hour.toString();
                 newtime=hour+':'+exacttimelist[1]+':'+exacttimelist[2];
 
-                console.log(newtime);
+                //console.log(newtime);
                 //console.log(timelist[-1]);
                 timezone=timelist[5]+'+11';
                 if (pastaday==1) {
@@ -232,7 +232,7 @@ $(document).ready(
                         timelist[0]='Mon,';
 
                     }
-                    console.log('new time is '+timelist[0]);
+                    //console.log('new time is '+timelist[0]);
                     day=parseInt(timelist[1]);
                     if (day<31) {
                         day+=1;
@@ -253,9 +253,9 @@ $(document).ready(
                     if (pastamonth==1) {
                         timelist[2]='Nov';
                     }
-                    console.log('new day is '+timelist[1]);
+                    //console.log('new day is '+timelist[1]);
                     finaltime=timelist[0]+' '+timelist[1]+' '+timelist[2]+' '+timelist[3]+' '+newtime+' '+timezone;
-                    console.log('finaltime time is '+ finaltime);
+                    //console.log('finaltime time is '+ finaltime);
                     return finaltime;
                 
 
@@ -565,7 +565,7 @@ function getFavoriteNumber() {
     $.ajax({
         url: "http://127.0.0.1:8080/user/getfavrecipenum",
         contentType: 'application/json',
-        data: JSON.stringify({ 'username': recipeDetail.id }),
+        data: JSON.stringify({ 'recipe_id': recipeDetail.id }),
         type: "POST",
         success: function (data) {
             if (data.status == "success") {
@@ -582,7 +582,7 @@ function changetime(currenttime){
                 //console.log("type is "+typeof currenttime);
                 pastaday=0;
                 pastamonth=0;
-                console.log(currenttime);
+                //console.log(currenttime);
                 timelist=currenttime.split(' ');
                 //console.log(timelist[1]);
                 exacttimelist=timelist[4].split(':')
@@ -596,7 +596,7 @@ function changetime(currenttime){
                 hour=hour.toString();
                 newtime=hour+':'+exacttimelist[1]+':'+exacttimelist[2];
 
-                console.log(newtime);
+                //console.log(newtime);
                 //console.log(timelist[-1]);
                 timezone=timelist[5]+'+11';
                 if (pastaday==1) {
@@ -628,7 +628,7 @@ function changetime(currenttime){
                         timelist[0]='Mon,';
 
                     }
-                    console.log('new time is '+timelist[0]);
+                    //console.log('new time is '+timelist[0]);
                     day=parseInt(timelist[1]);
                     if (day<31) {
                         day+=1;
@@ -649,9 +649,9 @@ function changetime(currenttime){
                     if (pastamonth==1) {
                         timelist[2]='Nov';
                     }
-                    console.log('new day is '+timelist[1]);
+                    //console.log('new day is '+timelist[1]);
                     finaltime=timelist[0]+' '+timelist[1]+' '+timelist[2]+' '+timelist[3]+' '+newtime+' '+timezone;
-                    console.log('finaltime time is '+ finaltime);
+                    //console.log('finaltime time is '+ finaltime);
                     return finaltime;
                 
 
