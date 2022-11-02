@@ -23,40 +23,65 @@ function UpdateRecipe () {
   //   setCurr(Number(curr) + val);
   // };
   const params = useParams();
-  const recipeid = params.recipeid
+  const recipe_id = params.recipeid
   const [show1, setS1] = React.useState('block');
   const [show2, setS2] = React.useState('none');
   const [show3, setS3] = React.useState('none');
   const [show4, setS4] = React.useState('none');
-  let recipe = React.useState()
   const recipe_username = localStorage.getItem('username');
-  const getrecipe = async (id) => {
-    console.log(id)
+  const getrecipe = async () => {
+    console.log(recipe_id)
     const response = await fetch('http://localhost:8080/recipe/showone/byid', {
       method: 'POST',
       headers: {
         'Content-type': 'application/json',
       },
-      body: {
-        id,
-      }
+      body: JSON.stringify({
+        recipe_id,
+      })
     })
     const data = await response.json();
-    const recipe = data.recipe
-    localStorage.setItem('recipe', JSON.stringify(recipe))
+    if(data.status==="success") {
+      const recipe = data.recipe
+      console.log(recipe)
+      localStorage.setItem('recipe', JSON.stringify(recipe))
+    }
+    else {
+      alert(data.message)
+      //alert("my alert")
+    }
   }
-  getrecipe(recipeid);
-  recipe = JSON.parse(localStorage.getItem('recipe'));
-  const [recipe_name, setName] = React.useState(recipe.recipe_name);
-  const [recipe_style, setCategory] = React.useState(recipe.recipe_style);
-  const [description, setDes] = React.useState(recipe.description);
-  const [ingredient, setIngre] = React.useState(recipe.ingredient);
+  React.useEffect(() => {
+    (async () => {
+      await getrecipe();
+    })(); 
+  }, []); 
+  const recipe = JSON.parse(localStorage.getItem('recipe'));
+  console.log(recipe)
+  // const [recipe_name, setName] = React.useState(recipe.recipe_name);
+  // const [recipe_style, setCategory] = React.useState(recipe.recipe_style);
+  // const [description, setDes] = React.useState(recipe.description);
+  // const [ingredient, setIngre] = React.useState(recipe.ingredient);
+  // const [ingres, setIngres] = React.useState('');
+  // const [group, setGrou] = React.useState('');
+  // const [steps, setSteps] = React.useState(recipe.steps);
+  // const [recipe_photo, setImg] = React.useState(recipe.recipe_photo);
+  // const [cooking_time, setTime] = React.useState(recipe.cooking_time);
+  const [recipe_name, setName] = React.useState('');
+  const [recipe_style, setCategory] = React.useState('');
+  const [description, setDes] = React.useState('');
+  const [ingredient, setIngre] = React.useState('');
   const [ingres, setIngres] = React.useState('');
   const [group, setGrou] = React.useState('');
-  const [steps, setSteps] = React.useState(recipe.steps);
-  const [recipe_photo, setImg] = React.useState(recipe.recipe_photo);
-  const [cooking_time, setTime] = React.useState(recipe.cooking_time);
+  const [steps, setSteps] = React.useState([]);
+  let [recipe_photo, setImg] = React.useState('');
+  const [cooking_time, setTime] = React.useState(0);
   const updaterecipe = async () => {
+    if (recipe_photo.split('/').length!=2) {
+      const pics = recipe_photo.split('\\')
+      //console.log(pics)
+      recipe_photo = 'imgs/' + pics[pics.length-1]
+    }
     try {
       const response = await fetch('http://localhost:8080/recipe/create', {
         method: 'POST',

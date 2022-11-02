@@ -39,7 +39,7 @@ function CreateRecipe () {
     //console.log(ingredient)
     const pics = recipe_photo.split('\\')
     //console.log(pics)
-    recipe_photo = 'imgs/' + pics[2]
+    recipe_photo = 'imgs/' + pics[pics.length-1]
     const a = JSON.stringify({
       recipe_name,
       recipe_style,
