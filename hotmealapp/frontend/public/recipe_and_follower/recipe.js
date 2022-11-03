@@ -55,11 +55,11 @@ $(document).ready(
                             recipeDetail.recipeName = data.recipe.recipe_name;
                             recipeDetail.recipeOwnerName = data.recipe.recipe_username;
                             console.log(recipeDetail.recipeName)
-                            console.log(typeof data.recipe.ingredient);
-                            //recipeDetail.recipeDetail = "Ingredient : <br/>"+data.recipe.ingredient;
-                            recipeDetail.recipeDetail = "Ingredient : <br/>"+data.recipe.ingredient.Others.toString()+"<br/>"+data.recipe.ingredient.vegetable.toString();
+                            console.log(typeof data.recipe.ingredient_previous);
+                            recipeDetail.recipeDetail = "Ingredient : <br/>"+data.recipe.ingredient_previous.split(';').join('');
+                            //recipeDetail.recipeDetail = "Ingredient : <br/>"+data.recipe.ingredient.Others.toString()+"<br/>"+data.recipe.ingredient.vegetable.toString();
                             //recipeDetail.recipeDetail = "Ingredient : <br/>";
-                            recipeDetail.recipeSteps = "Steps : <br/>"+data.recipe.steps.toString();
+                            recipeDetail.recipeSteps = "Steps : <br/>"+data.recipe.steps_previous.split(',').join('');
                             //recipeDetail.recipeSteps = "Steps :";
                             //recipeDetail.recipeSteps = "Steps : <br/>"+data.recipe.steps;
                             recipeDetail.recipeDescription = data.recipe.description;
@@ -197,7 +197,7 @@ $(document).ready(
                 //console.log(timelist[1]);
                 exacttimelist=timelist[4].split(':')
                 //console.log('hour is '+typeof int(exacttimelist[0]));
-                hour=parseInt(exacttimelist[0])+21;
+                hour=parseInt(exacttimelist[0])+11;
                 //console.log('hour is '+hour);
                  if (hour >= 24){
                     pastaday=1;
@@ -260,7 +260,7 @@ $(document).ready(
                         timelist[2]='Nov';
                     }
                     //console.log('new day is '+timelist[1]);
-                    finaltime=timelist[0]+' '+timelist[1]+' '+timelist[2]+' '+timelist[3]+' '+newtime+' '+timezone;
+                    finaltime=timelist[0]+' '+timelist[1]+' '+timelist[2]+' '+timelist[3]+' '+newtime;
                     //console.log('finaltime time is '+ finaltime);
                     return finaltime;
                 
@@ -593,7 +593,7 @@ function changetime(currenttime){
                 //console.log(timelist[1]);
                 exacttimelist=timelist[4].split(':')
                 //console.log('hour is '+typeof int(exacttimelist[0]));
-                hour=parseInt(exacttimelist[0])+21;
+                hour=parseInt(exacttimelist[0])+11;
                 //console.log('hour is '+hour);
                  if (hour >= 24){
                     pastaday=1;
@@ -656,7 +656,7 @@ function changetime(currenttime){
                         timelist[2]='Nov';
                     }
                     //console.log('new day is '+timelist[1]);
-                    finaltime=timelist[0]+' '+timelist[1]+' '+timelist[2]+' '+timelist[3]+' '+newtime+' '+timezone;
+                    finaltime=timelist[0]+' '+timelist[1]+' '+timelist[2]+' '+timelist[3]+' '+newtime;
                     //console.log('finaltime time is '+ finaltime);
                     return finaltime;
                 
