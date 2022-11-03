@@ -35,7 +35,7 @@ function App () {
           <Container>
             <Navbar.Brand href="/homepage">Hot Meal</Navbar.Brand>
             <Nav className="me-auto">
-              {/* <Nav.Link href="/register">Register</Nav.Link>
+              <Nav.Link href="/register">Register</Nav.Link>
               <Nav.Link href="/login">Login</Nav.Link>
               <Nav.Link href="/personalpage">Personalpage</Nav.Link>
               <Nav.Link href="/viewpersonalpage">ViewPersonalpage</Nav.Link>
@@ -43,7 +43,7 @@ function App () {
               <Nav.Link href="/createrecipe">CreateRecipe</Nav.Link>
               <Nav.Link href="/recipe_and_follower/recipe.html">Recipe</Nav.Link>
               <Nav.Link href="/update_personal_info/">Update info</Nav.Link>
-              <Button href="/logout" variant="secondary">Logout</Button> */}
+              <Button href="/logout" variant="secondary">Logout</Button>
               {/* <Button onClick={logout}>Logout</Button> */}
             </Nav>
           </Container>
