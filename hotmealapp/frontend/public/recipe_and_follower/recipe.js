@@ -64,6 +64,10 @@ $(document).ready(
                             //recipeDetail.recipeSteps = "Steps : <br/>"+data.recipe.steps;
                             recipeDetail.recipeDescription = data.recipe.description;
                             recipeDetail.recipeLikeNumber = data.recipe.like_num;
+                            recipeDetail.recipeAvatar=data.recipe.recipe_photo;
+                            console.log("avatar: "+recipeDetail.recipeAvatar);
+                            console.log(typeof recipeDetail.recipeAvatar);
+
                             getfollowingnum();
                         }
                     },
@@ -300,7 +304,7 @@ $(document).ready(
                 document.getElementById("whosrecipe").innerHTML = recipeDetail.recipeOwnerName;
                 document.getElementById("recipeName").innerHTML = recipeDetail.recipeName;
                 document.getElementById("recipeDesciption").innerHTML = recipeDetail.recipeDescription;
-
+                document.getElementsByClassName("logoImg").src=recipeDetail.recipeAvatar;
                 document.getElementsByClassName("detailRemark")[0].innerHTML = recipeDetail.recipeDetail;
                 document.getElementsByClassName("detailRemark")[1].innerHTML = recipeDetail.recipeSteps;
                 initComment();
