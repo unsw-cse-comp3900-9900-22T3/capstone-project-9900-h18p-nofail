@@ -56,10 +56,10 @@ $(document).ready(
                             recipeDetail.recipeOwnerName = data.recipe.recipe_username;
                             console.log(recipeDetail.recipeName)
                             console.log(typeof data.recipe.ingredient_previous);
-                            recipeDetail.recipeDetail = "Ingredient : <br/>"+data.recipe.ingredient_previous.split(';').join('');
+                            recipeDetail.recipeDetail = "Ingredient : <br/>"+data.recipe.ingredient_previous.split(';').join('<br/>');
                             //recipeDetail.recipeDetail = "Ingredient : <br/>"+data.recipe.ingredient.Others.toString()+"<br/>"+data.recipe.ingredient.vegetable.toString();
                             //recipeDetail.recipeDetail = "Ingredient : <br/>";
-                            recipeDetail.recipeSteps = "Steps : <br/>"+data.recipe.steps_previous.split(',').join('');
+                            recipeDetail.recipeSteps = "Steps : <br/>"+data.recipe.steps_previous.split(',').join('<br/>');
                             //recipeDetail.recipeSteps = "Steps :";
                             //recipeDetail.recipeSteps = "Steps : <br/>"+data.recipe.steps;
                             recipeDetail.recipeDescription = data.recipe.description;
@@ -142,8 +142,10 @@ $(document).ready(
                             }
                         }
                         checkliked();
+                       // initDetails();
                     },
                     error: function (data) {
+                        document.getElementById("fav").innerHTML = 'favorited';
                         initDetails();
                     }
                 })
@@ -162,8 +164,10 @@ $(document).ready(
                             }
                         }
                         checkfollowed();
+                       // initDetails();
                     },
                     error: function (data) {
+                        document.getElementById("like").innerHTML = 'like';
                         initDetails();
                     }
                 })
@@ -180,10 +184,14 @@ $(document).ready(
                             if (followed==1) {
                                document.getElementById("follow").innerHTML = 'You followed';  
                             }
+                            else{
+                                document.getElementById("follow").innerHTML = 'follow';
+                            }
                         }
                         initDetails();
                     },
                     error: function (data) {
+                        
                         initDetails();
                     }
                 })
@@ -662,6 +670,3 @@ function changetime(currenttime){
                 
 
             }
-function topersonalpage(){
-    window.location.href = `http://localhost:3000/Viewpersonalpage?username=${recipeDetail.recipeOwnerName}`;
-}
