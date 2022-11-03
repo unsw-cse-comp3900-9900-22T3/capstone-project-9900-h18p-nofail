@@ -8,6 +8,9 @@ import CreateRecipe from './pages/CreateRecipe';
 import Homepage from './pages/Homepage';
 import Personalpage from './pages/Personalpage';
 import Viewpersonalpage from './pages/Viewpersonalpage';
+import Searchrecipepage from './pages/SearchRecipePage';
+import Searchuserpage from './pages/SearchUserPage';
+import Favrecipepage from './pages/Favrecipepage';
 import UpdateRecipe from './pages/UpdateRecipe';
 import Updatepersonalinfo from './pages/Updatepersoninfo';
 
@@ -35,6 +38,7 @@ function App () {
               <Nav.Link href="/register">Register</Nav.Link>
               <Nav.Link href="/login">Login</Nav.Link>
               <Nav.Link href="/personalpage">Personalpage</Nav.Link>
+              <Nav.Link href="/viewpersonalpage">ViewPersonalpage</Nav.Link>
               <Nav.Link href="/homepage">Homepage</Nav.Link>
               <Nav.Link href="/createrecipe">CreateRecipe</Nav.Link>
               <Nav.Link href="/recipe_and_follower/recipe.html">Recipe</Nav.Link>
@@ -53,6 +57,10 @@ function App () {
           <Route path="/createrecipe" element={<CreateRecipe />} />
           <Route path="/homepage" element={<Homepage />} />
           <Route path="/personalpage" element={<Personalpage />} />
+          <Route path="/viewpersonalpage" element={<Viewpersonalpage />} />
+          <Route path="/searchrecipepage" element={<Searchrecipepage />} />
+          <Route path="/searchuserpage" element={<Searchuserpage />} />
+          <Route path="/favrecipepage" element={<Favrecipepage />} />
           <Route path="/updaterecipe/:recipeid" element={<UpdateRecipe />} />
           <Route path="/update_personal_info/:username" element={<Updatepersonalinfo />} />
         </Routes>
