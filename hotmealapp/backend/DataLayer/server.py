@@ -381,9 +381,9 @@ def show_one_recipe_byid():
             like_num = DataLayer.Recipe_get_like_num_byid(recipe_id)
             re=list(re) #convert tuple into list
             if like_num:
-                re = {"recipe_id": re[0], "recipe_name": re[1], "recipe_username": re[2], "recipe_style": re[3], "ingredient": group_ingredient, "cooking_time": re[5], "steps": group_steps, "recipe_photo": re[7], "description": re[9],"like_num":like_num} #convert tuple into dictionary
+                re = {"recipe_id": re[0], "recipe_name": re[1], "recipe_username": re[2], "recipe_style": re[3], "ingredient": group_ingredient, "ingredient_previous": re[4],"cooking_time": re[5], "steps": group_steps, "steps_previous":re[6],"recipe_photo": re[7], "description": re[9],"like_num":like_num} #convert tuple into dictionary
             else:
-                re = {"recipe_id": re[0], "recipe_name": re[1], "recipe_username": re[2], "recipe_style": re[3], "ingredient": group_ingredient, "cooking_time": re[5], "steps": group_steps, "recipe_photo": re[7], "description": re[9],"like_num":0}
+                re = {"recipe_id": re[0], "recipe_name": re[1], "recipe_username": re[2], "recipe_style": re[3], "ingredient": group_ingredient, "ingredient_previous": re[4], "cooking_time": re[5], "steps": group_steps, "steps_previous":re[6],"recipe_photo": re[7], "description": re[9],"like_num":0}
             msg = {'status': 'success', 'message': 'You have successfully got the recipe!', 'recipe': re}
         else:
             msg = {'status': 'fail', 'message': 'The recipe does not exist!'}
