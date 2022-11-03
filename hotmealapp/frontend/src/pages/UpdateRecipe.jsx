@@ -25,7 +25,7 @@ function UpdateRecipe () {
   const params = useParams();
   const recipeid = params.recipeid
   const [recipe_id, setR] = React.useState(recipeid);
-  console.log(recipe_id)
+  //console.log(recipe_id)
   const [show1, setS1] = React.useState('block');
   const [show2, setS2] = React.useState('none');
   const [show3, setS3] = React.useState('none');
@@ -45,7 +45,7 @@ function UpdateRecipe () {
     if(data.status==="success") {
       const recipe = data.recipe
       //setRe(recipe);
-      console.log(recipe)
+      //console.log(recipe)
       localStorage.setItem('recipe', JSON.stringify(recipe))
       //fresh();
     }
@@ -57,11 +57,14 @@ function UpdateRecipe () {
   React.useEffect(() => {
     (async () => {
       await getrecipe();
-      setRe(JSON.parse(localStorage.getItem('recipe')));
+      if(location.href.indexOf('#reloaded')==-1){
+        location.href = location.href+'#reloaded';
+        location.reload();
+      }
     })(); 
   }, []);
   let [recipe, setRe] = React.useState(JSON.parse(localStorage.getItem('recipe')));
-  console.log(recipe)
+  //console.log(recipe)
   //location.reload();
   const [recipe_name, setName] = React.useState(recipe.recipe_name);
   const [recipe_style, setCategory] = React.useState(recipe.recipe_style);
@@ -88,6 +91,17 @@ function UpdateRecipe () {
       //console.log(pics)
       recipe_photo = 'imgs/' + pics[pics.length-1]
     }
+    const a = JSON.stringify({
+      recipe_name,
+      recipe_style,
+      recipe_username,
+      ingredient,
+      description,
+      steps,
+      recipe_photo,
+      cooking_time,
+    })
+    console.log(a)
     try {
       const response = await fetch('http://localhost:8080/recipe/update', {
         method: 'PUT',
@@ -172,9 +186,9 @@ function UpdateRecipe () {
   //   list1.push(1)
   // }
   const [o_list, setListo] = React.useState(ori_list);
-  console.log(orilist1_)
+  //console.log(orilist1_)
   const [o_list1, setListo2] = React.useState(orilist1_);
-  console.log(o_list1)
+  //console.log(o_list1)
 
   const list1 = [[1]];
   const list1_ = [1];
