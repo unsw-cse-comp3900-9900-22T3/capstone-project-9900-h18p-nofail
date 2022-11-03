@@ -211,7 +211,7 @@ def update_recipe():
         #change mac directory into json format
         recipe_photo_directory = recipe_photo_directory.replace("\\","/")
         print("recipe_photo_directory: ",recipe_photo_directory)
-        if DataLayer.Recipe_Insert_Update(str(recipe_name), str(recipe_username), str(description), str(recipe_style), str(str_ingredient), cooking_time,str(str_steps), str(recipe_photo_directory)):
+        if DataLayer.Recipe_Insert_Update_repeate(str(recipe_name), str(recipe_username), str(description), str(recipe_style), str(str_ingredient), cooking_time,str(str_steps), str(recipe_photo_directory)):
             msg = {'status': 'success', 'message': 'You have successfully updated a recipe!'}
         else:
             msg = {'status': 'fail', 'message': 'Update recipe failed!'}

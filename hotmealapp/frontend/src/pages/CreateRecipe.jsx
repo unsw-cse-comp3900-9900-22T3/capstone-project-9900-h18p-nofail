@@ -210,7 +210,9 @@ function CreateRecipe () {
                       <option value="Seasoning">Seasoning</option>
                       <option value="Grain">Grain</option>
                     </Form.Select>
-                    <Button variant="outline-secondary" onClick={todelete}>Delete</Button>
+                    {index===list.length-1?
+                    <Button variant="outline-secondary" onClick={todelete}>Delete</Button>:
+                    <Button variant="outline-secondary" disabled onClick={todelete}>Delete</Button>}
                     </InputGroup>
                   </Row>
                   <p></p>
@@ -256,7 +258,9 @@ function CreateRecipe () {
                     style={{ height: '150px' }}
                     onBlur={e => setSteps([...steps, e.target.value])}
                     />
-                  <Button variant="outline-secondary" onClick={todelete1}>Delete</Button>
+                  {index===list2.length-1?
+                    <Button variant="outline-secondary" onClick={todelete1}>Delete</Button>:
+                    <Button variant="outline-secondary" disabled onClick={todelete1}>Delete</Button>}
                   </InputGroup>
                 </Row>
               </div>
