@@ -86,13 +86,24 @@ def Recipe_Insert_Update(recipe_name,recipe_username,recipe_discrption,recipe_st
     try:
         creat_cursor.execute(sql)
         db.commit()
-        db.close()
-        return True
     except Exception:
         db.rollback()
         print("create recipe worng!!")
         db.close()
         return False
+    id_sql = "SELECT last_insert_id() FROM sys.Recipe;"
+    select_cursor = db.cursor()
+    return_re = ''
+    db.ping()
+    try:
+        select_cursor.execute(id_sql)
+        return_re = select_cursor.fetchone()[0]
+    except Exception:
+        db.rollback()
+        print("return id is worng!!")
+    # print('kk', return_re)
+    db.close()
+    return return_re
 
 
 # def Recipe_Update_byid(recipe_id, recipe_discrption,recipe_style,ingredient,cooking_time,steps,recipe_photo):
@@ -144,13 +155,26 @@ def Recipe_Insert_Update_repeate(recipe_name,recipe_username,recipe_discrption,r
     try:
         creat_cursor.execute(sql)
         db.commit()
-        db.close()
-        return True
+
+        # return True
     except Exception:
         db.rollback()
         print("create recipe worng!!")
         db.close()
         return False
+    id_sql = "SELECT last_insert_id() FROM sys.Recipe;"
+    select_cursor = db.cursor()
+    return_re = ''
+    db.ping()
+    try:
+        select_cursor.execute(id_sql)
+        return_re = select_cursor.fetchone()[0]
+    except Exception:
+        db.rollback()
+        print("return id is worng!!")
+    # print('kk',return_re)
+    db.close()
+    return return_re
 
 def Recipe_Delete(recipe_name,recipe_username):
     sql_check = "SELECT Recipe_Id FROM sys.Recipe WHERE Recipe_Name= '%s' AND Recipe_Username = '%s';" % (
@@ -1044,8 +1068,8 @@ def Recipe_get_fav_num(recipe_id):
     return re_num
 
 # Ingredient_find('chicken')
-Recipe_get_fav_num(2)
-
+# Recipe_get_fav_num(2)
+# Recipe_Insert_Update('red meet','Ryan','good style','so good','beef;chicken',60,'no step','root')
 
 
 re='fry fish'
