@@ -49,13 +49,19 @@ $(document).ready(
                     type: "POST",
                     success: function (data) {
                         //
+                        console.log("sdadsawda")
+                        console.log(data)
                         if (data.status === "success") {
                             recipeDetail.recipeName = data.recipe.recipe_name;
                             recipeDetail.recipeOwnerName = data.recipe.recipe_username;
+                            console.log(recipeDetail.recipeName)
                             console.log(typeof data.recipe.ingredient);
-
-                            recipeDetail.recipeDetail = "Ingredient : <br/>"+data.recipe.ingredient.replaceAll(";", "<br/>");
-                            recipeDetail.recipeSteps = "Steps : <br/>"+data.recipe.steps.replaceAll(",", "<br/>");
+                            //recipeDetail.recipeDetail = "Ingredient : <br/>"+data.recipe.ingredient;
+                            recipeDetail.recipeDetail = "Ingredient : <br/>"+data.recipe.ingredient.Others.toString()+"<br/>"+data.recipe.ingredient.vegetable.toString();
+                            //recipeDetail.recipeDetail = "Ingredient : <br/>";
+                            recipeDetail.recipeSteps = "Steps : <br/>"+data.recipe.steps.toString();
+                            //recipeDetail.recipeSteps = "Steps :";
+                            //recipeDetail.recipeSteps = "Steps : <br/>"+data.recipe.steps;
                             recipeDetail.recipeDescription = data.recipe.description;
                             recipeDetail.recipeLikeNumber = data.recipe.like_num;
                             getfollowingnum();
