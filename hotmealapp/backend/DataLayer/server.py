@@ -6,7 +6,7 @@ import sys
 # sys.path.append('..')
 from collections import ChainMap
 from tokenize import group
-from flask_login import current_user
+# from flask_login import current_user
 # from flask_qiniustorage import Qiniu
 
 from flask import Flask, jsonify, render_template, request, redirect, url_for, session, Blueprint, Response
@@ -412,7 +412,7 @@ def get_personal_info():
         username = request.json['username']
         re = DataLayer.User_show(username)
         if re:
-            following_num = DataLayer.User_get_follower_number(username) #get the number of followers
+            following_num = DataLayer.User_get_following_number(username) #get the number of followers
             follower_num = DataLayer.User_get_follower_number(username) #get the number of following
             re=list(re)
             if following_num and follower_num:
