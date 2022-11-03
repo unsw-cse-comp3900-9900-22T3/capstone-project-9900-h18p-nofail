@@ -140,19 +140,22 @@ $(document).ready(
                             if (favorited==1) {
                                document.getElementById("fav").innerHTML = 'You favorited'; 
                             }
+                            else{
+                                document.getElementById("fav").innerHTML = 'favorite';
+                            }
                         }
                         checkliked();
                        // initDetails();
                     },
                     error: function (data) {
-                        document.getElementById("fav").innerHTML = 'favorited';
+                        document.getElementById("fav").innerHTML = 'favorite';
                         initDetails();
                     }
                 })
             }
             function checkliked() {
                 $.ajax({
-                    url: "http://127.0.0.1:8080/user/checkfav",
+                    url: "http://127.0.0.1:8080/user/checklike",
                     contentType: 'application/json',
                     data: JSON.stringify({ 'recipe_id': recipeDetail.id ,'username': currentUserName}),
                     type: "POST",
@@ -161,6 +164,9 @@ $(document).ready(
                             liked=1;
                             if (liked==1) {
                                document.getElementById("like").innerHTML = 'You liked'; 
+                            }
+                            else{
+                                document.getElementById("like").innerHTML = 'like';
                             }
                         }
                         checkfollowed();
