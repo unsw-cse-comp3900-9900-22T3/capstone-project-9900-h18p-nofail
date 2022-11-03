@@ -24,6 +24,7 @@ function Updatepersonalinfo () {
     })
     const data = await response.json();
     const info = data.personal_info
+    console.log(info)
     localStorage.setItem('info', JSON.stringify(info))
   }
   React.useEffect(() => {

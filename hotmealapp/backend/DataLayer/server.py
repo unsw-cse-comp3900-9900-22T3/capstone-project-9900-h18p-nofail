@@ -162,8 +162,11 @@ def create_recipe():
         recipe_photo_directory = recipe_photo_directory.replace("\\","/")
         print("recipe_photo_directory: ",recipe_photo_directory)
 
-        if DataLayer.Recipe_Insert_Update(str(recipe_name), str(recipe_username), str(description), str(recipe_style), str(str_ingredient), cooking_time,str(str_steps), str(recipe_photo_directory)):
-            msg = {'status': 'success', 'message': 'You have successfully created a recipe!'}
+        re = DataLayer.Recipe_Insert_Update_repeate(str(recipe_name), str(recipe_username), str(description), str(recipe_style), str(str_ingredient), cooking_time,str(str_steps), str(recipe_photo_directory))
+        print("re:" , re)
+
+        if re:
+            msg = {'status': 'success', 'message': 'You have successfully created a recipe!', 'recipe_id': re}
         else:
             msg = {'status': 'fail', 'message': 'Create recipe failed!'}
     elif request.method == 'GET':

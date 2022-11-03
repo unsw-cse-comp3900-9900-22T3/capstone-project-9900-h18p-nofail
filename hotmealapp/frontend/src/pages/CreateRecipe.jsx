@@ -70,9 +70,10 @@ function CreateRecipe () {
       });
       const data = await response.json();
       console.log(data)
+      const recipe_id = data.recipe_id;
       if(data.status==="success") {
         alert("create successfully!");
-        window.open('/recipe_and_follower/recipe.html');
+        window.open(`/recipe_and_follower/recipe.html?receipId=${recipe_id}`);
       }
       else {
         alert(data.message)

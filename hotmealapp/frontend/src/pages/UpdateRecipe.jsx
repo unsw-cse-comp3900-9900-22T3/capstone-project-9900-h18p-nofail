@@ -23,7 +23,9 @@ function UpdateRecipe () {
   //   setCurr(Number(curr) + val);
   // };
   const params = useParams();
-  const recipe_id = params.recipeid
+  const recipeid = params.recipeid
+  const [recipe_id, setR] = React.useState(recipeid);
+  console.log(recipe_id)
   const [show1, setS1] = React.useState('block');
   const [show2, setS2] = React.useState('none');
   const [show3, setS3] = React.useState('none');
@@ -42,8 +44,10 @@ function UpdateRecipe () {
     const data = await response.json();
     if(data.status==="success") {
       const recipe = data.recipe
-      //console.log(recipe)
+      //setRe(recipe);
+      console.log(recipe)
       localStorage.setItem('recipe', JSON.stringify(recipe))
+      //fresh();
     }
     else {
       alert(data.message)
@@ -53,10 +57,12 @@ function UpdateRecipe () {
   React.useEffect(() => {
     (async () => {
       await getrecipe();
+      setRe(JSON.parse(localStorage.getItem('recipe')));
     })(); 
-  }, []); 
-  const recipe = JSON.parse(localStorage.getItem('recipe'));
+  }, []);
+  let [recipe, setRe] = React.useState(JSON.parse(localStorage.getItem('recipe')));
   console.log(recipe)
+  //location.reload();
   const [recipe_name, setName] = React.useState(recipe.recipe_name);
   const [recipe_style, setCategory] = React.useState(recipe.recipe_style);
   const [description, setDes] = React.useState(recipe.description);
@@ -102,7 +108,7 @@ function UpdateRecipe () {
       const data = await response.json();
       if(data.status==="success") {
         alert("update successfully!")
-        window.open('https://wenqinghomepage.s3.ap-southeast-2.amazonaws.com/personal-page/index.html')
+        window.open(`/recipe_and_follower/recipe.html?receipId=${recipe_id}`)
       }
       else {
         alert(data.message)
