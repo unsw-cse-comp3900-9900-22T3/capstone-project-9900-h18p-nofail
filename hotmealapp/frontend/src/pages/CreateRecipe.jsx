@@ -259,8 +259,8 @@ function CreateRecipe () {
                     onBlur={e => setSteps([...steps, e.target.value])}
                     />
                   {index===list2.length-1?
-                    <Button variant="outline-secondary" onClick={todelete}>Delete</Button>:
-                    <Button variant="outline-secondary" disabled onClick={todelete}>Delete</Button>}
+                    <Button variant="outline-secondary" onClick={todelete1}>Delete</Button>:
+                    <Button variant="outline-secondary" disabled onClick={todelete1}>Delete</Button>}
                   </InputGroup>
                 </Row>
               </div>
