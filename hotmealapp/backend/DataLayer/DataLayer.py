@@ -1063,10 +1063,25 @@ def Recipe_get_fav_num(recipe_id):
         db.rollback()
         print("count_favourite worng!!")
     re_num = int(re_num)
-    print(re_num)
+    # print(re_num)
     db.close()
     return re_num
-
+def Recipe_Pop():
+    db.ping()
+    sql="SELECT b.* FROM sys.Recipe b join (SELECT Recipe_Id,COUNT(Recipe_Id) FROM \
+    (SELECT Recipe_Id FROM sys.Recipe_Like WHERE DATEDIFF(NOW(), SUBSTRING(Like_Time,1,10))<=10 ) temp GROUP BY Recipe_Id) a on b.Recipe_Id = a.Recipe_Id;"
+    cursor = db.cursor()
+    re=''
+    try:
+        cursor.execute(sql)
+        re=cursor.fetchall()
+    except Exception:
+        db.rollback()
+        print("pop fall")
+        return False
+    # print(re)
+    return re
+# Recipe_Pop()
 # Ingredient_find('chicken')
 # Recipe_get_fav_num(2)
 # Recipe_Insert_Update('red meet','Ryan','good style','so good','beef;chicken',60,'no step','root')
