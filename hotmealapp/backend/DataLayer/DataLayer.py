@@ -1,5 +1,6 @@
 import pymysql
 import ConnectDB
+import numpy as np
 
 db = ConnectDB.connectDb()
 
@@ -1048,7 +1049,7 @@ def Ingredient_find(ingredient):
         print("search user follower worng!!")
         return False
     db.close()
-    print(re)
+    # print(re)
     return re
 def Recipe_get_fav_num(recipe_id):
     db.ping()
@@ -1062,6 +1063,7 @@ def Recipe_get_fav_num(recipe_id):
     except Exception:
         db.rollback()
         print("count_favourite worng!!")
+        return False
     re_num = int(re_num)
     # print(re_num)
     db.close()
@@ -1081,6 +1083,152 @@ def Recipe_Pop():
         return False
     # print(re)
     return re
+def User_register_style(username,st1,st2):
+    db.ping()
+    sql = "UPDATE sys.User SET %s=2, %s =1 WHERE Username='%s';"%(st1,st2,username)
+    # print(sql)
+    cursor = db.cursor()
+    try:
+        cursor.execute(sql)
+        db.commit()
+    except Exception:
+        db.rollback()
+        print("insert style worng!!")
+        return False
+    db.close()
+    return True
+
+def favourite_style(username,recipe_id):
+    db.ping()
+    select_sql="SELECT Recipe_Style FROM sys.Recipe WHERE Recipe_Id='%s';"%(recipe_id)
+    cursor = db.cursor()
+    re_style = ''
+    try:
+        cursor.execute(select_sql)
+        re_style = cursor.fetchone()[0]
+    except Exception:
+        db.rollback()
+        print("count_favourite worng!!")
+        return False
+    # print(re_style)
+    select_user = "SELECT %s FROM sys.User WHERE Username='%s';"%(re_style,username)
+    cur = db.cursor()
+    re_num = ''
+    try:
+        cur.execute(select_user)
+        re_num = cur.fetchone()[0]
+    except Exception:
+        db.rollback()
+        print("count_favourite worng!!")
+    re_num = float(re_num)+2
+    # print(re_num)
+    update_sql = "UPDATE sys.User SET %s=%s WHERE Username='%s';"%(re_style,re_num,username)
+    update_cur = db.cursor()
+    try:
+        update_cur.execute(update_sql)
+        db.commit()
+    except Exception:
+        db.rollback()
+        print("insert style worng!!")
+        return False
+    db.close()
+    return True
+
+def like_style(username,recipe_id):
+    db.ping()
+    select_sql="SELECT Recipe_Style FROM sys.Recipe WHERE Recipe_Id='%s';"%(recipe_id)
+    cursor = db.cursor()
+    re_style = ''
+    try:
+        cursor.execute(select_sql)
+        re_style = cursor.fetchone()[0]
+    except Exception:
+        db.rollback()
+        print("count_favourite worng!!")
+    # print(re_style)
+    select_user = "SELECT %s FROM sys.User WHERE Username='%s';"%(re_style,username)
+    cur = db.cursor()
+    re_num = ''
+    try:
+        cur.execute(select_user)
+        re_num = cur.fetchone()[0]
+    except Exception:
+        db.rollback()
+        print("count_favourite worng!!")
+    re_num = float(re_num)+1
+    # print(re_num)
+    update_sql = "UPDATE sys.User SET %s=%s WHERE Username='%s';"%(re_style,re_num,username)
+    update_cur = db.cursor()
+    try:
+        update_cur.execute(update_sql)
+        db.commit()
+    except Exception:
+        db.rollback()
+        print("insert style worng!!")
+        return False
+    db.close()
+    return True
+
+def recommend_recipe(username):
+    db.ping()
+    style_name=['chinese','japanese','korean','south_east_asia','french','italy','fast_food','middle_east','indian','russian']
+    style_num=[]
+    sql="SELECT chinese,japanese,korean,south_east_asia,french,italy,fast_food,middle_east,indian,russian FROM sys.User WHERE Username='%s';"%(username)
+    cursor = db.cursor()
+    re_num = ''
+    try:
+        cursor.execute(sql)
+        re_num = cursor.fetchone()
+    except Exception:
+        db.rollback()
+        print("select style worng!!")
+        return False
+    # print(re_num)
+    re_num=list(re_num)
+    for i in re_num:
+        if float(i)==0.0:
+            style_num.append(float(i))
+        else:
+            style_num.append(i/sum(re_num))
+    # print(style_num)
+    # np.random.seed(0)
+    p=np.array(style_num)
+    recipe={}
+    for i in range(10):
+        index=np.random.choice([0,1,2,3,4,5,6,7,8,9], p=p.ravel())
+        if style_name[index] not in recipe:
+            recipe[style_name[index]]=1
+        else:
+            recipe[style_name[index]]+=1
+    # print(recipe)
+
+    re=[]
+    for sty in recipe:
+        sel_sql = "SELECT * FROM(SELECT a.* FROM Recipe a join \
+            (SELECT Recipe_Id ,COUNT(Recipe_Id)  from sys.Recipe_Like group by Recipe_Id ) b on a.Recipe_Id =b.Recipe_id) kk  WHERE Recipe_Style = '%s';" % (sty)
+        # print(sel_sql)
+        cur=db.cursor()
+        re_ele=''
+        try:
+            cur.execute(sel_sql)
+            re_ele=cur.fetchall()
+        except:
+            db.rollback()
+            print("select recipe wrong")
+            return False
+        re_ele=list(re_ele)
+        if len(re_ele)>recipe[sty]:
+            re.append(re_ele[:recipe[sty]])
+        else:
+            re.append(re_ele)
+        # print(re)
+    return re
+
+
+
+# recommend_recipe('Ryan')
+# like_style('Ryan',6)
+# User_register_style('Katherine','chinese','south_east_asia')
 # Recipe_Pop()
 # Ingredient_find('chicken')
 # Recipe_get_fav_num(2)
