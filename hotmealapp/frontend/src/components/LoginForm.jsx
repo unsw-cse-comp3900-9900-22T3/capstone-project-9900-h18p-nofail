@@ -63,18 +63,6 @@ function LoginForm () {
         })
       });
       const data_fav_recipe = await response_fav_recipe.json();
-
-      //get all recipe list
-      const response_all_recipe = await fetch('http://localhost:8080/recipe/showall', {
-        method: 'POST',
-        headers: {
-          'Content-type': 'application/json',
-        },
-        body: JSON.stringify({
-          
-        })
-      });
-      const data_all_recipe = await response_all_recipe.json();
       //////////////////////////////////////////////////////////////////////////
 
       if(data.status==="success") {
@@ -102,11 +90,6 @@ function LoginForm () {
         //get a user's fav recipe list
         let fav_recipes = data_fav_recipe.fav_list
         localStorage.setItem('fav_recipes', JSON.stringify(fav_recipes))
-
-        //get all recipe list
-        let all_recipes = data_all_recipe.recipe_list
-        localStorage.setItem('all_recipes', JSON.stringify(all_recipes))
-        //console.log(all_recipes)
         
         //////////////////////////////////////////////////////////
 

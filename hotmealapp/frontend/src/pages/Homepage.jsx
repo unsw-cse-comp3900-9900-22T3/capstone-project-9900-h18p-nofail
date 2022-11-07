@@ -1,48 +1,53 @@
 import React from 'react';
 import {
-    Row,
     Button,
-    Form,
-    Col,
-    InputGroup,
   } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import HomepageRecipeCard from '../components/HomepageRecipeCard';
+//import HomepageRecipeCard from '../components/HomepageRecipeCard';
 import Logout from '../pages/Logout';
 
 
 function Homepage() {
-
+  
+  const HomepageRecipeCard = React.lazy(() => import('../components/HomepageRecipeCard'));
+  //homepage recipe card
+  const getrecipe = async () => {
+    const response_all_recipe = await fetch('http://localhost:8080/recipe/showall', {
+      method: 'POST',
+      headers: {
+        'Content-type': 'application/json',
+      },
+      body: JSON.stringify({
+        
+      })
+    })
+    if(data.status==="success") {
+      const data_all_recipe = await response_all_recipe.json();
+      let all_recipes = data_all_recipe.recipe_list
+      localStorage.setItem('all_recipes', JSON.stringify(all_recipes))
+      console.log(all_recipes)
+    }
+  }
+  React.useEffect(() => {
+    (async () => {
+      await getrecipe();
+    })(); 
+  }, []); 
+  
+  //personal page button
   function personalPage() {
     window.location.href = 'http://localhost:3000/personalpage';
   }
-
-  function viewRecipe() {
-    window.location.href = '/recipe_and_follower/recipe.html';
-  }
   
-    const myfunciton = async () => {
-      // const username_search_url="/usar/s";
-      // const recipe_saerch_url="/safd";
+  //search button
+  const searchBtn = async () => {
       const radio_box = document.getElementsByName("searchType");
       var search_box_content = document.getElementById("SearchBox");
-      console.log("#####search_box_content:", search_box_content.value)
-      const search_box_value = search_box_content.value
-      
-      // search_content_real = search_content_real.search_content_real
+      const search_box_value = search_box_content.value;
+      const search_content = JSON.stringify({"search_content":search_box_value,"difficult":"","style_name":"","ingredient":""});
+      var search_content_real = JSON.parse(search_content);
 
-      const search_content = JSON.stringify({"search_content":search_box_value,"difficult":"","style_name":"","ingredient":""})
-      console.log("search_content:",search_content.search_content, "type:", typeof(search_content))
-
-      var search_content_real = JSON.parse(search_content)
-      console.log("search_content_real:", search_content_real)
-
-      console.log("radio_box: ",radio_box);
-      console.log("radio_box.length:",radio_box.length);
-      // document.getElementById("result").innerHTML = "Gender: "+radio_box[i].value;
         if(radio_box[0].checked){
-          console.log("radiobox[0]")
-          // const search_user = async () => {
               const response = await fetch('http://localhost:8080/search/user', {
               method: 'POST',
               headers: {
@@ -54,18 +59,13 @@ function Homepage() {
                 }.search_content_real
               )
             });
-            // search_user();
             const data = await response.json();
-            console.log("user data: ",data);
             let user_search_return = data.return_user
             localStorage.setItem('user_search_return', JSON.stringify(user_search_return))
 
             window.location.href = 'http://localhost:3000/searchuserpage';
 
-
         } else if (radio_box[1].checked){
-          console.log("radiobox[1]")
-          // const search_recipe = async () => {
             const response = await fetch('http://localhost:8080/search/recipe', {
             method: 'POST',
             headers: {
@@ -75,16 +75,12 @@ function Homepage() {
               search_content_real
             }.search_content_real)
           });
-          // search_recipe();
           const data = await response.json();
-          console.log("recipe data: ",data);
           localStorage.setItem('recipe_search_return', JSON.stringify(data.return_recipe))
 
           window.location.href = 'http://localhost:3000/searchrecipepage';
-        // }
-
         }
-        
+
 
     }
 
@@ -121,18 +117,18 @@ function Homepage() {
        <input type="radio" id="recipe_box" name="searchType" defaultValue="Recipe" />
          Recipe
        <input type="text" id="SearchBox" />
-       <input type="Submit" defaultValue="Search" onClick={myfunciton}/>
+       <input type="Submit" defaultValue="Search" onClick={searchBtn}/>
 
-      
-
-      
+      {/*Personal Page Button*/}
       <Button onClick={personalPage} variant="outline-success" style={{ marginLeft: 180 }}>
         Personal Page
       </Button>
 
       <Logout />
 
-      <HomepageRecipeCard />
+      <React.Suspense fallback={<div>Loading...</div>}>
+        {/* <HomepageRecipeCard /> */}
+      </React.Suspense>
       
       {/*script*/}
       <p />

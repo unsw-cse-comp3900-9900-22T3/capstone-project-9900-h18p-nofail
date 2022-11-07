@@ -7,17 +7,6 @@ import {
 } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-import Friedpork from '../images/friedpork.jpeg';
-import Koushuichicken from '../images/koushuichicken.jpeg';
-import Margheritapizza from '../images/MarghheritaPizza.jpeg';
-import Roujiamo from '../images/roujiamo.jpeg';
-import Soursoupbeef from '../images/soursoupbeef.jpeg';
-import Tiramisu from '../images/tiramisu.jpeg';
-import Tomatofriedegges from '../images/tomatofriedeggs.jpeg';
-import Zajiangmian from '../images/zajiangmian.jpeg';
-
-
-
 function PersonalRecipeCard () {
     const recipes = JSON.parse(localStorage.getItem('recipes'));
     //console.log(recipes);
@@ -108,10 +97,10 @@ function PersonalRecipeCard () {
               {recipes.map(recipe =>(
                     <Col >
                       <Card>
-                        <Card.Img variant="top" />
+                        <Card.Img variant="top"/>
                         <Card.Body>
                           <Button variant="outline-success" href = {`/recipe_and_follower/recipe.html?receipId=${recipe.recipe_id}`}>
-                            <Card.Img variant="top" src={recipe.recipe_photo}/>
+                            <Card.Img variant="top" src={recipe.recipe_photo} height="180px"/>
                           </Button>
                           <Card.Title>{recipe.recipe_name}</Card.Title>
                           <Card.Text>❤️{recipe.like_num}</Card.Text>

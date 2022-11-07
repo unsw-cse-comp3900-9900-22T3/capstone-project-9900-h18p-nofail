@@ -7,16 +7,6 @@ import {
 } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-import Friedpork from '../images/friedpork.jpeg';
-import Koushuichicken from '../images/koushuichicken.jpeg';
-import Margheritapizza from '../images/MarghheritaPizza.jpeg';
-import Roujiamo from '../images/roujiamo.jpeg';
-import Soursoupbeef from '../images/soursoupbeef.jpeg';
-import Tiramisu from '../images/tiramisu.jpeg';
-import Tomatofriedegges from '../images/tomatofriedeggs.jpeg';
-import Zajiangmian from '../images/zajiangmian.jpeg';
-
-
 function HomepageRecipeCard () {
 
   function viewRecipe(id) {
@@ -29,6 +19,7 @@ function HomepageRecipeCard () {
   }
 
   const all_recipes = JSON.parse(localStorage.getItem('all_recipes'));
+  //const all_recipes = JSON.parse(localStorage.getItem('all_recipes'));
   //console.log(all_recipes);
 
 
@@ -89,7 +80,7 @@ function HomepageRecipeCard () {
                       <Card>
                         <Card.Body>
                           <Button variant="outline-success" href = {`/recipe_and_follower/recipe.html?receipId=${all_recipe.recipe_id}`}>
-                            <Card.Img variant="top" src={all_recipe.recipe_photo}/>
+                            <Card.Img variant="top" src={all_recipe.recipe_photo} height="180px"/>
                           </Button>
                           <Card.Title>{all_recipe.recipe_name}</Card.Title>
                           <Card.Text>❤️{all_recipe.like_num}</Card.Text>
