@@ -5,9 +5,10 @@ import {
 } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-function PersonalDetail () {
+function ViewPersonalDetail () {
 
-    const username = localStorage.getItem('username');
+    const params = useParams();
+    const username = params.username;
     const recipe_num = localStorage.getItem('recipe_num');
 
     //get personal info
@@ -32,7 +33,7 @@ function PersonalDetail () {
         })(); 
     }, []); 
     const personal_info_from_infos = JSON.parse(localStorage.getItem('personal_info'));
-    console.log(personal_info_from_infos);
+    //console.log(personal_info_from_infos);
     const [description, setDes] = React.useState(personal_info_from_infos.description);
     let [user_photo, setImg] = React.useState(personal_info_from_infos.user_photo);
     const [following_num, setFollowing] = React.useState(personal_info_from_infos.following_num);
@@ -111,4 +112,4 @@ function PersonalDetail () {
         );
 }
 
-export default PersonalDetail;
+export default ViewPersonalDetail;

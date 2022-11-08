@@ -1,57 +1,25 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import {
     Button,
     Form,
   } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import {useParams} from 'react-router-dom';
 import PersonalRecipeCard from '../components/PersonalRecipeCard';
 import PersonalDetail from '../components/PersonalDetail';
 import Logout from '../pages/Logout';
 
 function Personalpage() {
-  const username = localStorage.getItem('username');
-
-  const getinfo = async (username) => {
-    try {
-      const response = await fetch('http://localhost:8080/user/getpersonalinfo', {
-        method: 'POST',
-        headers: {
-          'Content-type': 'application/json',
-        },
-        body: JSON.stringify({
-          username  // username: username
-        })
-        
-      });
-      const data = await response.json();
-      console.log(data);
-      return data;
-    } catch (error) {
-      console.log(error);
-      return error;
-    }
-  }
+  //const username = localStorage.getItem('username');
+  const params = useParams();
+  const username = params.username;
   
-
-  useEffect(() => {
-    (async () => {
-      let info = await getinfo(username);
-      if (info.status === 'success') {
-        localStorage.setItem('info', JSON.stringify(info.personal_info));
-        
-        console.log(info.personal_info);
-        
-      } else {
-        alert(info.message);
-      }
-    })(); // IIFE
-  }, []); // [] means no dependency
-  
+  //logo jump to homepage
   function logoJump() {
       window.location.href = 'http://localhost:3000/homepage';
     }
 
-    function createRecipe() {
+  function createRecipe() {
       window.location.href = 'http://localhost:3000/createrecipe';
     }
 
@@ -105,7 +73,21 @@ function Personalpage() {
     </table>
   </div>
 
-
+{/*Recipe List*/}
+<br />
+            <table bgcolor="#7DA395">
+                <tbody>
+                  <tr>
+                    <td>
+                      <a href={`/personalpage/${username}`}  style={{ marginLeft: 380, color:'black'}}>My Recipe</a>
+                    </td>
+                    <td>
+                      <a href={`/favrecipepage/${username}`} style={{ margin: 434 , color:'black'}}>Favorite Recipe</a>
+                    </td>
+                    </tr>
+                </tbody>
+              </table>
+            <br />
 <PersonalRecipeCard />
 
   {/*script*/}

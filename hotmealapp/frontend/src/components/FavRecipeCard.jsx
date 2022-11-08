@@ -6,32 +6,33 @@ import {
   Button
 } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
-
-import Friedpork from '../images/friedpork.jpeg';
-import Koushuichicken from '../images/koushuichicken.jpeg';
-import Margheritapizza from '../images/MarghheritaPizza.jpeg';
-import Roujiamo from '../images/roujiamo.jpeg';
-import Soursoupbeef from '../images/soursoupbeef.jpeg';
-import Tiramisu from '../images/tiramisu.jpeg';
-import Tomatofriedegges from '../images/tomatofriedeggs.jpeg';
-import Zajiangmian from '../images/zajiangmian.jpeg';
-
+import {useParams} from 'react-router-dom';
 
 function FavRecipeCard () {
 
-  function viewRecipe(id) {
-    if (id)
-      window.location.href = `/recipe_and_follower/recipe.html?receipId=${id}`;
+  const params = useParams();
+  const username = params.username;
+
+  const getfavrecipe = async () => {
+  const response_fav_recipe = await fetch('http://localhost:8080/user/getfavlist', {
+        method: 'POST',
+        headers: {
+          'Content-type': 'application/json',
+        },
+        body: JSON.stringify({
+          username
+        })
+      });
+    const data_fav_recipe = await response_fav_recipe.json();
+    let fav_recipes = data_fav_recipe.fav_list
+    localStorage.setItem('fav_recipes', JSON.stringify(fav_recipes))
+    //console.log(recipes);
   }
-
-  function myRecipe() {
-    window.location.href = 'http://localhost:3000/personalpage';
-    }
-
-  function favoriteRecipe() {
-    window.location.href = 'http://localhost:3000/favrecipepage';
-    }
-
+  React.useEffect(() => {
+      (async () => {
+      await getfavrecipe();
+      })(); 
+  }, []); 
   const fav_recipes = JSON.parse(localStorage.getItem('fav_recipes'));
   //console.log(all_recipes);
 
@@ -39,21 +40,6 @@ function FavRecipeCard () {
 
     return (
             <>
-            {/*Recipe List*/}
-            <br />
-            <table bgcolor="#7DA395">
-                <tbody>
-                  <tr>
-                    <td>
-                      <a href = 'http://localhost:3000/personalpage' style={{ marginLeft: 380, color:'black'}}>My Recipe</a>
-                    </td>
-                    <td>
-                      <a href = 'http://localhost:3000/favrecipepage' style={{ margin: 434 , color:'black'}}>Favorite Recipe</a>
-                    </td>
-                    </tr>
-                </tbody>
-              </table>
-            <br />
 
             {/*Filters*/}
               <div className='Container2'>
@@ -109,7 +95,7 @@ function FavRecipeCard () {
                       <Card>
                         <Card.Body>
                           <Button variant="outline-success" href = {`/recipe_and_follower/recipe.html?receipId=${fav_recipe.recipe_id}`}>
-                            <Card.Img variant="top" src={fav_recipe.recipe_photo}/>
+                            <Card.Img variant="top" src={fav_recipe.recipe_photo} height="180px"/>
                           </Button>
                           <Card.Title>{fav_recipe.recipe_name}</Card.Title>
                           <Card.Text>❤️{fav_recipe.like_num}</Card.Text>

@@ -8,6 +8,7 @@ import CreateRecipe from './pages/CreateRecipe';
 import Homepage from './pages/Homepage';
 import Personalpage from './pages/Personalpage';
 import Viewpersonalpage from './pages/Viewpersonalpage';
+import ViewFavrecipepage from './pages/ViewFavrecipepage';
 import Searchrecipepage from './pages/SearchRecipePage';
 import Searchuserpage from './pages/SearchUserPage';
 import Favrecipepage from './pages/Favrecipepage';
@@ -56,11 +57,12 @@ function App () {
           <Route path="/logout" element={<Logout />} />
           <Route path="/createrecipe" element={<CreateRecipe />} />
           <Route path="/homepage" element={<Homepage />} />
-          <Route path="/personalpage" element={<Personalpage />} />
-          <Route path="/viewpersonalpage" element={<Viewpersonalpage />} />
+          <Route path="/personalpage/:username" element={<Personalpage />} />
+          <Route path="/viewpersonalpage/:username" element={<Viewpersonalpage />} />
+          <Route path="/viewfavrecipepage/:username" element={<ViewFavrecipepage />} />
           <Route path="/searchrecipepage" element={<Searchrecipepage />} />
           <Route path="/searchuserpage" element={<Searchuserpage />} />
-          <Route path="/favrecipepage" element={<Favrecipepage />} />
+          <Route path="/favrecipepage/:username" element={<Favrecipepage />} />
           <Route path="/updaterecipe/:recipeid" element={<UpdateRecipe />} />
           <Route path="/update_personal_info/:username" element={<Updatepersonalinfo />} />
         </Routes>

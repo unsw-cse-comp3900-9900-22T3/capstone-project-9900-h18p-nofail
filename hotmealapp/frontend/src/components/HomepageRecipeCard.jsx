@@ -9,20 +9,30 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 function HomepageRecipeCard () {
 
-  function viewRecipe(id) {
-    if (id)
-      window.location.href = `/recipe_and_follower/recipe.html?receipId=${id}`;
-  }
-
-  function hanle_CookingTime(){
-    
-  }
-
+   const getrecipe = async () => {
+     const response_all_recipe = await fetch('http://localhost:8080/recipe/showall', {
+       method: 'POST',
+       headers: {
+         'Content-type': 'application/json',
+       },
+       body: JSON.stringify({
+        
+       })
+     })
+     const data_all_recipe = await response_all_recipe.json();
+     if(data_all_recipe.status==="success") {
+       let all_recipes = data_all_recipe.recipe_list
+       localStorage.setItem('all_recipes', JSON.stringify(all_recipes))
+       console.log(all_recipes)
+     }
+   }
+   React.useEffect(() => {
+     (async () => {
+       await getrecipe();
+     })(); 
+   }, []); 
+  
   const all_recipes = JSON.parse(localStorage.getItem('all_recipes'));
-  //const all_recipes = JSON.parse(localStorage.getItem('all_recipes'));
-  //console.log(all_recipes);
-
-
 
     return (
             <>

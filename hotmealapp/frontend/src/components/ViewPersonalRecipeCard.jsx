@@ -6,55 +6,45 @@ import {
   Button
 } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
-
-import Friedpork from '../images/friedpork.jpeg';
-import Koushuichicken from '../images/koushuichicken.jpeg';
-import Margheritapizza from '../images/MarghheritaPizza.jpeg';
-import Roujiamo from '../images/roujiamo.jpeg';
-import Soursoupbeef from '../images/soursoupbeef.jpeg';
-import Tiramisu from '../images/tiramisu.jpeg';
-import Tomatofriedegges from '../images/tomatofriedeggs.jpeg';
-import Zajiangmian from '../images/zajiangmian.jpeg';
-
-
+import {useParams} from 'react-router-dom';
 
 function ViewPersonalRecipeCard () {
-    const recipes = JSON.parse(localStorage.getItem('recipes'));
-    console.log(recipes);
+    const params = useParams();
+    const username = params.username;
 
-    function viewRecipe(id) {
-      if (id)
-        window.location.href = `/recipe_and_follower/recipe.html?receipId=${id}`;
-    }
-  
-    function myRecipe() {
-      window.location.href = 'http://localhost:3000/personalpage';
+    const recipe_username = username;
+    const getrecipe = async () => {
+      const response_recipe = await fetch('http://localhost:8080/recipe/showlist', {
+        method: 'POST',
+        headers: {
+          'Content-type': 'application/json',
+        },
+        body: JSON.stringify({
+          recipe_username
+        })
+      });
+      const data_recipe = await response_recipe.json();
+      let recipes = data_recipe.recipe_list;
+      localStorage.setItem('recipes', JSON.stringify(recipes));
+      
+      //get a user's recipe number
+      if(data_recipe.status==="fail"){
+        localStorage.setItem('recipe_num', 0)
       }
-  
-    function favoriteRecipe() {
-      window.location.href = 'http://localhost:3000/favrecipepage';
+      else {
+        localStorage.setItem('recipe_num', recipes.length)
       }
-
-    
-
-    
+  }
+  React.useEffect(() => {
+      (async () => {
+      await getrecipe();
+      })(); 
+  }, []); 
+  const recipes = JSON.parse(localStorage.getItem('recipes'));
+  //console.log(recipes);
+  
     return(
         <>
-          {/*Recipe List*/}
-            <br />
-            <table bgcolor="#7DA395">
-                <tbody>
-                  <tr>
-                    <td>
-                    <a href = 'http://localhost:3000/personalpage' style={{ marginLeft: 380, color:'black'}}>My Recipe</a>
-                    </td>
-                    <td>
-                      <a href = 'http://localhost:3000/favrecipepage' style={{ margin: 434 , color:'black'}}>Favorite Recipe</a>
-                    </td>
-                    </tr>
-                </tbody>
-              </table>
-            <br />
 
           {/*Filters*/}
           <div className='Container2'>
@@ -108,10 +98,10 @@ function ViewPersonalRecipeCard () {
               {recipes.map(recipe =>(
                     <Col >
                       <Card>
-                        <Card.Img variant="top" />
+                        <Card.Img variant="top"/>
                         <Card.Body>
                           <Button variant="outline-success" href = {`/recipe_and_follower/recipe.html?receipId=${recipe.recipe_id}`}>
-                            <Card.Img variant="top" src={recipe.recipe_photo}/>
+                            <Card.Img variant="top" src={recipe.recipe_photo} height="180px"/>
                           </Button>
                           <Card.Title>{recipe.recipe_name}</Card.Title>
                           <Card.Text>❤️{recipe.like_num}</Card.Text>

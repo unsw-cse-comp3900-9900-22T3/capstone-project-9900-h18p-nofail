@@ -31,7 +31,7 @@ function SearchUserPage(){
                       <Card>
                         <Card.Img variant="top" />
                         <Card.Body>
-                          <Button variant="outline-success">
+                          <Button variant="outline-success" href={`/viewpersonalpage/${user.username}`}>
                             <Card.Img variant="top" src={user.user_photo} height="180px"/>
                           </Button>
                           <Card.Title>{user.username}</Card.Title>

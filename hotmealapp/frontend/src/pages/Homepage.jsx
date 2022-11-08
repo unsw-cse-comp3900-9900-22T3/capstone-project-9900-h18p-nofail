@@ -8,32 +8,9 @@ import Logout from '../pages/Logout';
 
 
 function Homepage() {
-  
+  const username = localStorage.getItem('username');
   const HomepageRecipeCard = React.lazy(() => import('../components/HomepageRecipeCard'));
-  //homepage recipe card
-  const getrecipe = async () => {
-    const response_all_recipe = await fetch('http://localhost:8080/recipe/showall', {
-      method: 'POST',
-      headers: {
-        'Content-type': 'application/json',
-      },
-      body: JSON.stringify({
-        
-      })
-    })
-    if(data.status==="success") {
-      const data_all_recipe = await response_all_recipe.json();
-      let all_recipes = data_all_recipe.recipe_list
-      localStorage.setItem('all_recipes', JSON.stringify(all_recipes))
-      console.log(all_recipes)
-    }
-  }
-  React.useEffect(() => {
-    (async () => {
-      await getrecipe();
-    })(); 
-  }, []); 
-  
+
   //personal page button
   function personalPage() {
     window.location.href = 'http://localhost:3000/personalpage';
@@ -80,9 +57,8 @@ function Homepage() {
 
           window.location.href = 'http://localhost:3000/searchrecipepage';
         }
-
-
     }
+
 
       return (
         <>
@@ -120,14 +96,14 @@ function Homepage() {
        <input type="Submit" defaultValue="Search" onClick={searchBtn}/>
 
       {/*Personal Page Button*/}
-      <Button onClick={personalPage} variant="outline-success" style={{ marginLeft: 180 }}>
+      <Button href={`/personalpage/${username}`} variant="outline-success" style={{ marginLeft: 180 }}>
         Personal Page
       </Button>
 
       <Logout />
 
       <React.Suspense fallback={<div>Loading...</div>}>
-        {/* <HomepageRecipeCard /> */}
+        <HomepageRecipeCard />
       </React.Suspense>
       
       {/*script*/}

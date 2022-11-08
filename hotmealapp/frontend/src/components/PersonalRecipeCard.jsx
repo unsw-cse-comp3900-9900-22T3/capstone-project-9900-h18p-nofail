@@ -6,44 +6,46 @@ import {
   Button
 } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import {useParams} from 'react-router-dom';
 
 function PersonalRecipeCard () {
-    const recipes = JSON.parse(localStorage.getItem('recipes'));
-    //console.log(recipes);
 
-    function viewRecipe(id) {
-      if (id)
-        window.location.href = `/recipe_and_follower/recipe.html?receipId=${id}`;
-    }
-  
-    function myRecipe() {
-      window.location.href = 'http://localhost:3000/personalpage';
+  const params = useParams();
+  const username = params.username;
+
+  const recipe_username = username;
+  const getrecipe = async () => {
+      const response_recipe = await fetch('http://localhost:8080/recipe/showlist', {
+        method: 'POST',
+        headers: {
+          'Content-type': 'application/json',
+        },
+        body: JSON.stringify({
+          recipe_username
+        })
+      });
+      const data_recipe = await response_recipe.json();
+      let recipes = data_recipe.recipe_list;
+      localStorage.setItem('recipes', JSON.stringify(recipes));
+
+      //get a user's recipe number
+      if(data_recipe.status==="fail"){
+        localStorage.setItem('recipe_num', 0)
       }
-  
-    function favoriteRecipe() {
-      window.location.href = 'http://localhost:3000/favrecipepage';
+      else {
+        localStorage.setItem('recipe_num', recipes.length)
       }
+  }
+  React.useEffect(() => {
+      (async () => {
+      await getrecipe();
+      })(); 
+  }, []); 
+  const recipes = JSON.parse(localStorage.getItem('recipes'));
+  //console.log(recipes);
 
-    
-
-    
     return(
         <>
-          {/*Recipe List*/}
-            <br />
-            <table bgcolor="#7DA395">
-                <tbody>
-                  <tr>
-                    <td>
-                    <a href = 'http://localhost:3000/personalpage' style={{ marginLeft: 380, color:'black'}}>My Recipe</a>
-                    </td>
-                    <td>
-                      <a href = 'http://localhost:3000/favrecipepage' style={{ margin: 434 , color:'black'}}>Favorite Recipe</a>
-                    </td>
-                    </tr>
-                </tbody>
-              </table>
-            <br />
 
           {/*Filters*/}
           <div className='Container2'>

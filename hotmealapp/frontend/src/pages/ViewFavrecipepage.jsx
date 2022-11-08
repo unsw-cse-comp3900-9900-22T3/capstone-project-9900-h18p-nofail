@@ -5,81 +5,76 @@ import {
   } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {useParams} from 'react-router-dom';
-import ViewPersonalRecipeCard from '../components/ViewPersonalRecipeCard';
+import FavRecipeCard from '../components/FavRecipeCard';
 import ViewPersonalDetail from '../components/ViewPersonalDetail';
 import Logout from '../pages/Logout';
 
-
-function Viewpersonalpage() {
+function ViewFavrecipepage() {
   const params = useParams();
   const username = params.username;
 
-class FollowBtn extends React.Component {
-  constructor(){
-      super()
-      this.state={
-          isLiked:false
-      }
-  }
-
-  from_username = localStorage.getItem('username');
-  to_username = username;
-
-  handleFollow = async() =>{
-    try{
-      const response = await fetch('http://localhost:8080/user/follow', {
-        method: 'POST',
-        headers: {
-          'Content-type': 'application/json',
-        },
-        body: JSON.stringify({
-          from_username,
-          to_username
+  class FollowBtn extends React.Component {
+    constructor(){
+        super()
+        this.state={
+            isLiked:false
+        }
+    }
+  
+    from_username = localStorage.getItem('username');
+    to_username = username;
+  
+    handleFollow = async() =>{
+      try{
+        const response = await fetch('http://localhost:8080/user/follow', {
+          method: 'POST',
+          headers: {
+            'Content-type': 'application/json',
+          },
+          body: JSON.stringify({
+            from_username,
+            to_username
+          })
+        });
+        const data = await response.json();
+  
+        this.setState((prevState)=>{
+            //console.log(prevState)
+            return{
+                isLiked:!prevState.isLiked
+            }
+        },()=>{
+            //console.log(this.state.isLiked) //获取最新的状态
+            if(data.status==="success"){
+              this.state.isLiked=='true'
+            }
+            else {
+              alert(data.message)
+            }
         })
-      });
-      const data = await response.json();
-
-      this.setState((prevState)=>{
-          //console.log(prevState)
-          return{
-              isLiked:!prevState.isLiked
-          }
-      },()=>{
-          //console.log(this.state.isLiked) //获取最新的状态
-          if(data.status==="success"){
-            this.state.isLiked=='true'
-          }
-          else {
-            alert(data.message)
-          }
-      })
-    }catch (err) {
-      alert(err)
+      }catch (err) {
+        alert(err)
+      }
+    }
+  
+    render() {
+      return (
+              <Button variant="outline-success" style={{ marginLeft: 50 }} onClick={this.handleFollow.bind(this)}>
+                  {
+                  this.state.isLiked ? 'Followed' :'Follow'
+                  }
+              </Button>
+      )
     }
   }
+  
+  function logoJump() {
+      window.location.href = 'http://localhost:3000/homepage';
+    }
 
-  render() {
+  
     return (
-            <Button variant="outline-success" style={{ marginLeft: 50 }} onClick={this.handleFollow.bind(this)}>
-                {
-                this.state.isLiked ? 'Followed' :'Follow'
-                }
-            </Button>
-    )
-  }
-}
-
-    //logo jump to homepage
-    function logoJump() {
-        window.location.href = 'http://localhost:3000/homepage';
-      }
-
-
-
-
-
-    return (
-        <>
+      <>
         <div className='Title'>
           <h1 onClick={logoJump}>Hot Meal</h1>
         </div>
@@ -91,9 +86,7 @@ class FollowBtn extends React.Component {
           <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
           <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
           <title>React App</title>
-          <noscript>You need to enable JavaScript to run this app.</noscript>
-        <div id="root" />
-
+          <div id="root" />
   {/*Header*/}
   <br />
     <div class="loginRemark" style={{ marginLeft: 1200 }}>
@@ -118,8 +111,8 @@ class FollowBtn extends React.Component {
     </table>
   </div>
 
-  {/*Recipe List*/}
-  <br />
+{/*Recipe List*/}
+<br />
             <table bgcolor="#7DA395">
                 <tbody>
                   <tr>
@@ -133,15 +126,13 @@ class FollowBtn extends React.Component {
                 </tbody>
               </table>
             <br />
-
-<ViewPersonalRecipeCard />
+<FavRecipeCard />
 
   {/*script*/}
 </>
 
-
       );
     }
+  
 
-
-export default Viewpersonalpage;
+export default ViewFavrecipepage;

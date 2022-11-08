@@ -4,12 +4,14 @@ import {
     Form,
   } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import {useParams} from 'react-router-dom';
 import FavRecipeCard from '../components/FavRecipeCard';
 import PersonalDetail from '../components/PersonalDetail';
 import Logout from '../pages/Logout';
 
-function Personalpage() {
-  const username = localStorage.getItem('username');
+function Favrecipepage() {
+  const params = useParams();
+  const username = params.username;
   
   function logoJump() {
       window.location.href = 'http://localhost:3000/homepage';
@@ -69,7 +71,21 @@ function Personalpage() {
     </table>
   </div>
 
-
+{/*Recipe List*/}
+<br />
+            <table bgcolor="#7DA395">
+                <tbody>
+                  <tr>
+                    <td>
+                      <a href={`/personalpage/${username}`}  style={{ marginLeft: 380, color:'black'}}>My Recipe</a>
+                    </td>
+                    <td>
+                      <a href={`/favrecipepage/${username}`} style={{ margin: 434 , color:'black'}}>Favorite Recipe</a>
+                    </td>
+                    </tr>
+                </tbody>
+              </table>
+            <br />
 <FavRecipeCard />
 
   {/*script*/}
@@ -79,4 +95,4 @@ function Personalpage() {
     }
   
 
-export default Personalpage;
+export default Favrecipepage;
