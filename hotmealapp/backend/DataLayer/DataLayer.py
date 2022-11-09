@@ -653,7 +653,7 @@ def Recipe_show_comment(recipe_name,recipe_username):
         db.rollback()
         print("search recipe id worng!!")
     re_id = int(re_id)
-    sql = "SELECT * FROM sys.Recipe_Comment WHERE Comment_Recipe_Id = '%s';" %(re_id)
+    sql = "SELECT a.*,b.User_Photo From(SELECT * FROM sys.Recipe_Comment WHERE Comment_Recipe_Id = '%s') a join sys.User b on a.Comment_Username=b.Username ;" %(re_id)
     print(sql)
     cursor = db.cursor()
     re = ''
@@ -667,7 +667,7 @@ def Recipe_show_comment(recipe_name,recipe_username):
 def Recipe_show_comment_byid(recipe_id):
     db.ping()
     re_id = int(recipe_id)
-    sql = "SELECT * FROM sys.Recipe_Comment WHERE Comment_Recipe_Id = '%s';" %(re_id)
+    sql = "SELECT a.*,b.User_Photo From(SELECT * FROM sys.Recipe_Comment WHERE Comment_Recipe_Id = '%s') a join sys.User b on a.Comment_Username=b.Username ;" %(re_id)
     print(sql)
     cursor = db.cursor()
     re = ''
@@ -957,7 +957,7 @@ def check_user_following(username,following_name):
     else:
         return False
 def Follow_Show(username):
-    sql = "SELECT Follower_name,Follow_Time FROM sys.User_Follower WHERE Username='%s';" %(username)
+    sql = "SELECT a.Follower_name,a.Follow_Time,b.User_Photo from (SELECT Follower_name,Follow_Time FROM sys.User_Follower WHERE Username='%s') a join sys.User b on a.Follower_name=b.Username; " %(username)
     db.ping()
     cur = db.cursor()
     re_id = ''
@@ -973,7 +973,7 @@ def Follow_Show(username):
     db.close()
     return re_id
 def Following_Show(username):
-    sql = "SELECT Following_name,Following_Time FROM sys.User_Following WHERE Username='%s';" %(username)
+    sql = "SELECT a.Following_name,a.Following_Time,b.User_Photo from (SELECT Following_name,Following_Time FROM sys.User_Following WHERE Username='%s') a join sys.User b on a.Following_name=b.Username; " %(username)
     db.ping()
     cur = db.cursor()
     re_id = ''
@@ -1201,7 +1201,6 @@ def recommend_recipe(username):
         else:
             recipe[style_name[index]]+=1
     # print(recipe)
-
     re=[]
     for sty in recipe:
         sel_sql = "SELECT * FROM(SELECT a.* FROM Recipe a join \
