@@ -14,65 +14,64 @@ function Viewpersonalpage() {
   const params = useParams();
   const username = params.username;
 
-class FollowBtn extends React.Component {
-  constructor(){
-      super()
-      this.state={
-          isLiked:false
-      }
-  }
+  //follow button
+  const from_username = localStorage.getItem('username');
+  const to_username = username;
 
-  from_username = localStorage.getItem('username');
-  to_username = username;
+  class FollowBtn extends React.Component {
+    constructor(){
+        super()
+        this.state={
+            isLiked:false
+        }
+    }
+    handleFollow = async() =>{
+      try{
+        const response = await fetch('http://localhost:8080/user/follow', {
+          method: 'POST',
+          headers: {
+            'Content-type': 'application/json',
+          },
+          body: JSON.stringify({
+            from_username,
+            to_username
+          })
+        });
+        const data = await response.json();
 
-  handleFollow = async() =>{
-    try{
-      const response = await fetch('http://localhost:8080/user/follow', {
-        method: 'POST',
-        headers: {
-          'Content-type': 'application/json',
-        },
-        body: JSON.stringify({
-          from_username,
-          to_username
+        this.setState((prevState)=>{
+            //console.log("prevstate",prevState)
+            return{
+                isLiked:!prevState.isLiked
+            }
+        },()=>{
+            //console.log("this state",this.state.isLiked) //获取最新的状态
+            if(data.status==="success"){
+              this.state.isLiked=='true'
+            }
+            else {
+              alert(data.message)
+            }
         })
-      });
-      const data = await response.json();
-
-      this.setState((prevState)=>{
-          //console.log(prevState)
-          return{
-              isLiked:!prevState.isLiked
-          }
-      },()=>{
-          //console.log(this.state.isLiked) //获取最新的状态
-          if(data.status==="success"){
-            this.state.isLiked=='true'
-          }
-          else {
-            alert(data.message)
-          }
-      })
-    }catch (err) {
-      alert(err)
+      }catch (err) {
+        alert(err)
+      }
+    }
+    render() {
+      return (
+              <Button variant="outline-success" style={{ marginLeft: 50 }} onClick={this.handleFollow.bind(this)}>
+                  {
+                  this.state.isLiked ? 'Followed' :'Follow'
+                  }
+              </Button>
+      )
     }
   }
 
-  render() {
-    return (
-            <Button variant="outline-success" style={{ marginLeft: 50 }} onClick={this.handleFollow.bind(this)}>
-                {
-                this.state.isLiked ? 'Followed' :'Follow'
-                }
-            </Button>
-    )
-  }
-}
-
-    //logo jump to homepage
-    function logoJump() {
+  //logo jump to homepage
+  function logoJump() {
         window.location.href = 'http://localhost:3000/homepage';
-      }
+  }
 
 
 
@@ -94,49 +93,49 @@ class FollowBtn extends React.Component {
           <noscript>You need to enable JavaScript to run this app.</noscript>
         <div id="root" />
 
-  {/*Header*/}
-  <br />
-    <div class="loginRemark" style={{ marginLeft: 1200 }}>
-      <Form>
-        <Logout />
-        </Form>
-    </div>
+        {/*Header*/}
+        <br />
+          <div class="loginRemark" style={{ marginLeft: 1200 }}>
+            <Form>
+              <Logout />
+              </Form>
+          </div>
 
-  {/*Personal Details*/}
-  <ViewPersonalDetail />
+        {/*Personal Details*/}
+        <ViewPersonalDetail />
 
-  <div style={{ marginLeft: 150 }}>
-    <table border={0}>
-      <tbody>
-        <tr>
-          <td>
-            <br />
-            <FollowBtn />
-          </td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
+        <div style={{ marginLeft: 150 }}>
+          <table border={0}>
+            <tbody>
+              <tr>
+                <td>
+                  <br />
+                  <FollowBtn />
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
 
-  {/*Recipe List*/}
-  <br />
-            <table bgcolor="#7DA395">
-                <tbody>
-                  <tr>
-                    <td>
-                      <a href={`/viewpersonalpage/${username}`}  style={{ marginLeft: 380, color:'black'}}>My Recipe</a>
-                    </td>
-                    <td>
-                      <a href={`/viewfavrecipepage/${username}`} style={{ margin: 434 , color:'black'}}>Favorite Recipe</a>
-                    </td>
-                    </tr>
-                </tbody>
-              </table>
-            <br />
+        {/*Recipe List*/}
+        <br />
+                  <table bgcolor="#7DA395">
+                      <tbody>
+                        <tr>
+                          <td>
+                            <a href={`/viewpersonalpage/${username}`}  style={{ marginLeft: 380, color:'black'}}>My Recipe</a>
+                          </td>
+                          <td>
+                            <a href={`/viewfavrecipepage/${username}`} style={{ margin: 434 , color:'black'}}>Favorite Recipe</a>
+                          </td>
+                          </tr>
+                      </tbody>
+                    </table>
+                  <br />
 
-<ViewPersonalRecipeCard />
+      <ViewPersonalRecipeCard />
 
-  {/*script*/}
+        {/*script*/}
 </>
 
 

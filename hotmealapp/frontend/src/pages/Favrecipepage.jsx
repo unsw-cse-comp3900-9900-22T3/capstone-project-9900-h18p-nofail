@@ -17,7 +17,7 @@ function Favrecipepage() {
       window.location.href = 'http://localhost:3000/homepage';
     }
 
-    function createRecipe() {
+  function createRecipe() {
       window.location.href = 'http://localhost:3000/createrecipe';
     }
 
@@ -38,57 +38,57 @@ function Favrecipepage() {
           <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
           <title>React App</title>
           <div id="root" />
-  {/*Header*/}
-  <br />
-    <div class="loginRemark" style={{ marginLeft: 1200 }}>
-      <Form>
-        <Form.Text>Welcome {username}</Form.Text>
-        <Logout />
-        </Form>
-    </div>
+          {/*Header*/}
+          <br />
+            <div class="loginRemark" style={{ marginLeft: 1200 }}>
+              <Form>
+                <Form.Text>Welcome {username}</Form.Text>
+                <Logout />
+                </Form>
+            </div>
 
-  {/*Personal Details*/}
-  <PersonalDetail />
+          {/*Personal Details*/}
+          <PersonalDetail />
 
-  <div style={{ marginLeft: 100 }}>
-    <table border={0}>
-      <tbody>
-        <tr>
-          <td>
-            <br />
-            <Button id="editSaveBtn" href={`/update_personal_info/${username}`} variant="outline-success" style={{ marginLeft: 100 }}>
-              Edit/Save
-            </Button>
-          </td>
-          <td></td>
-          <td>
-            <Button type="createRecipeBtn" onClick={createRecipe} variant="success" style={{ marginLeft: 730 }}>
-              Create New Recipe
-            </Button>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
+          <div style={{ marginLeft: 100 }}>
+            <table border={0}>
+              <tbody>
+                <tr>
+                  <td>
+                    <br />
+                    <Button id="editSaveBtn" href={`/update_personal_info/${username}`} variant="outline-success" style={{ marginLeft: 100 }}>
+                      Edit/Save
+                    </Button>
+                  </td>
+                  <td></td>
+                  <td>
+                    <Button type="createRecipeBtn" onClick={createRecipe} variant="success" style={{ marginLeft: 730 }}>
+                      Create New Recipe
+                    </Button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
 
-{/*Recipe List*/}
-<br />
-            <table bgcolor="#7DA395">
-                <tbody>
-                  <tr>
-                    <td>
-                      <a href={`/personalpage/${username}`}  style={{ marginLeft: 380, color:'black'}}>My Recipe</a>
-                    </td>
-                    <td>
-                      <a href={`/favrecipepage/${username}`} style={{ margin: 434 , color:'black'}}>Favorite Recipe</a>
-                    </td>
-                    </tr>
-                </tbody>
-              </table>
-            <br />
-<FavRecipeCard />
+        {/*Recipe List*/}
+        <br />
+                    <table bgcolor="#7DA395">
+                        <tbody>
+                          <tr>
+                            <td>
+                              <a href={`/personalpage/${username}`}  style={{ marginLeft: 380, color:'black'}}>My Recipe</a>
+                            </td>
+                            <td>
+                              <a href={`/favrecipepage/${username}`} style={{ margin: 434 , color:'black'}}>Favorite Recipe</a>
+                            </td>
+                            </tr>
+                        </tbody>
+                      </table>
+                    <br />
+        <FavRecipeCard />
 
-  {/*script*/}
+          {/*script*/}
 </>
 
       );

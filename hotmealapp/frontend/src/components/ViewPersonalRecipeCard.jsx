@@ -12,6 +12,7 @@ function ViewPersonalRecipeCard () {
     const params = useParams();
     const username = params.username;
 
+    //get a user's recipe list
     const recipe_username = username;
     const getrecipe = async () => {
       const response_recipe = await fetch('http://localhost:8080/recipe/showlist', {
@@ -37,7 +38,8 @@ function ViewPersonalRecipeCard () {
   }
   React.useEffect(() => {
       (async () => {
-      await getrecipe();
+        await getrecipe();
+        location.reload();
       })(); 
   }, []); 
   const recipes = JSON.parse(localStorage.getItem('recipes'));

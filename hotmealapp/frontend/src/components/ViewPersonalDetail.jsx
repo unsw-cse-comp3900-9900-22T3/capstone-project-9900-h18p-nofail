@@ -29,7 +29,8 @@ function ViewPersonalDetail () {
     }
     React.useEffect(() => {
         (async () => {
-        await getpersonalinfo();
+            await getpersonalinfo();
+            location.reload();
         })(); 
     }, []); 
     const personal_info_from_infos = JSON.parse(localStorage.getItem('personal_info'));

@@ -10,11 +10,6 @@ import Logout from '../pages/Logout';
 function Homepage() {
   const username = localStorage.getItem('username');
   const HomepageRecipeCard = React.lazy(() => import('../components/HomepageRecipeCard'));
-
-  //personal page button
-  function personalPage() {
-    window.location.href = 'http://localhost:3000/personalpage';
-  }
   
   //search button
   const searchBtn = async () => {
@@ -102,6 +97,7 @@ function Homepage() {
 
       <Logout />
 
+      {/* HomepageRecipeCard */}
       <React.Suspense fallback={<div>Loading...</div>}>
         <HomepageRecipeCard />
       </React.Suspense>

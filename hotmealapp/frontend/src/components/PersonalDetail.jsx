@@ -28,15 +28,16 @@ function PersonalDetail () {
     }
     React.useEffect(() => {
         (async () => {
-        await getpersonalinfo();
+            await getpersonalinfo();
+            location.reload();
         })(); 
     }, []); 
     const personal_info_from_infos = JSON.parse(localStorage.getItem('personal_info'));
     console.log(personal_info_from_infos);
-    const [description, setDes] = React.useState(personal_info_from_infos.description);
-    let [user_photo, setImg] = React.useState(personal_info_from_infos.user_photo);
-    const [following_num, setFollowing] = React.useState(personal_info_from_infos.following_num);
-    const [follower_num, setFollower] = React.useState(personal_info_from_infos.follower_num);
+    // const [description, setDes] = React.useState(personal_info_from_infos.description);
+    // let [user_photo, setImg] = React.useState(personal_info_from_infos.user_photo);
+    // const [following_num, setFollowing] = React.useState(personal_info_from_infos.following_num);
+    // const [follower_num, setFollower] = React.useState(personal_info_from_infos.follower_num);
 
     //following button
     function following() {
@@ -63,7 +64,7 @@ function PersonalDetail () {
             <tbody>
                 <tr>
                 <td>
-                    <img src={user_photo} width={180} height={180} />
+                    <img src={personal_info_from_infos.user_photo} width={180} height={180} />
                 </td>
                 <td>
                     <b>
@@ -71,12 +72,12 @@ function PersonalDetail () {
                     </b>
                     <br />
                     <label>
-                        {description}
+                        {personal_info_from_infos.description}
                     </label>
                 </td>
                 <td>
                     <label style={{ marginLeft: 550 }}>
-                        {following_num}
+                        {personal_info_from_infos.following_num}
                     </label>
                     <br />
                     <Button onClick={following} variant="outline-secondary" style={{ marginLeft: 550 }}>
@@ -85,7 +86,7 @@ function PersonalDetail () {
                 </td>
                 <td>
                     <label style={{ marginLeft: 50 }}>
-                        {follower_num}
+                        {personal_info_from_infos.follower_num}
                     </label>
                     <br />
                     <Button onClick={follower} variant="outline-secondary" style={{ marginLeft: 50 }}>

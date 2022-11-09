@@ -9,7 +9,8 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 function HomepageRecipeCard () {
 
-   const getrecipe = async () => {
+  //get all recipes
+  const getrecipe = async () => {
      const response_all_recipe = await fetch('http://localhost:8080/recipe/showall', {
        method: 'POST',
        headers: {
@@ -29,6 +30,8 @@ function HomepageRecipeCard () {
    React.useEffect(() => {
      (async () => {
        await getrecipe();
+       location.reload();
+        window.stop();
      })(); 
    }, []); 
   

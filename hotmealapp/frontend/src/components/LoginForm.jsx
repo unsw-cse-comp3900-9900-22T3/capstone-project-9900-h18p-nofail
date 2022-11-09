@@ -28,42 +28,61 @@ function LoginForm () {
 
       ////////////////////// Wenqing Yi /////////////////////////////////////
 
-      //get a user's recipe list
-      // const recipe_username = localStorage.getItem('username')
-      // const response_recipe = await fetch('http://localhost:8080/recipe/showlist', {
-      //   method: 'POST',
-      //   headers: {
-      //     'Content-type': 'application/json',
-      //   },
-      //   body: JSON.stringify({
-      //     recipe_username
-      //   })
-      // });
-      // const data_recipe = await response_recipe.json();
+      //get a user's personal info
+      const personal_info = JSON.stringify([{
+        "description": "1",
+        "email": "1",
+        "follower_num": 1,
+        "following_num": 2,
+        "update_time": "Thu, 06 Oct 2022 13:09:23 GMT",
+        "user_photo": "imgs/default.png",
+        "username": "kk"
+      }]);
+      localStorage.setItem('personal_info', personal_info);
 
-      // //get a user's fav recipe list
-      // const response_fav_recipe = await fetch('http://localhost:8080/user/getfavlist', {
-      //   method: 'POST',
-      //   headers: {
-      //     'Content-type': 'application/json',
-      //   },
-      //   body: JSON.stringify({
-      //     username
-      //   })
-      // });
-      // const data_fav_recipe = await response_fav_recipe.json();
+      //get a user's recipe list
+      const recipes = JSON.stringify([{
+        "cooking_time": 30,
+        "description": "so good",
+        "ingredient": "",
+        "like_num": 0,
+        "recipe_id": 10,
+        "recipe_name": "chaomian",
+        "recipe_photo": "imgs/chaomian.jpg",
+        "recipe_style": "Italy",
+        "recipe_username": "kk",
+        "steps": ""
+      }]);
+      localStorage.setItem('recipes', recipes);
+
+      //get a user's fav recipe list
+      const fav_recipes = JSON.stringify([{
+        "cooking_time": 30,
+        "ingredient": "fish,oil",
+        "recipe_create_time": "Sat, 22 Oct 2022 08:51:11 GMT",
+        "recipe_id": 9,
+        "recipe_name": "fry fish",
+        "recipe_photo": "imgs/zhayu.jpg",
+        "recipe_style": "Japanese",
+        "recipe_username": "Ryan",
+        "steps": "pure oil and fry fish"
+      }]);
+      localStorage.setItem('fav_recipes', fav_recipes);
 
       //get all recipe list
-        const response_all_recipe = await fetch('http://localhost:8080/recipe/showall', {
-          method: 'POST',
-          headers: {
-            'Content-type': 'application/json',
-          },
-          body: JSON.stringify({
-            
-          })
-        })
-        const data_all_recipe = await response_all_recipe.json();
+      const all_recipes = JSON.stringify([{
+          "cooking_time": 20,
+          "description": "good",
+          "ingredient": "oil;tomato; eggs;",
+          "like_num": 2,
+          "recipe_id": 1,
+          "recipe_name": "Tomato fry eggs",
+          "recipe_photo": "imgs/fanqiedan.jpg",
+          "recipe_style": "Home cooking",
+          "recipe_username": "Ryan",
+          "steps": "Put oil, then put tomato,finally put eggs, it will finish in 20 min"
+      }]);
+      localStorage.setItem('all_recipes', all_recipes);
       //////////////////////////////////////////////////////////////////////////
 
       if(data.status==="success") {
@@ -93,9 +112,9 @@ function LoginForm () {
         // localStorage.setItem('fav_recipes', JSON.stringify(fav_recipes))
         
         //get all recipe list
-        let all_recipes = data_all_recipe.recipe_list
-        localStorage.setItem('all_recipes', JSON.stringify(all_recipes))
-        console.log(all_recipes)
+        // let all_recipes = data_all_recipe.recipe_list
+        // localStorage.setItem('all_recipes', JSON.stringify(all_recipes))
+        // console.log(all_recipes)
         //////////////////////////////////////////////////////////
 
       }

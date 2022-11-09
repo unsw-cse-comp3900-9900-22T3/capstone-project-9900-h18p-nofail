@@ -13,6 +13,7 @@ function FavRecipeCard () {
   const params = useParams();
   const username = params.username;
 
+  //get a user's fav recipe list
   const getfavrecipe = async () => {
   const response_fav_recipe = await fetch('http://localhost:8080/user/getfavlist', {
         method: 'POST',
@@ -30,7 +31,8 @@ function FavRecipeCard () {
   }
   React.useEffect(() => {
       (async () => {
-      await getfavrecipe();
+        await getfavrecipe();
+        location.reload();
       })(); 
   }, []); 
   const fav_recipes = JSON.parse(localStorage.getItem('fav_recipes'));
