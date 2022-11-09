@@ -26,9 +26,13 @@ function PersonalDetail () {
         })
         })
         const data_personal_info = await response_personal_info.json();
-        const personal_info = data_personal_info.personal_info
-        localStorage.setItem('personal_info', JSON.stringify(personal_info[0]))
-        console.log(personal_info)
+        if(data_personal_info.status==="success") {
+            const personal_info = data_personal_info.personal_info
+            localStorage.setItem('personal_info', JSON.stringify(personal_info[0]))
+            console.log(personal_info)
+        }else {
+            alert(data_personal_info.message)
+          }
     }
     React.useEffect(() => {
         (async () => {

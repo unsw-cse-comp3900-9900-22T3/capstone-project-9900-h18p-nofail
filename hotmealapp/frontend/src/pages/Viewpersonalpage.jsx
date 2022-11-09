@@ -68,12 +68,6 @@ function Viewpersonalpage() {
     }
   }
 
-  //logo jump to homepage
-  function logoJump() {
-        window.location.href = 'http://localhost:3000/homepage';
-  }
-
-
 
 
 

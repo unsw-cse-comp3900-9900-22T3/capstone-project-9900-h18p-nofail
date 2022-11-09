@@ -30,15 +30,16 @@ function PersonalRecipeCard () {
         })
       });
       const data_recipe = await response_recipe.json();
-      let recipes = data_recipe.recipe_list;
-      localStorage.setItem('recipes', JSON.stringify(recipes));
+      if(data_recipe.status==="success") {
+        let recipes = data_recipe.recipe_list;
+        localStorage.setItem('recipes', JSON.stringify(recipes));
+        localStorage.setItem('recipe_num', recipes.length)
+      }
 
       //get a user's recipe number
-      if(data_recipe.status==="fail"){
-        localStorage.setItem('recipe_num', 0)
-      }
-      else {
-        localStorage.setItem('recipe_num', recipes.length)
+      else if(data_recipe.status==="fail"){
+        localStorage.setItem('recipe_num', 0);
+        alert(data_recipe.message)
       }
   }
   React.useEffect(() => {

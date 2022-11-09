@@ -29,9 +29,13 @@ function FavRecipeCard () {
         })
       });
     const data_fav_recipe = await response_fav_recipe.json();
-    let fav_recipes = data_fav_recipe.fav_list
-    localStorage.setItem('fav_recipes', JSON.stringify(fav_recipes))
-    //console.log(recipes);
+    if(data_fav_recipe.status==="success") {
+      let fav_recipes = data_fav_recipe.fav_list
+      localStorage.setItem('fav_recipes', JSON.stringify(fav_recipes))
+      //console.log(recipes);
+    }else {
+      alert(data_fav_recipe.message)
+    }
   }
   React.useEffect(() => {
       (async () => {

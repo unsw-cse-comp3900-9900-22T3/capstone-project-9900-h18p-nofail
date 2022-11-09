@@ -10,6 +10,52 @@ import Logout from '../pages/Logout';
 function Homepage() {
   const username = localStorage.getItem('username');
   const HomepageRecipeCard = React.lazy(() => import('../components/HomepageRecipeCard'));
+
+  //get For U
+  const getForU = async () => {
+    const response_for_u = await fetch('http://localhost:8080/recipe/rs', {
+    method: 'POST',
+    headers: {
+        'Content-type': 'application/json',
+    },
+    body: JSON.stringify({
+        username
+    })
+    })
+    const data_for_u = await response_for_u.json();
+    if(data_for_u.status==="success") {
+      const for_u_recipes = data_for_u.return_recipe;
+      localStorage.setItem('for_u_recipes', JSON.stringify(for_u_recipes))
+      console.log("getForU",for_u_recipes)
+      window.location.href = 'http://localhost:3000/foru';
+    }else {
+      alert(data_for_u.message)
+    }
+  }
+
+
+  //get popular
+  const getPopular = async () => {
+    const response_popular = await fetch('http://localhost:8080/recipe/popular', {
+    method: 'POST',
+    headers: {
+        'Content-type': 'application/json',
+    },
+    body: JSON.stringify({
+        username
+    })
+    })
+    const data_popular = await response_popular.json();
+    if(data_popular.status==="success") {
+      const popular_recipes = data_popular.return_recipe;
+      localStorage.setItem('popular_recipes', JSON.stringify(popular_recipes))
+      console.log("getPopular",popular_recipes)
+      window.location.href = 'http://localhost:3000/popular';
+    }else {
+      alert(data_popular.message)
+    }
+  }
+
   
   //search button
   const searchBtn = async () => {
@@ -32,10 +78,13 @@ function Homepage() {
               )
             });
             const data = await response.json();
-            let user_search_return = data.return_user
-            localStorage.setItem('user_search_return', JSON.stringify(user_search_return))
-
-            window.location.href = 'http://localhost:3000/searchuserpage';
+            if(data.status==="success") {
+              let user_search_return = data.return_user
+              localStorage.setItem('user_search_return', JSON.stringify(user_search_return));
+              window.location.href = 'http://localhost:3000/searchuserpage';
+            }else {
+              alert(data.message)
+            }
 
         } else if (radio_box[1].checked){
             const response = await fetch('http://localhost:8080/search/recipe', {
@@ -48,9 +97,12 @@ function Homepage() {
             }.search_content_real)
           });
           const data = await response.json();
-          localStorage.setItem('recipe_search_return', JSON.stringify(data.return_recipe))
-
-          window.location.href = 'http://localhost:3000/searchrecipepage';
+          if(data.status==="success") {
+            localStorage.setItem('recipe_search_return', JSON.stringify(data.return_recipe));
+            window.location.href = 'http://localhost:3000/searchrecipepage';
+          }else {
+            alert(data.message)
+          }
         }
     }
 
@@ -75,15 +127,15 @@ function Homepage() {
         <div id="root" />
 
       {/*Header*/}
-      <a href = 'http://localhost:3000/homepage' style={{ marginLeft: 200, color:"#7DA395"}}>
+      <Button onClick={getForU} variant="success" style={{ marginLeft: 200}}>
         ForU
-      </a>
-      <a href = 'http://localhost:3000/homepage' style={{ marginLeft: 100, color:"#7DA395" }}>
+      </Button>
+      <Button onClick={getPopular} variant="success" style={{ marginLeft: 50 }}>
         Popular
-      </a>
+      </Button>
 
       {/*Search Box*/}
-       <input type="radio" id="username_box" name="searchType" defaultValue="Username" style={{ marginLeft: 200}} />
+       <input type="radio" id="username_box" name="searchType" defaultValue="Username" style={{ marginLeft: 150}} />
          Username
        <input type="radio" id="recipe_box" name="searchType" defaultValue="Recipe" />
          Recipe

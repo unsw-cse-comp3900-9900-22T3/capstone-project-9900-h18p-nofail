@@ -68,11 +68,6 @@ function ViewFavrecipepage() {
     }
   
 
-    //logoJump button
-    function logoJump() {
-        window.location.href = 'http://localhost:3000/homepage';
-    }
-
   
     return (
       <>

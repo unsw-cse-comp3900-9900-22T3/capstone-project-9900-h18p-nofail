@@ -12,6 +12,8 @@ import ViewFavrecipepage from './pages/ViewFavrecipepage';
 import Searchrecipepage from './pages/SearchRecipePage';
 import Searchuserpage from './pages/SearchUserPage';
 import Favrecipepage from './pages/Favrecipepage';
+import ForUPage from './pages/ForUpage';
+import PopularPage from './pages/Popularpage';
 import UpdateRecipe from './pages/UpdateRecipe';
 import Updatepersonalinfo from './pages/Updatepersoninfo';
 
@@ -63,6 +65,8 @@ function App () {
           <Route path="/searchrecipepage" element={<Searchrecipepage />} />
           <Route path="/searchuserpage" element={<Searchuserpage />} />
           <Route path="/favrecipepage/:username" element={<Favrecipepage />} />
+          <Route path="/foru" element={<ForUPage />} />
+          <Route path="/popular" element={<PopularPage />} />
           <Route path="/updaterecipe/:recipeid" element={<UpdateRecipe />} />
           <Route path="/update_personal_info/:username" element={<Updatepersonalinfo />} />
         </Routes>
