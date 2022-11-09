@@ -67,7 +67,7 @@ function Updatepersonalinfo () {
       const data = await response.json();
       if(data.status==="success") {
         alert("update successfully!")
-        navigate('/personalpage')
+        navigate('/personalpage/'+username)
       }
       else {
         alert(data.message)

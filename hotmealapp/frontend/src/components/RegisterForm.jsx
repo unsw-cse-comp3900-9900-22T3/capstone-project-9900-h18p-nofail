@@ -11,6 +11,8 @@ function RegisterForm () {
   const [password, setPassword] = React.useState('');
   const [password1, setPassword1] = React.useState('');
   const [name, setName] = React.useState('');
+  const [style1, setStyle1] = React.useState('');
+  const [style2, setStyle2] = React.useState('');
   const navigate = useNavigate();
 
   const register = async () => {
@@ -36,12 +38,14 @@ function RegisterForm () {
           "email":email,
           "username":name,
           "password":password,
-          "password1":password1
+          "style1":style1,
+          "style2":style2
         })
       });
       const data = await response.json();
       localStorage.setItem('token', data.username)
       if(data.status==="success") {
+        alert(data.message)
         navigate('/login');
       }
       else {
@@ -73,20 +77,34 @@ function RegisterForm () {
       </Form.Group>
       <Form.Group className="mb-3">
         <Form.Label>Which style do you like the most:</Form.Label>
-        <Form.Select aria-label="Default select example" onChange={e => setCategory(e.target.value)}>
+        <Form.Select aria-label="Default select example" onChange={e => setStyle1(e.target.value)}>
           <option>Open to select</option>
-          <option value="1">One</option>
-          <option value="2">Two</option>
-          <option value="3">Three</option>
+          <option value="Chinese">Chinese</option>
+          <option value="Japanese">Japanese</option>
+          <option value="Korean">Korean</option>
+          <option value="South East Asia">South East Asia</option>
+          <option value="French">French</option>
+          <option value="Italy">Italy</option>
+          <option value="Fast food">Fast food</option>
+          <option value="Middle East">Middle East</option>
+          <option value="Indian">Indian</option>
+          <option value="Russian">Russian</option>
         </Form.Select>
       </Form.Group>
       <Form.Group className="mb-3">
         <Form.Label>Which style do you like the second:</Form.Label>
-        <Form.Select aria-label="Default select example" onChange={e => setCategory(e.target.value)}>
+        <Form.Select aria-label="Default select example" onChange={e => setStyle2(e.target.value)}>
           <option>Open to select</option>
-          <option value="1">One</option>
-          <option value="2">Two</option>
-          <option value="3">Three</option>
+          <option value="Chinese">Chinese</option>
+          <option value="Japanese">Japanese</option>
+          <option value="Korean">Korean</option>
+          <option value="South East Asia">South East Asia</option>
+          <option value="French">French</option>
+          <option value="Italy">Italy</option>
+          <option value="Fast food">Fast food</option>
+          <option value="Middle East">Middle East</option>
+          <option value="Indian">Indian</option>
+          <option value="Russian">Russian</option>
         </Form.Select>
       </Form.Group>
       <Button variant="success" type="submit" onClick={register}>Register</Button>
