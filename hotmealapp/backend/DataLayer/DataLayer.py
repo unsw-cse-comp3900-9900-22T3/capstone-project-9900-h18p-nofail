@@ -27,6 +27,38 @@ def User_Register(username, email, password):
         db.close()
         return False
 
+def User_Register_with_style(username, email, password, st1,st2):
+    db.ping()
+    sql = "INSERT INTO sys.User(Username, Email, Password, %s, %s) VALUES ('%s', '%s', '%s',2,1);" % (st1, st2, username, email, password)
+    # sql = "UPDATE sys.User SET %s=2, %s =1 WHERE Username='%s';"%(st1,st2,username)
+    print(sql)
+    cursor = db.cursor()
+    try:
+        cursor.execute(sql)
+        db.commit()
+    except Exception:
+        db.rollback()
+        print("register worng!!")
+        return False
+    db.close()
+    return True
+
+def User_register_style(username,st1,st2):
+    db.ping()
+    sql = "UPDATE sys.User SET %s=2, %s =1 WHERE Username='%s';"%(st1,st2,username)
+    # print(sql)
+    cursor = db.cursor()
+    try:
+        cursor.execute(sql)
+        db.commit()
+    except Exception:
+        db.rollback()
+        print("insert style worng!!")
+        return False
+    db.close()
+    return True
+
+
 def User_Login(username, password):
     sql = "SELECT Password FROM sys.User WHERE Username = '%s';" % (username)
     print(sql)
@@ -1083,20 +1115,6 @@ def Recipe_Pop():
         return False
     # print(re)
     return re
-def User_register_style(username,st1,st2):
-    db.ping()
-    sql = "UPDATE sys.User SET %s=2, %s =1 WHERE Username='%s';"%(st1,st2,username)
-    # print(sql)
-    cursor = db.cursor()
-    try:
-        cursor.execute(sql)
-        db.commit()
-    except Exception:
-        db.rollback()
-        print("insert style worng!!")
-        return False
-    db.close()
-    return True
 
 def favourite_style(username,recipe_id):
     db.ping()
