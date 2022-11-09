@@ -553,7 +553,7 @@ def getfollowinglist():
         if re:
             re = list(re)
             for i in range(len(re)):
-                re[i] = {'following_username':re[i][0],'time':re[i][1]}
+                re[i] = {'following_username':re[i][0],'time':re[i][1], 'user_photo':re[i][2]}
             msg = {'status': 'success', 'message': 'You have successfully got the following list!','following_list':re}
         else:
             msg = {'status': 'fail', 'message': 'Get following list failed!'}
@@ -569,7 +569,7 @@ def getfollowerlist():
         if re:
             re = list(re)
             for i in range(len(re)):
-                re[i] = {'follower_username':re[i][0],'time':re[i][1]}
+                re[i] = {'follower_username':re[i][0],'time':re[i][1], 'user_photo':re[i][2]}
             msg = {'status': 'success', 'message': 'You have successfully got the follower list!','follower_list':re}
         else:
             msg = {'status': 'fail', 'message': 'Get follower list failed!'}
