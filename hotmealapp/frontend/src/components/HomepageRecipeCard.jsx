@@ -30,12 +30,15 @@ function HomepageRecipeCard () {
    React.useEffect(() => {
      (async () => {
        await getrecipe();
-       location.reload();
-        window.stop();
+       if(location.href.indexOf("#reloaded")==-1){
+        location.href=location.href+"#reloaded";
+        location.reload();
+        }
      })(); 
    }, []); 
   
   const all_recipes = JSON.parse(localStorage.getItem('all_recipes'));
+  
 
     return (
             <>
