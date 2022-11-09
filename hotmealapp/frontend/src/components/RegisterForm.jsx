@@ -71,6 +71,24 @@ function RegisterForm () {
         <Form.Label>Confirm Password: </Form.Label>
         <Form.Control placeholder="confirm password" type='password' onChange={e => setPassword1(e.target.value)} />
       </Form.Group>
+      <Form.Group className="mb-3">
+        <Form.Label>Which style do you like the most:</Form.Label>
+        <Form.Select aria-label="Default select example" onChange={e => setCategory(e.target.value)}>
+          <option>Open to select</option>
+          <option value="1">One</option>
+          <option value="2">Two</option>
+          <option value="3">Three</option>
+        </Form.Select>
+      </Form.Group>
+      <Form.Group className="mb-3">
+        <Form.Label>Which style do you like the second:</Form.Label>
+        <Form.Select aria-label="Default select example" onChange={e => setCategory(e.target.value)}>
+          <option>Open to select</option>
+          <option value="1">One</option>
+          <option value="2">Two</option>
+          <option value="3">Three</option>
+        </Form.Select>
+      </Form.Group>
       <Button variant="success" type="submit" onClick={register}>Register</Button>
     </div>
     </>);
