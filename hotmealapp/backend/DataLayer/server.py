@@ -93,13 +93,31 @@ headers = {
 @app.route('/register', methods =['GET', 'POST'])
 def register():
     msg = 'missing parameter'
-    if request.method == 'POST' and 'username' in request.json and 'password' in request.json and 'email' in request.json:
+    if (
+        request.method == 'POST' and 
+        'username' in request.json and 
+        'password' in request.json and 
+        'email' in request.json and
+        'style1' in request.json and
+        'style2' in request.json
+    ):
         username = request.json['username']
         password = request.json['password']
         email = request.json['email']
+        style1 = request.json['style1']
+        style2 = request.json['style2']
         if DataLayer.Username_Check(username):
-            DataLayer.User_Register(username, password, email)
-            msg = {'status': 'success', 'message': 'You have successfully registered!'}
+            if DataLayer.User_Register_with_style(username, password, email, style1, style2):
+                msg = {
+                    'status': 'success', 
+                    'message': 'User registered successfully with username: {username} and style1: {style1} and style2:{style2}'.format(
+                        username=username, 
+                        style1=style1, 
+                        style2=style2
+                        )
+                    }
+            else:
+                msg = {'status': 'fail', 'message': 'Register failed'}
         else:
             msg = {'status': 'fail', 'message': 'Username already exists!'}
     elif request.method == 'GET':
@@ -553,7 +571,7 @@ def getfollowinglist():
         if re:
             re = list(re)
             for i in range(len(re)):
-                re[i] = {'following_username':re[i][0],'time':re[i][1]}
+                re[i] = {'following_username':re[i][0],'time':re[i][1], 'user_photo':re[i][2]}
             msg = {'status': 'success', 'message': 'You have successfully got the following list!','following_list':re}
         else:
             msg = {'status': 'fail', 'message': 'Get following list failed!'}
@@ -569,7 +587,7 @@ def getfollowerlist():
         if re:
             re = list(re)
             for i in range(len(re)):
-                re[i] = {'follower_username':re[i][0],'time':re[i][1]}
+                re[i] = {'follower_username':re[i][0],'time':re[i][1], 'user_photo':re[i][2]}
             msg = {'status': 'success', 'message': 'You have successfully got the follower list!','follower_list':re}
         else:
             msg = {'status': 'fail', 'message': 'Get follower list failed!'}
@@ -598,7 +616,7 @@ def fav_recipe_byid():
     if request.method == 'POST' and 'username' in request.json and 'recipe_id' in request.json:
         username = request.json['username']
         recipe_id = request.json['recipe_id']
-        if DataLayer.User_insert_favour_byid(username,recipe_id):
+        if DataLayer.User_insert_favour_byid(username,recipe_id) and DataLayer.favourite_style(username,recipe_id):
             msg = {'status': 'success', 'message': 'You have successfully favorited a recipe!'}
         else:
             msg = {'status': 'fail', 'message': 'Favorite recipe failed!'}
@@ -706,7 +724,7 @@ def like_recipe_byid():
     if request.method == 'POST' and 'username' in request.json and 'recipe_id' in request.json:
         username = request.json['username']
         recipe_id = request.json['recipe_id']
-        if DataLayer.Recipe_add_like_byid(username,recipe_id):
+        if DataLayer.Recipe_add_like_byid(username,recipe_id) and DataLayer.like_style(username, recipe_id):
             msg = {'status': 'success', 'message': 'You have successfully liked a recipe!'}
         else:
             msg = {'status': 'fail', 'message': 'Like recipe failed!'}
@@ -967,6 +985,64 @@ def logout():
     session.pop('username', None)
     return jsonify({'status': 'success', 'message': 'You have successfully logged out!'})
 
+@app.route('/recipe/popular', methods =['POST'])
+def get_popular_recipe():
+    msg = 'missing parameter'
+    if request.method == 'POST':
+        return_recipe = DataLayer.Recipe_Pop()
+        if return_recipe:
+            return_recipe = list(return_recipe)
+            for i in range(len(return_recipe)):
+                return_recipe[i] = {
+                    'recipe_id':return_recipe[i][0],
+                    'recipe_name':return_recipe[i][1],
+                    'recipe_username':return_recipe[i][2],
+                    'recipe_style':return_recipe[i][3],
+                    'ingredient':return_recipe[i][4],
+                    'cooking_time':return_recipe[i][5],
+                    'steps':return_recipe[i][6],
+                    'recipe_photo':return_recipe[i][7],
+                    'recipe_create_time':return_recipe[i][8],
+                    'description':return_recipe[i][9]
+                    }
+            msg = {'status': 'success', 'message': 'You have successfully got the popular recipes!','return_recipe':return_recipe}
+        else:
+            msg = {'status': 'fail', 'message': 'Get popular recipes failed!'}
+    return jsonify(msg)
+
+@app.route('/recipe/rs', methods =['POST'])
+#username
+def get_recipe_rs():
+    msg = 'missing parameter'
+    if request.method == 'POST' and 'username' in request.json:
+        username = request.json['username']
+        return_recipe = DataLayer.recommend_recipe(username)
+        real_return_recipe = []
+        if return_recipe:
+            # gt = return_recipe
+            # return_recipe = return_recipe[0]
+            return_recipe = list(return_recipe)
+            for j in range(len(return_recipe)):
+                # print(f"return_recipe[{j}]:{ return_recipe[j]}")
+                return_recipe[j] = list(return_recipe[j])
+                for i in range(len(return_recipe[j])):
+                    return_recipe[j][i] = {
+                        'recipe_id':return_recipe[j][i][0],
+                        'recipe_name':return_recipe[j][i][1],
+                        'recipe_username':return_recipe[j][i][2],
+                        'recipe_style':return_recipe[j][i][3],
+                        'ingredient':return_recipe[j][i][4],
+                        'cooking_time':return_recipe[j][i][5],
+                        'steps':return_recipe[j][i][6],
+                        'recipe_photo':return_recipe[j][i][7],
+                        'recipe_create_time':return_recipe[j][i][8],
+                        'description':return_recipe[j][i][9]
+                    }
+                    real_return_recipe.append(return_recipe[j][i])
+            msg = {'status': 'success', 'message': 'You have successfully got the recipe rs!','return_recipe':real_return_recipe}
+    else:
+            msg = {'status': 'fail', 'message': 'Get recommended recipes failed!'}
+    return jsonify(msg)
 
 #######End of Business Layer#######======================================================
 

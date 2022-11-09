@@ -27,6 +27,38 @@ def User_Register(username, email, password):
         db.close()
         return False
 
+def User_Register_with_style(username, email, password, st1,st2):
+    db.ping()
+    sql = "INSERT INTO sys.User(Username, Email, Password, %s, %s) VALUES ('%s', '%s', '%s',2,1);" % (st1, st2, username, email, password)
+    # sql = "UPDATE sys.User SET %s=2, %s =1 WHERE Username='%s';"%(st1,st2,username)
+    print(sql)
+    cursor = db.cursor()
+    try:
+        cursor.execute(sql)
+        db.commit()
+    except Exception:
+        db.rollback()
+        print("register worng!!")
+        return False
+    db.close()
+    return True
+
+def User_register_style(username,st1,st2):
+    db.ping()
+    sql = "UPDATE sys.User SET %s=2, %s =1 WHERE Username='%s';"%(st1,st2,username)
+    # print(sql)
+    cursor = db.cursor()
+    try:
+        cursor.execute(sql)
+        db.commit()
+    except Exception:
+        db.rollback()
+        print("insert style worng!!")
+        return False
+    db.close()
+    return True
+
+
 def User_Login(username, password):
     sql = "SELECT Password FROM sys.User WHERE Username = '%s';" % (username)
     print(sql)
@@ -653,7 +685,7 @@ def Recipe_show_comment(recipe_name,recipe_username):
         db.rollback()
         print("search recipe id worng!!")
     re_id = int(re_id)
-    sql = "SELECT * FROM sys.Recipe_Comment WHERE Comment_Recipe_Id = '%s';" %(re_id)
+    sql = "SELECT a.*,b.User_Photo From(SELECT * FROM sys.Recipe_Comment WHERE Comment_Recipe_Id = '%s') a join sys.User b on a.Comment_Username=b.Username ;" %(re_id)
     print(sql)
     cursor = db.cursor()
     re = ''
@@ -667,7 +699,7 @@ def Recipe_show_comment(recipe_name,recipe_username):
 def Recipe_show_comment_byid(recipe_id):
     db.ping()
     re_id = int(recipe_id)
-    sql = "SELECT * FROM sys.Recipe_Comment WHERE Comment_Recipe_Id = '%s';" %(re_id)
+    sql = "SELECT a.*,b.User_Photo From(SELECT * FROM sys.Recipe_Comment WHERE Comment_Recipe_Id = '%s') a join sys.User b on a.Comment_Username=b.Username ;" %(re_id)
     print(sql)
     cursor = db.cursor()
     re = ''
@@ -957,7 +989,7 @@ def check_user_following(username,following_name):
     else:
         return False
 def Follow_Show(username):
-    sql = "SELECT Follower_name,Follow_Time FROM sys.User_Follower WHERE Username='%s';" %(username)
+    sql = "SELECT a.Follower_name,a.Follow_Time,b.User_Photo from (SELECT Follower_name,Follow_Time FROM sys.User_Follower WHERE Username='%s') a join sys.User b on a.Follower_name=b.Username; " %(username)
     db.ping()
     cur = db.cursor()
     re_id = ''
@@ -973,7 +1005,7 @@ def Follow_Show(username):
     db.close()
     return re_id
 def Following_Show(username):
-    sql = "SELECT Following_name,Following_Time FROM sys.User_Following WHERE Username='%s';" %(username)
+    sql = "SELECT a.Following_name,a.Following_Time,b.User_Photo from (SELECT Following_name,Following_Time FROM sys.User_Following WHERE Username='%s') a join sys.User b on a.Following_name=b.Username; " %(username)
     db.ping()
     cur = db.cursor()
     re_id = ''
@@ -1083,20 +1115,6 @@ def Recipe_Pop():
         return False
     # print(re)
     return re
-def User_register_style(username,st1,st2):
-    db.ping()
-    sql = "UPDATE sys.User SET %s=2, %s =1 WHERE Username='%s';"%(st1,st2,username)
-    # print(sql)
-    cursor = db.cursor()
-    try:
-        cursor.execute(sql)
-        db.commit()
-    except Exception:
-        db.rollback()
-        print("insert style worng!!")
-        return False
-    db.close()
-    return True
 
 def favourite_style(username,recipe_id):
     db.ping()
@@ -1201,7 +1219,6 @@ def recommend_recipe(username):
         else:
             recipe[style_name[index]]+=1
     # print(recipe)
-
     re=[]
     for sty in recipe:
         sel_sql = "SELECT * FROM(SELECT a.* FROM Recipe a join \

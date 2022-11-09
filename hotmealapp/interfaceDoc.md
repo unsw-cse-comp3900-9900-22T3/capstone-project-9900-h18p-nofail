@@ -300,20 +300,20 @@ exp.
             <pre>
 exp.
 {
-	"message": "You have successfully got the recipe!",
-	"recipe": {
-		"cooking_time": 30,
-		"description": "true good",
-		"ingredient": "fish,oil",
-		"like_num": 0,
-		"recipe_id": 9,
-		"recipe_name": "fry fish",
-		"recipe_photo": "lol",
-		"recipe_style": "fast food",
-		"recipe_username": "Ryan",
-		"steps": "pure oil and fry fish"
-	},
-	"status": "success"
+    "message": "You have successfully got the recipe!",
+    "recipe": {
+        "cooking_time": 30,
+        "description": "true good",
+        "ingredient": "fish,oil",
+        "like_num": 0,
+        "recipe_id": 9,
+        "recipe_name": "fry fish",
+        "recipe_photo": "lol",
+        "recipe_style": "fast food",
+        "recipe_username": "Ryan",
+        "steps": "pure oil and fry fish"
+    },
+    "status": "success"
 }
         </pre>
     </code>
@@ -714,15 +714,16 @@ exp.
             <pre>
 exp.
 {
-	"follower_list": [
-		{
-			"follower_username": "kk",
-			"time": "Wed, 26 Oct 2022 15:29:05 GMT"
-		},
+    "follower_list": [
+        {
+            "follower_username": "k1",
+            "time": "Thu, 27 Oct 2022 06:41:23 GMT",
+            "user_photo": "imgs/k1.png"
+        },
         ...
-	],
-	"message": "You have successfully got the follower list!",
-	"status": "success"
+    ],
+    "message": "You have successfully got the follower list!",
+    "status": "success"
 }
         </pre>
     </code>
@@ -756,15 +757,16 @@ exp.
             <pre>
 exp.
 {
-	"following_list": [
-		{
-			"following_username": "Katherine",
-			"time": "Wed, 26 Oct 2022 15:29:05 GMT"
-		},
+    "following_list": [
+        {
+            "following_username": "Katherine",
+            "time": "Wed, 02 Nov 2022 02:58:24 GMT",
+            "user_photo": "imgs/default.png"
+        },
         ...
-	],
-	"message": "You have successfully got the following list!",
-	"status": "success"
+    ],
+    "message": "You have successfully got the following list!",
+    "status": "success"
 }
         </pre>
     </code>
@@ -1202,23 +1204,26 @@ exp.
         <code>{recipe_id}</code>
         <br/><br/>
         <b>Return Object</b><br/>
-        <pre><code>
+        <code> 
+        <pre>
 {
-	"comm": [
-		[
-			1,
-			"Katherine",
-			2,
-			null,
-			"I like Malatang",
-			"Wed, 05 Oct 2022 09:19:58 GMT"
-		],
+    "comm": [
+        [
+            1,
+            "Katherine",
+            2,
+            null,
+            "I like Malatang",
+            "Wed, 05 Oct 2022 09:19:58 GMT",
+            "imgs/default.png"
+        ],
         ...
-	],
-	"message": "You have successfully got the comment list!",
-	"status": "success"
+    ],
+    "message": "You have successfully got the comment list!",
+    "status": "success"
 }
-        </code></pre>
+        </pre>
+        </code>
     </td>
     <td>
         Throw <code>HTTPError</code> (status <code>fail</code>) when
@@ -1507,6 +1512,104 @@ exp.
         Throw <code>HTTPError</code> (status <code>fail</code>) when
         <ul>
             <li>search_content is an empty string <code>""</code></li>
+        </ul>
+    </td>
+</tr>
+
+<!-- /recipe/popular  POST-->
+<!-- Query Parameters:  -->
+<!-- return: status, message, return_recipe-->
+<tr>
+    <td>
+        <code>/recipe/popular</code><br/><br/>
+        Get popular recipes
+    </td>
+    <td>
+        POST
+    </td>
+    <td>
+        <b>Query Parameters</b><br/>
+        <code>{}</code>
+        <br/><br/>
+        <b>Return Object</b><br/>
+        <code>
+        <pre>
+exp.
+{
+    "message": "You have successfully got popular recipes!",
+    "return_recipe": [
+        {
+            "cooking_time": 20,
+            "description": "good",
+            "ingredient": "oil;tomato; eggs;",
+            "recipe_create_time": "Wed, 05 Oct 2022 07:04:04 GMT",
+            "recipe_id": 1,
+            "recipe_name": "Tomato fry eggs",
+            "recipe_photo": "imgs/fanqiedan.jpg",
+            "recipe_style": "Chinese",
+            "recipe_username": "Ryan",
+            "steps": "Put oil, then put tomato,finally put eggs, it will finish in 20 min"
+        },
+        ...
+    ],
+    "status": "success"
+}
+        </pre>
+        </code>
+    </td>
+    <td>
+        Throw <code>HTTPError</code> (status <code>fail</code>) when
+        <ul>
+            <li>search_content is an empty string <code>""</code></li>
+        </ul>
+    </td>
+</tr>
+
+<!-- /recipe/rs  POST-->
+<!-- Query Parameters: username -->
+<!-- return: status, message, return_recipe-->
+<tr>
+    <td>
+        <code>/recipe/rs</code><br/><br/>
+        Get recommended recipes
+    </td>
+    <td>
+        POST
+    </td>
+    <td>
+        <b>Query Parameters</b><br/>
+        <code>{username}</code>
+        <br/><br/>
+        <b>Return Object</b><br/>
+        <code>
+        <pre>
+exp.
+{
+    "message": "You have successfully got recommended recipes!",
+    "return_recipe": [
+        {
+            "cooking_time": 20,
+            "description": "good",
+            "ingredient": "oil;tomato; eggs;",
+            "recipe_create_time": "Wed, 05 Oct 2022 07:04:04 GMT",
+            "recipe_id": 1,
+            "recipe_name": "Tomato fry eggs",
+            "recipe_photo": "imgs/fanqiedan.jpg",
+            "recipe_style": "Chinese",
+            "recipe_username": "Ryan",
+            "steps": "Put oil, then put tomato,finally put eggs, it will finish in 20 min"
+        },
+        ...
+    ],
+    "status": "success"
+}
+        </pre>
+        </code>
+    </td>
+    <td>
+        Throw <code>HTTPError</code> (status <code>fail</code>) when
+        <ul>
+            <li>username is an empty string <code>""</code></li>
         </ul>
     </td>
 </tr>
