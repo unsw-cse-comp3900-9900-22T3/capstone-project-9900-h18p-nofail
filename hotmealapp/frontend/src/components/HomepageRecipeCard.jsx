@@ -30,8 +30,8 @@ function HomepageRecipeCard () {
    React.useEffect(() => {
      (async () => {
        await getrecipe();
-       if(location.href.indexOf("#reloaded")==-1){
-        location.href=location.href+"#reloaded";
+       if(location.href.indexOf("#1")==-1){
+        location.href=location.href+"#1";
         location.reload();
         }
      })(); 

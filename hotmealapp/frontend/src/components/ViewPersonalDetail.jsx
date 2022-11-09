@@ -13,6 +13,10 @@ function ViewPersonalDetail () {
 
     //get personal info
     const getpersonalinfo = async () => {
+
+        //make the page wait for 2 seconds
+        await new Promise(r => setTimeout(r, 2000));
+
         const response_personal_info = await fetch('http://localhost:8080/user/getpersonalinfo', {
         method: 'POST',
         headers: {
@@ -30,15 +34,14 @@ function ViewPersonalDetail () {
     React.useEffect(() => {
         (async () => {
             await getpersonalinfo();
-            location.reload();
+            if(location.href.indexOf("#1")==-1){
+                location.href=location.href+"#1";
+                location.reload();
+                }
         })(); 
     }, []); 
     const personal_info_from_infos = JSON.parse(localStorage.getItem('personal_info'));
     //console.log(personal_info_from_infos);
-    const [description, setDes] = React.useState(personal_info_from_infos.description);
-    let [user_photo, setImg] = React.useState(personal_info_from_infos.user_photo);
-    const [following_num, setFollowing] = React.useState(personal_info_from_infos.following_num);
-    const [follower_num, setFollower] = React.useState(personal_info_from_infos.follower_num);
 
     //following button
     function following() {
@@ -65,7 +68,7 @@ function ViewPersonalDetail () {
             <tbody>
                 <tr>
                 <td>
-                    <img src={user_photo} width={180} height={180} />
+                    <img src={"/"+personal_info_from_infos.user_photo} width={180} height={180} />
                 </td>
                 <td>
                     <b>
@@ -73,12 +76,12 @@ function ViewPersonalDetail () {
                     </b>
                     <br />
                     <label>
-                        {description}
+                        {personal_info_from_infos.description}
                     </label>
                 </td>
                 <td>
                     <label style={{ marginLeft: 550 }}>
-                        {following_num}
+                        {personal_info_from_infos.following_num}
                     </label>
                     <br />
                     <Button onClick={following} variant="outline-secondary" style={{ marginLeft: 550 }}>
@@ -87,7 +90,7 @@ function ViewPersonalDetail () {
                 </td>
                 <td>
                     <label style={{ marginLeft: 50 }}>
-                        {follower_num}
+                        {personal_info_from_infos.follower_num}
                     </label>
                     <br />
                     <Button onClick={follower} variant="outline-secondary" style={{ marginLeft: 50 }}>

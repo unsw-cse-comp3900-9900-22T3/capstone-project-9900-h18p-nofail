@@ -17,6 +17,9 @@ function PersonalRecipeCard () {
   //get a user's recipe list
   const recipe_username = username;
   const getrecipe = async () => {
+      //make the page wait for 2 seconds
+      await new Promise(r => setTimeout(r, 3000));
+
       const response_recipe = await fetch('http://localhost:8080/recipe/showlist', {
         method: 'POST',
         headers: {
@@ -41,11 +44,16 @@ function PersonalRecipeCard () {
   React.useEffect(() => {
       (async () => {
         await getrecipe();
-        location.reload();
+        if(location.href.indexOf("#2")==-1 ){
+          location.href=location.href+"#2";
+          location.reload();
+        } 
+          
       })(); 
   }, []); 
   const recipes = JSON.parse(localStorage.getItem('recipes'));
   //console.log(recipes);
+  
 
     return(
         <>
@@ -105,7 +113,7 @@ function PersonalRecipeCard () {
                         <Card.Img variant="top"/>
                         <Card.Body>
                           <Button variant="outline-success" href = {`/recipe_and_follower/recipe.html?receipId=${recipe.recipe_id}`}>
-                            <Card.Img variant="top" src={recipe.recipe_photo} height="180px"/>
+                            <Card.Img variant="top" src={"/"+recipe.recipe_photo} height="180px"/>
                           </Button>
                           <Card.Title>{recipe.recipe_name}</Card.Title>
                           <Card.Text>❤️{recipe.like_num}</Card.Text>

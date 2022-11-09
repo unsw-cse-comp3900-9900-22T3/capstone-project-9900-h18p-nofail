@@ -77,7 +77,7 @@ function ViewFavrecipepage() {
     return (
       <>
         <div className='Title'>
-          <h1 onClick={logoJump}>Hot Meal</h1>
+          <h1>Personal Page</h1>
         </div>
           <meta charSet="utf-8" />
           <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />

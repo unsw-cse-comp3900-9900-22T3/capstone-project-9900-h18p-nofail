@@ -19,7 +19,7 @@ function SearchUserPage(){
 
     return(
         <>
-            <div className='Title' onClick={logoJump}><h1>Hot Meal</h1></div>
+            <div className='Title'><h1>Search</h1></div>
           
         
             <div className='Container1'>

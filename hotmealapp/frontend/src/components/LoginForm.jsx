@@ -29,7 +29,7 @@ function LoginForm () {
       ////////////////////// Wenqing Yi /////////////////////////////////////
 
       //get a user's personal info
-      const personal_info = JSON.stringify([{
+      const personal_info = JSON.stringify({
         "description": "1",
         "email": "1",
         "follower_num": 1,
@@ -37,7 +37,7 @@ function LoginForm () {
         "update_time": "Thu, 06 Oct 2022 13:09:23 GMT",
         "user_photo": "imgs/default.png",
         "username": "kk"
-      }]);
+      });
       localStorage.setItem('personal_info', personal_info);
 
       //get a user's recipe list
@@ -77,7 +77,7 @@ function LoginForm () {
           "like_num": 2,
           "recipe_id": 1,
           "recipe_name": "Tomato fry eggs",
-          "recipe_photo": "imgs/fanqiedan.jpg",
+          "recipe_photo": "imgs/loading.jpg",
           "recipe_style": "Home cooking",
           "recipe_username": "Ryan",
           "steps": "Put oil, then put tomato,finally put eggs, it will finish in 20 min"
