@@ -9,7 +9,7 @@ username = 'Ryan'
 password = 'liuyiyang'
 
 
-def User_Register(username, email, password):
+def User_Register(username, password, email):
     sql = "INSERT INTO sys.User(Username, Email, Password) \
             VALUES ('%s', '%s', '%s');" % (username, email, password)
     print(sql)

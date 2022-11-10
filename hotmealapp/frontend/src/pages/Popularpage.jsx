@@ -7,20 +7,19 @@ import {
 } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-function SearchRecipePage(){
+function PopularPage(){
 
 
-    const recipes = JSON.parse(localStorage.getItem('recipe_search_return'));
+    const recipes = JSON.parse(localStorage.getItem('popular_recipes'));
     //console.log(recipes);
 
 
     return(
         <>
-            <div className='Title'><h1>Search</h1></div>
-            <div className='Container1'>
-            <text><b>Search Results:</b></text>
+            <div className='Title'><h1>Popular</h1></div>
+            <div className='Container2'>
             <br />
-            <Row xs={1} md={1} className="g-4">
+            <Row xs={1} md={4} className="g-4">
               {recipes.map(recipe =>(
                     <Col >
                       <Card>
@@ -40,4 +39,4 @@ function SearchRecipePage(){
         </>
     );
 }
-export default SearchRecipePage;
+export default PopularPage;

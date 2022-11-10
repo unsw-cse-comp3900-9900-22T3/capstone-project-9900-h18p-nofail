@@ -11,6 +11,7 @@ function HomepageRecipeCard () {
 
   //get all recipes
   const getrecipe = async () => {
+      
      const response_all_recipe = await fetch('http://localhost:8080/recipe/showall', {
        method: 'POST',
        headers: {
@@ -25,13 +26,15 @@ function HomepageRecipeCard () {
        let all_recipes = data_all_recipe.recipe_list
        localStorage.setItem('all_recipes', JSON.stringify(all_recipes))
        console.log(all_recipes)
-     }
+     }else {
+      alert(data_all_recipe.message)
+    }
    }
    React.useEffect(() => {
      (async () => {
        await getrecipe();
-       if(location.href.indexOf("#reloaded")==-1){
-        location.href=location.href+"#reloaded";
+       if(location.href.indexOf("#1")==-1){
+        location.href=location.href+"#1";
         location.reload();
         }
      })(); 

@@ -68,19 +68,13 @@ function Viewpersonalpage() {
     }
   }
 
-  //logo jump to homepage
-  function logoJump() {
-        window.location.href = 'http://localhost:3000/homepage';
-  }
-
-
 
 
 
     return (
         <>
         <div className='Title'>
-          <h1 onClick={logoJump}>Hot Meal</h1>
+          <h1>Personal Page</h1>
         </div>
           <meta charSet="utf-8" />
           <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />

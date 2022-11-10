@@ -13,15 +13,10 @@ function SearchUserPage(){
     const users = JSON.parse(localStorage.getItem('user_search_return'));
     //console.log(recipes);
 
-    function logoJump() {
-        window.location.href = 'http://localhost:3000/homepage';
-      }
 
     return(
         <>
-            <div className='Title' onClick={logoJump}><h1>Hot Meal</h1></div>
-          
-        
+            <div className='Title'><h1>Search</h1></div>
             <div className='Container1'>
             <text><b>Search Results:</b></text>
             <br />
