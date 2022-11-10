@@ -291,6 +291,7 @@ $(document).ready(
             }
 
             function initRecipeDetails() {
+                console.log(currentUserName);
                 document.getElementsByClassName("recipeOwnerName")[0].innerHTML = recipeDetail.recipeOwnerName;
                 document.getElementsByClassName("favoriteNumber")[0].innerHTML = recipeDetail.recipeFavoriteNumber;
                 document.getElementsByClassName("followperson")[0].innerHTML = recipeDetail.recipeOwnerFollowerNumber;
@@ -302,6 +303,7 @@ $(document).ready(
                 document.getElementsByClassName("recipeOwnerName")[0].href = "viewpersonalpage/" + recipeDetail.recipeOwnerName;
                 document.getElementsByClassName("detailRemark")[0].innerHTML = recipeDetail.recipeDetail;
                 document.getElementsByClassName("detailRemark")[1].innerHTML = recipeDetail.recipeSteps;
+                document.getElementById("curr").href = 'http://localhost:3000/personalpage/' + currentUserName;
                 initComment();
             }
 
@@ -320,7 +322,7 @@ $(document).ready(
                                 obj.avatarUrl = "images/logo.png";
                                 obj[5] = changetime(obj[5]);
                                 var commentContainer =
-                                    "<div class='commentDiv'><div class='commentAvatar'><div class='commentImgBorder'><img src='" + obj[6] + "' class='commentImg'/></div></div><div class='commentMain'><div class='commentUserName'><a href='viewpersonalpage/" + obj[1] + "'>" + obj[1] + "</a></div><div class='commentContent'>" + obj[4] + "</div></div><div class='commentTime'>" + obj[5] + "</div></div>";
+                                    "<div class='commentDiv'><div class='commentAvatar'><div class='commentImgBorder'><img src='" + obj[6] + "' class='commentImg'/></div></div><div class='commentMain'><div class='commentUserName'><a href='http://localhost:3000/viewpersonalpage/" + obj[1] + "'>" + obj[1] + "</a></div><div class='commentContent'>" + obj[4] + "</div></div><div class='commentTime'>" + obj[5] + "</div></div>";
 
                                 document.getElementById("commentContainer").innerHTML += commentContainer;
                             }
@@ -475,11 +477,11 @@ function addComment() {
 
 
 function getCommentList() {
-    document.getElementById("commentContainer").innerHTML = "";
+
     $.ajax({
-        url: "http://127.0.0.1:8080/comment/showlist",
+        url: "http://127.0.0.1:8080/comment/showlist/byid",
         contentType: 'application/json',
-        data: JSON.stringify({ 'recipe_name': recipeDetail.recipeName, 'recipe_username': recipeDetail.recipeOwnerName }),
+        data: JSON.stringify({ 'recipe_id': recipeDetail.id }),
         type: "POST",
         success: function (data) {
             if (data.status === "success") {
@@ -489,11 +491,12 @@ function getCommentList() {
                     obj.avatarUrl = "images/logo.png";
                     obj[5] = changetime(obj[5]);
                     var commentContainer =
-                        "<div class='commentDiv'><div class='commentAvatar'><div class='commentImgBorder'><img src='" + obj.avatarUrl + "' class='commentImg'/></div></div><div class='commentMain'><div class='commentUserName'>" + obj[1] + "</div><div class='commentContent'>" + obj[4] + "</div></div><div class='commentTime'>" + obj[5] + "</div></div>";
+                        "<div class='commentDiv'><div class='commentAvatar'><div class='commentImgBorder'><img src='" + obj[6] + "' class='commentImg'/></div></div><div class='commentMain'><div class='commentUserName'><a href='http://localhost:3000/viewpersonalpage/" + obj[1] + "'>" + obj[1] + "</a></div><div class='commentContent'>" + obj[4] + "</div></div><div class='commentTime'>" + obj[5] + "</div></div>";
 
                     document.getElementById("commentContainer").innerHTML += commentContainer;
                 }
             }
+
         },
         error: function (data) {
         }
