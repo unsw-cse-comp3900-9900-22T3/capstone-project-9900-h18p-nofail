@@ -17,7 +17,7 @@ function ViewPersonalRecipeCard () {
     const getrecipe = async () => {
 
       //make the page wait for 2 seconds
-      await new Promise(r => setTimeout(r, 3000));
+      await new Promise(r => setTimeout(r, 4000));
 
       const response_recipe = await fetch('http://localhost:8080/recipe/showlist', {
         method: 'POST',

@@ -5,58 +5,110 @@ import {
   } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {useParams} from 'react-router-dom';
-import ViewPersonalRecipeCard from '../components/ViewPersonalRecipeCard';
-import ViewPersonalDetail from '../components/ViewPersonalDetail';
+//import ViewPersonalRecipeCard from '../components/ViewPersonalRecipeCard';
+//import ViewPersonalDetail from '../components/ViewPersonalDetail';
 import Logout from '../pages/Logout';
 
 
 function Viewpersonalpage() {
+  const ViewPersonalDetail = React.lazy(() => import('../components/ViewPersonalDetail'));
+  const ViewPersonalRecipeCard = React.lazy(() => import('../components/ViewPersonalRecipeCard'));
+
   const params = useParams();
   const username = params.username;
 
   //follow button
   const from_username = localStorage.getItem('username');
   const to_username = username;
+  const self_username = localStorage.getItem('username');
+  const query_username = username;
 
   class FollowBtn extends React.Component {
     constructor(){
         super()
         this.state={
-            isLiked:false
+            isLiked: true//this.checkFollowStatus()
         }
     }
-    handleFollow = async() =>{
+    checkFollowStatus = async() =>{
       try{
-        const response = await fetch('http://localhost:8080/user/follow', {
+        //make the page wait for 2 seconds
+        await new Promise(r => setTimeout(r, 8000));
+
+        const response = await fetch('http://localhost:8080/user/checkfollowingstatus', {
           method: 'POST',
           headers: {
             'Content-type': 'application/json',
           },
           body: JSON.stringify({
-            from_username,
-            to_username
+            self_username,
+            query_username
           })
         });
         const data = await response.json();
-
+        console.log("Check following status:",data.message);
+        if(data.message==="This user is following you!"){
+            return true;
+        }
+        else {
+            return false;
+        }
+      }catch (err) {
+        alert("Check following status:"+err)
+      }
+    }
+    handleFollow = async() =>{
         this.setState((prevState)=>{
-            //console.log("prevstate",prevState)
+            //console.log("prevstate",prevState.isLiked)
             return{
                 isLiked:!prevState.isLiked
             }
-        },()=>{
-            //console.log("this state",this.state.isLiked) //获取最新的状态
-            if(data.status==="success"){
-              this.state.isLiked=='true'
+        },async() =>{
+            console.log("this state",this.state.isLiked) //获取最新的状态
+
+            if(this.state.isLiked=='false') {
+              console.log("false");
+               const response = await fetch('http://localhost:8080/user/follow', {
+                 method: 'POST',
+                 headers: {
+                   'Content-type': 'application/json',
+                 },
+                 body: JSON.stringify({
+                   from_username,
+                   to_username
+                 })
+               });
+               const data = await response.json();
+               if(data.status==="success") {
+                  this.state.isLiked=='true';
+                  console.log("state:",this.state.isLiked);
+               }else {
+                alert(data.message)
+              }
             }
-            else {
-              alert(data.message)
-            }
+            else if(this.state.isLiked=='true') {
+              console.log("true");
+              const response = await fetch('http://localhost:8080/user/unfollow', {
+                method: 'POST',
+                headers: {
+                  'Content-type': 'application/json',
+                },
+                body: JSON.stringify({
+                  from_username,
+                  to_username
+                })
+              });
+              const data = await response.json();
+              if(data.status==="success") {
+                this.state.isLiked=='false';
+                console.log("state:",this.state.isLiked);
+              }else {
+                alert(data.message)
+              }
+           }
         })
-      }catch (err) {
-        alert(err)
       }
-    }
+    
     render() {
       return (
               <Button variant="outline-success" style={{ marginLeft: 50 }} onClick={this.handleFollow.bind(this)}>
@@ -91,12 +143,15 @@ function Viewpersonalpage() {
         <br />
           <div class="loginRemark" style={{ marginLeft: 1200 }}>
             <Form>
+            <Form.Text>Welcome {from_username}</Form.Text>
               <Logout />
               </Form>
           </div>
 
         {/*Personal Details*/}
-        <ViewPersonalDetail />
+        <React.Suspense fallback={<div>Loading...</div>}>
+          <ViewPersonalDetail />
+        </React.Suspense>
 
         <div style={{ marginLeft: 150 }}>
           <table border={0}>
@@ -104,7 +159,9 @@ function Viewpersonalpage() {
               <tr>
                 <td>
                   <br />
-                  <FollowBtn />
+                  <React.Suspense fallback={<div>Loading...</div>}>
+                    <FollowBtn />
+                  </React.Suspense>
                 </td>
               </tr>
             </tbody>
@@ -127,7 +184,9 @@ function Viewpersonalpage() {
                     </table>
                   <br />
 
-      <ViewPersonalRecipeCard />
+      <React.Suspense fallback={<div>Loading...</div>}>
+        <ViewPersonalRecipeCard />
+      </React.Suspense>
 
         {/*script*/}
 </>

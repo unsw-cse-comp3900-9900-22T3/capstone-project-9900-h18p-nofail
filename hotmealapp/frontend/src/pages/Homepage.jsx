@@ -42,7 +42,7 @@ function Homepage() {
         'Content-type': 'application/json',
     },
     body: JSON.stringify({
-        username
+      
     })
     })
     const data_popular = await response_popular.json();
@@ -127,7 +127,7 @@ function Homepage() {
         <div id="root" />
 
       {/*Header*/}
-      <Button onClick={getForU} variant="success" style={{ marginLeft: 200}}>
+      <Button onClick={getForU} variant="success" style={{ marginLeft: 100}}>
         ForU
       </Button>
       <Button onClick={getPopular} variant="success" style={{ marginLeft: 50 }}>
@@ -135,7 +135,7 @@ function Homepage() {
       </Button>
 
       {/*Search Box*/}
-       <input type="radio" id="username_box" name="searchType" defaultValue="Username" style={{ marginLeft: 150}} />
+       <input type="radio" id="username_box" name="searchType" defaultValue="Username" style={{ marginLeft: 200}} />
          Username
        <input type="radio" id="recipe_box" name="searchType" defaultValue="Recipe" />
          Recipe
@@ -143,7 +143,7 @@ function Homepage() {
        <input type="Submit" defaultValue="Search" onClick={searchBtn}/>
 
       {/*Personal Page Button*/}
-      <Button href={`/personalpage/${username}`} variant="outline-success" style={{ marginLeft: 180 }}>
+      <Button href={`/personalpage/${username}`} variant="outline-success" style={{ marginLeft: 280 }}>
         Personal Page
       </Button>
 

@@ -15,7 +15,7 @@ function ViewPersonalDetail () {
     const getpersonalinfo = async () => {
 
         //make the page wait for 2 seconds
-        await new Promise(r => setTimeout(r, 2000));
+        await new Promise(r => setTimeout(r, 3000));
 
         const response_personal_info = await fetch('http://localhost:8080/user/getpersonalinfo', {
         method: 'POST',
