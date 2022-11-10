@@ -9,6 +9,18 @@
 </head>
 
 <body>
+    <div class="navbar navbar-expand navbar-dark bg-dark">
+        <div class='Container'>
+            <a href="/homepage" class="navbar-brand">Hot Meal</a>
+            <div class="me-auto navbar-nav">
+                <a href="/register" data-rr-ui-event-key="/register" class="nav-link">Register</a>
+                <a href="/login" data-rr-ui-event-key="/login" class="nav-link">Login</a>
+            </div>
+        </div>
+    </div>
+    <div class="Title">
+        Hot Meal
+    </div>
     <div class="htmlBody">
         <div class="top">
             <div class="BarBanner">
@@ -20,7 +32,8 @@
                     </div>
                 </div>
                 <div class="openRecipe">
-                    <button type="button" onclick="CreateRecipe()">Create New Recipe</button>
+                    <button type="button" class="btn btn-outline-success" onclick="CreateRecipe()">Create New
+                        Recipe</button>
                 </div>
                 <div class="title">
                     <label id="whosrecipe"></label>'s Recipe
@@ -30,17 +43,18 @@
                         <label style="color: red;" class="currentUserName">Ryan</label></a>
                 </div>
                 <div class="loginOut">
-                    <button onclick="logOut()">Log Out</button>
+                    <button class="btn btn-secondary" onclick="logOut()">Log Out</button>
                 </div>
             </div>
             <div class="topMain">
                 <div class="avatarContainer">
                     <div class="avatarBorder">
-                        <img class="logoImg" src="imgs/malatang.jpg" />
+                        <img class="logoImg" id="receipImg" src="" />
                     </div>
                     <div class="favoriteAndLike">
                         <div class="favorite">
-                            <div id="fav" class="favoriteNumberBorder" onclick="validateOperate('favorite')"> favorite
+                            <div id="fav" class="favoriteNumberBorder" onclick="validateOperate('favorite')">
+                                favorite
                             </div>
                             <div class='favoriteNumber'> </div>
                         </div>
@@ -71,7 +85,7 @@
                 </div>
                 <div class="personMessage">
                     <div class="personName">
-                        <img src="images/avatar.png" class="avatar" /> <span class="recipeOwnerName" ></span>
+                        <img src="images/avatar.png" class="avatar" /> <a class="recipeOwnerName"></a>
                     </div>
                     <div class="follow">
                         <div id="follow" class="personFollowing" onclick="validateOperate('follow')"> follow </div>

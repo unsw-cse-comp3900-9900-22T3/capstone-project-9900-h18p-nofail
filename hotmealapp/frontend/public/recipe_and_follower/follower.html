@@ -8,6 +8,18 @@
 </head>
 
 <body>
+    <div class="navbar navbar-expand navbar-dark bg-dark">
+        <div class='Container'>
+            <a href="/homepage" class="navbar-brand">Hot Meal</a>
+            <div class="me-auto navbar-nav">
+                <a href="/register" data-rr-ui-event-key="/register" class="nav-link">Register</a>
+                <a href="/login" data-rr-ui-event-key="/login" class="nav-link">Login</a>
+            </div>
+        </div>
+    </div>
+    <div class="Title">
+        Hot Meal
+    </div>
     <div class="htmlBody">
         <div class="top">
             <div class="BarBanner">
@@ -17,7 +29,8 @@
                     </div>
                 </div>
                 <div class="openRecipe">
-                    <button type="button" onclick="CreateRecipe()">Create New Recipe</button>
+                    <button type="button" class="btn btn-outline-success" onclick="CreateRecipe()">Create New
+                        Recipe</button>
                 </div>
                 <div class="title">
                     Follower
@@ -26,16 +39,16 @@
                     <a href="~">Welcome <label style="color: red;" class="currentUserName"></label></a>
                 </div>
                 <div class="loginOut">
-                    <button onclick="logOut()">Log Out</button>
+                    <button class="btn btn-secondary" onclick="logOut()">Log Out</button>
                 </div>
             </div>
-            
+
         </div>
         <div class="bottom">
             <div id="commentContainer">
 
             </div>
-           
+
         </div>
     </div>
 </body>

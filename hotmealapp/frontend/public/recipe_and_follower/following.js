@@ -29,7 +29,7 @@ $(document).ready(
                                 obj.avatarUrl = "images/logo.png";
 
                                 var commentContainer =
-                                    "<div class='commentDiv'><div class='commentAvatar'><div class='commentImgBorder'><img src='" + obj.avatarUrl + "' class='commentImg'/></div></div><div class='commentMain'><div class='commentUserName'>" + obj.following_username + "</div></div><div class='commentTime'>" + obj.time + "</div></div>";
+                                    "<div class='commentDiv'><div class='commentAvatar'><div class='commentImgBorder'><img src='" + obj.user_photo + "' class='commentImg'/></div></div><div class='commentMain'><div class='commentUserName'><a href='viewpersonalpage/" + obj.following_username + "'>" + obj.following_username + "</a></div></div><div class='commentTime'>" + obj.time + "</div></div>";
 
                                 document.getElementById("commentContainer").innerHTML += commentContainer;
                             }

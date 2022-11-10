@@ -1,6 +1,6 @@
-var favorited=0;
-var liked=0;
-var followed=0;
+var favorited = 0;
+var liked = 0;
+var followed = 0;
 var currentUserName = 'Ryan';
 var recipeDetail = {
     id: 0, //菜单ID
@@ -21,8 +21,6 @@ $(document).ready(
                 currentUserName = localStorage.getItem("username") ? localStorage.getItem("username") : 'Ryan';
 
                 recipeDetail.id = GetQueryString("receipId");
-
-                console.log(recipeDetail)
 
                 var domList = document.getElementsByClassName("currentUserName");
                 for (let index = 0; index < domList.length; index++) {
@@ -54,19 +52,15 @@ $(document).ready(
                         if (data.status === "success") {
                             recipeDetail.recipeName = data.recipe.recipe_name;
                             recipeDetail.recipeOwnerName = data.recipe.recipe_username;
-                            console.log(recipeDetail.recipeName)
-                            console.log(typeof data.recipe.ingredient_previous);
-                            recipeDetail.recipeDetail = "Ingredient : <br/>"+data.recipe.ingredient_previous.split(';').join('<br/>');
+                            recipeDetail.recipeDetail = "Ingredient : <br/>" + data.recipe.ingredient_previous.split(';').join('<br/>');
                             //recipeDetail.recipeDetail = "Ingredient : <br/>"+data.recipe.ingredient.Others.toString()+"<br/>"+data.recipe.ingredient.vegetable.toString();
                             //recipeDetail.recipeDetail = "Ingredient : <br/>";
-                            recipeDetail.recipeSteps = "Steps : <br/>"+data.recipe.steps_previous.split(',').join('<br/>');
+                            recipeDetail.recipeSteps = "Steps : <br/>" + data.recipe.steps_previous.split(',').join('<br/>');
                             //recipeDetail.recipeSteps = "Steps :";
                             //recipeDetail.recipeSteps = "Steps : <br/>"+data.recipe.steps;
                             recipeDetail.recipeDescription = data.recipe.description;
                             recipeDetail.recipeLikeNumber = data.recipe.like_num;
-                            recipeDetail.recipeAvatar=data.recipe.recipe_photo;
-                            console.log("avatar: "+recipeDetail.recipeAvatar);
-                            console.log(typeof recipeDetail.recipeAvatar);
+                            recipeDetail.recipeAvatar = data.recipe.recipe_photo;
 
                             getfollowingnum();
                         }
@@ -76,9 +70,9 @@ $(document).ready(
                     }
                 })
             }
-            function ingredient(name){
+            function ingredient(name) {
                 name.replaceAll(";", "<br/>");
-                name="Ingredient : <br/>"+name;
+                name = "Ingredient : <br/>" + name;
 
             }
             function getfollowingnum() {
@@ -136,20 +130,20 @@ $(document).ready(
                 $.ajax({
                     url: "http://127.0.0.1:8080/user/checkfav",
                     contentType: 'application/json',
-                    data: JSON.stringify({ 'recipe_id': recipeDetail.id ,'username': currentUserName}),
+                    data: JSON.stringify({ 'recipe_id': recipeDetail.id, 'username': currentUserName }),
                     type: "POST",
                     success: function (data) {
                         if (data.status == "success") {
-                            favorited=1;
-                            if (favorited==1) {
-                               document.getElementById("fav").innerHTML = 'You favorited'; 
+                            favorited = 1;
+                            if (favorited == 1) {
+                                document.getElementById("fav").innerHTML = 'You favorited';
                             }
-                            else{
+                            else {
                                 document.getElementById("fav").innerHTML = 'favorite';
                             }
                         }
                         checkliked();
-                       // initDetails();
+                        // initDetails();
                     },
                     error: function (data) {
                         document.getElementById("fav").innerHTML = 'favorite';
@@ -161,20 +155,20 @@ $(document).ready(
                 $.ajax({
                     url: "http://127.0.0.1:8080/user/checklike",
                     contentType: 'application/json',
-                    data: JSON.stringify({ 'recipe_id': recipeDetail.id ,'username': currentUserName}),
+                    data: JSON.stringify({ 'recipe_id': recipeDetail.id, 'username': currentUserName }),
                     type: "POST",
                     success: function (data) {
                         if (data.status == "success") {
-                            liked=1;
-                            if (liked==1) {
-                               document.getElementById("like").innerHTML = 'You liked'; 
+                            liked = 1;
+                            if (liked == 1) {
+                                document.getElementById("like").innerHTML = 'You liked';
                             }
-                            else{
+                            else {
                                 document.getElementById("like").innerHTML = 'like';
                             }
                         }
                         checkfollowed();
-                       // initDetails();
+                        // initDetails();
                     },
                     error: function (data) {
                         document.getElementById("like").innerHTML = 'like';
@@ -186,102 +180,102 @@ $(document).ready(
                 $.ajax({
                     url: "http://127.0.0.1:8080/user/checkfollowerstatus",
                     contentType: 'application/json',
-                    data: JSON.stringify({ 'self_username': recipeDetail.recipeOwnerName ,'query_username': currentUserName}),
+                    data: JSON.stringify({ 'self_username': recipeDetail.recipeOwnerName, 'query_username': currentUserName }),
                     type: "POST",
                     success: function (data) {
                         if (data.status == "success") {
-                            followed=1;
-                            if (followed==1) {
-                               document.getElementById("follow").innerHTML = 'You followed';  
+                            followed = 1;
+                            if (followed == 1) {
+                                document.getElementById("follow").innerHTML = 'You followed';
                             }
-                            else{
+                            else {
                                 document.getElementById("follow").innerHTML = 'follow';
                             }
                         }
                         initDetails();
                     },
                     error: function (data) {
-                        
+
                         initDetails();
                     }
                 })
             }
-            function changetime(currenttime){
+            function changetime(currenttime) {
                 //console.log("type is "+typeof currenttime);
-                pastaday=0;
-                pastamonth=0;
+                pastaday = 0;
+                pastamonth = 0;
                 //console.log(currenttime);
-                timelist=currenttime.split(' ');
+                timelist = currenttime.split(' ');
                 //console.log(timelist[1]);
-                exacttimelist=timelist[4].split(':')
+                exacttimelist = timelist[4].split(':')
                 //console.log('hour is '+typeof int(exacttimelist[0]));
-                hour=parseInt(exacttimelist[0])+11;
+                hour = parseInt(exacttimelist[0]) + 11;
                 //console.log('hour is '+hour);
-                 if (hour >= 24){
-                    pastaday=1;
-                    hour-=24;
-                 }
-                hour=hour.toString();
-                newtime=hour+':'+exacttimelist[1]+':'+exacttimelist[2];
+                if (hour >= 24) {
+                    pastaday = 1;
+                    hour -= 24;
+                }
+                hour = hour.toString();
+                newtime = hour + ':' + exacttimelist[1] + ':' + exacttimelist[2];
 
                 //console.log(newtime);
                 //console.log(timelist[-1]);
-                timezone=timelist[5]+'+11';
-                if (pastaday==1) {
-                    if(timelist[0].split(',')[0]=='Mon'){
-                        timelist[0]='Tue,';
+                timezone = timelist[5] + '+11';
+                if (pastaday == 1) {
+                    if (timelist[0].split(',')[0] == 'Mon') {
+                        timelist[0] = 'Tue,';
 
                     }
-                    if(timelist[0].split(',')[0]=='Tue'){
-                        timelist[0]='Wed,';
+                    if (timelist[0].split(',')[0] == 'Tue') {
+                        timelist[0] = 'Wed,';
 
                     }
-                    if(timelist[0].split(',')[0]=='Wed'){
-                        timelist[0]='Thu,';
+                    if (timelist[0].split(',')[0] == 'Wed') {
+                        timelist[0] = 'Thu,';
 
                     }
-                    if(timelist[0].split(',')[0]=='Thu'){
-                        timelist[0]='Fri,';
+                    if (timelist[0].split(',')[0] == 'Thu') {
+                        timelist[0] = 'Fri,';
 
                     }
-                    if(timelist[0].split(',')[0]=='Fri'){
-                        timelist[0]='Sat,';
+                    if (timelist[0].split(',')[0] == 'Fri') {
+                        timelist[0] = 'Sat,';
 
                     }
-                    if(timelist[0].split(',')[0]=='Sat'){
-                        timelist[0]='Sun,';
+                    if (timelist[0].split(',')[0] == 'Sat') {
+                        timelist[0] = 'Sun,';
 
                     }
-                    if(timelist[0].split(',')[0]=='Sun'){
-                        timelist[0]='Mon,';
+                    if (timelist[0].split(',')[0] == 'Sun') {
+                        timelist[0] = 'Mon,';
 
                     }
                     //console.log('new time is '+timelist[0]);
-                    day=parseInt(timelist[1]);
-                    if (day<31) {
-                        day+=1;
-                        if(day<=10){
-                            timelist[1]='0'+day.toString();
+                    day = parseInt(timelist[1]);
+                    if (day < 31) {
+                        day += 1;
+                        if (day <= 10) {
+                            timelist[1] = '0' + day.toString();
                         }
-                        else{
-                            timelist[1]=day.toString();
+                        else {
+                            timelist[1] = day.toString();
                         }
-                        
+
                     }
-                    else{
-                        pastamonth=1;
-                        day=1;
-                        timelist[1]='0'+day.toString();
+                    else {
+                        pastamonth = 1;
+                        day = 1;
+                        timelist[1] = '0' + day.toString();
                     }
                 }
-                    if (pastamonth==1) {
-                        timelist[2]='Nov';
-                    }
-                    //console.log('new day is '+timelist[1]);
-                    finaltime=timelist[0]+' '+timelist[1]+' '+timelist[2]+' '+timelist[3]+' '+newtime;
-                    //console.log('finaltime time is '+ finaltime);
-                    return finaltime;
-                
+                if (pastamonth == 1) {
+                    timelist[2] = 'Nov';
+                }
+                //console.log('new day is '+timelist[1]);
+                finaltime = timelist[0] + ' ' + timelist[1] + ' ' + timelist[2] + ' ' + timelist[3] + ' ' + newtime;
+                //console.log('finaltime time is '+ finaltime);
+                return finaltime;
+
 
             }
             function initDetails() {
@@ -304,7 +298,8 @@ $(document).ready(
                 document.getElementById("whosrecipe").innerHTML = recipeDetail.recipeOwnerName;
                 document.getElementById("recipeName").innerHTML = recipeDetail.recipeName;
                 document.getElementById("recipeDesciption").innerHTML = recipeDetail.recipeDescription;
-                document.getElementsByClassName("logoImg").src=recipeDetail.recipeAvatar;
+                document.getElementById("receipImg").src = recipeDetail.recipeAvatar;
+                document.getElementsByClassName("recipeOwnerName")[0].href = "viewpersonalpage/" + recipeDetail.recipeOwnerName;
                 document.getElementsByClassName("detailRemark")[0].innerHTML = recipeDetail.recipeDetail;
                 document.getElementsByClassName("detailRemark")[1].innerHTML = recipeDetail.recipeSteps;
                 initComment();
@@ -323,9 +318,9 @@ $(document).ready(
                             for (var i = 0; i < data.comm.length; i++) {
                                 let obj = data.comm[i];
                                 obj.avatarUrl = "images/logo.png";
-                                obj[5]=changetime(obj[5]);
+                                obj[5] = changetime(obj[5]);
                                 var commentContainer =
-                                    "<div class='commentDiv'><div class='commentAvatar'><div class='commentImgBorder'><img src='" + obj.avatarUrl + "' class='commentImg'/></div></div><div class='commentMain'><div class='commentUserName'>" + obj[1] + "</div><div class='commentContent'>" + obj[4] + "</div></div><div class='commentTime'>" + obj[5] + "</div></div>";
+                                    "<div class='commentDiv'><div class='commentAvatar'><div class='commentImgBorder'><img src='" + obj[6] + "' class='commentImg'/></div></div><div class='commentMain'><div class='commentUserName'><a href='viewpersonalpage/" + obj[1] + "'>" + obj[1] + "</a></div><div class='commentContent'>" + obj[4] + "</div></div><div class='commentTime'>" + obj[5] + "</div></div>";
 
                                 document.getElementById("commentContainer").innerHTML += commentContainer;
                             }
@@ -375,84 +370,84 @@ function logOut() {
 }
 
 function likeplus() {
-    if (liked==1){
-                alert("you have already liked this recipe");
-        }
-    else{
-            $.ajax({
-        url: "http://127.0.0.1:8080/user/likerecipe/byid",
-        contentType: 'application/json',
-        data: JSON.stringify({ 'username': currentUserName, 'recipe_id': recipeDetail.id }),
-        type: "POST",
-        success: function (data) {
-            if (data.status === "success") {
-                alert(data.message);
-                getLikeNumber();
-                document.getElementById("like").innerHTML = 'You liked'; 
+    if (liked == 1) {
+        alert("you have already liked this recipe");
+    }
+    else {
+        $.ajax({
+            url: "http://127.0.0.1:8080/user/likerecipe/byid",
+            contentType: 'application/json',
+            data: JSON.stringify({ 'username': currentUserName, 'recipe_id': recipeDetail.id }),
+            type: "POST",
+            success: function (data) {
+                if (data.status === "success") {
+                    alert(data.message);
+                    getLikeNumber();
+                    document.getElementById("like").innerHTML = 'You liked';
+                }
+            },
+            error: function (data) {
+                alert("like failed!")
             }
-        },
-        error: function (data) {
-            alert("like failed!")
-        }
 
-    })
+        })
     }
 
 
 }
 function favplus() {
-    if (favorited==1){
-                alert("you have already favorited this recipe");
-        }
-    else{
-        $.ajax({
-        url: "http://127.0.0.1:8080/user/favrecipe/byid",
-        contentType: 'application/json',
-        data: JSON.stringify({ 'username': currentUserName, 'recipe_id': recipeDetail.id }),
-        type: "POST",
-        success: function (data) {
-            if (data.status === "success" && favorited==0) {
-                alert(data.message);
-                getFavoriteNumber();
-                document.getElementById("fav").innerHTML = 'You favorited'; 
-            }
-            
-        },
-        error: function (data) {
-            alert("favorite failed!")
-        }
-
-    })
+    if (favorited == 1) {
+        alert("you have already favorited this recipe");
     }
-    
+    else {
+        $.ajax({
+            url: "http://127.0.0.1:8080/user/favrecipe/byid",
+            contentType: 'application/json',
+            data: JSON.stringify({ 'username': currentUserName, 'recipe_id': recipeDetail.id }),
+            type: "POST",
+            success: function (data) {
+                if (data.status === "success" && favorited == 0) {
+                    alert(data.message);
+                    getFavoriteNumber();
+                    document.getElementById("fav").innerHTML = 'You favorited';
+                }
+
+            },
+            error: function (data) {
+                alert("favorite failed!")
+            }
+
+        })
+    }
+
 }
 function followplus() {
     console.log("dddd");
     console.log(followed);
-    if (followed==1){
+    if (followed == 1) {
         alert("you have already followed this user")
     }
-    else{
+    else {
         $.ajax({
-        url: "http://127.0.0.1:8080/user/follow",
-        contentType: 'application/json',
-        data: JSON.stringify({ 'from_username': currentUserName, 'to_username': recipeDetail.recipeOwnerName }),
-        type: "POST",
-        success: function (data) {
-            console.log(data)
-            if (data.status === "success" && followed==0) {
-                alert(data.message);
-                getfollowingnum();
-                document.getElementById("follow").innerHTML = 'You followed'; 
+            url: "http://127.0.0.1:8080/user/follow",
+            contentType: 'application/json',
+            data: JSON.stringify({ 'from_username': currentUserName, 'to_username': recipeDetail.recipeOwnerName }),
+            type: "POST",
+            success: function (data) {
+                console.log(data)
+                if (data.status === "success" && followed == 0) {
+                    alert(data.message);
+                    getfollowingnum();
+                    document.getElementById("follow").innerHTML = 'You followed';
+                }
+            },
+            error: function (data) {
+                alert("follow failed!")
             }
-        },
-        error: function (data) {
-            alert("follow failed!")
-        }
 
-    })
+        })
     }
-    
+
 }
 function addComment() {
     var value = $("#currentComment").val();
@@ -492,7 +487,7 @@ function getCommentList() {
                 for (var i = 0; i < data.comm.length; i++) {
                     let obj = data.comm[i];
                     obj.avatarUrl = "images/logo.png";
-                    obj[5]=changetime(obj[5]);
+                    obj[5] = changetime(obj[5]);
                     var commentContainer =
                         "<div class='commentDiv'><div class='commentAvatar'><div class='commentImgBorder'><img src='" + obj.avatarUrl + "' class='commentImg'/></div></div><div class='commentMain'><div class='commentUserName'>" + obj[1] + "</div><div class='commentContent'>" + obj[4] + "</div></div><div class='commentTime'>" + obj[5] + "</div></div>";
 
@@ -527,19 +522,19 @@ function validateOperate(operation) {
         success: function (data) {
             //console.log("success!!!!!!")
             console.log(data.status)
-            
-                switch (operation) {
-                    case "like":
-                        likeplus();
-                        break;
-                    case "favorite":
-                        favplus();
-                        break;
-                    case "follow":
-                        followplus();
-                        break;
-                }
-            
+
+            switch (operation) {
+                case "like":
+                    likeplus();
+                    break;
+                case "favorite":
+                    favplus();
+                    break;
+                case "follow":
+                    followplus();
+                    break;
+            }
+
         },
         error: function (data) {
             alert("follow failed!")
@@ -602,81 +597,81 @@ function getFavoriteNumber() {
         }
     })
 }
-function changetime(currenttime){
-                //console.log("type is "+typeof currenttime);
-                pastaday=0;
-                pastamonth=0;
-                //console.log(currenttime);
-                timelist=currenttime.split(' ');
-                //console.log(timelist[1]);
-                exacttimelist=timelist[4].split(':')
-                //console.log('hour is '+typeof int(exacttimelist[0]));
-                hour=parseInt(exacttimelist[0])+11;
-                //console.log('hour is '+hour);
-                 if (hour >= 24){
-                    pastaday=1;
-                    hour-=24;
-                 }
-                hour=hour.toString();
-                newtime=hour+':'+exacttimelist[1]+':'+exacttimelist[2];
+function changetime(currenttime) {
+    //console.log("type is "+typeof currenttime);
+    pastaday = 0;
+    pastamonth = 0;
+    //console.log(currenttime);
+    timelist = currenttime.split(' ');
+    //console.log(timelist[1]);
+    exacttimelist = timelist[4].split(':')
+    //console.log('hour is '+typeof int(exacttimelist[0]));
+    hour = parseInt(exacttimelist[0]) + 11;
+    //console.log('hour is '+hour);
+    if (hour >= 24) {
+        pastaday = 1;
+        hour -= 24;
+    }
+    hour = hour.toString();
+    newtime = hour + ':' + exacttimelist[1] + ':' + exacttimelist[2];
 
-                //console.log(newtime);
-                //console.log(timelist[-1]);
-                timezone=timelist[5]+'+11';
-                if (pastaday==1) {
-                    if(timelist[0].split(',')[0]=='Mon'){
-                        timelist[0]='Tue,';
+    //console.log(newtime);
+    //console.log(timelist[-1]);
+    timezone = timelist[5] + '+11';
+    if (pastaday == 1) {
+        if (timelist[0].split(',')[0] == 'Mon') {
+            timelist[0] = 'Tue,';
 
-                    }
-                    if(timelist[0].split(',')[0]=='Tue'){
-                        timelist[0]='Wed,';
+        }
+        if (timelist[0].split(',')[0] == 'Tue') {
+            timelist[0] = 'Wed,';
 
-                    }
-                    if(timelist[0].split(',')[0]=='Wed'){
-                        timelist[0]='Thu,';
+        }
+        if (timelist[0].split(',')[0] == 'Wed') {
+            timelist[0] = 'Thu,';
 
-                    }
-                    if(timelist[0].split(',')[0]=='Thu'){
-                        timelist[0]='Fri,';
+        }
+        if (timelist[0].split(',')[0] == 'Thu') {
+            timelist[0] = 'Fri,';
 
-                    }
-                    if(timelist[0].split(',')[0]=='Fri'){
-                        timelist[0]='Sat,';
+        }
+        if (timelist[0].split(',')[0] == 'Fri') {
+            timelist[0] = 'Sat,';
 
-                    }
-                    if(timelist[0].split(',')[0]=='Sat'){
-                        timelist[0]='Sun,';
+        }
+        if (timelist[0].split(',')[0] == 'Sat') {
+            timelist[0] = 'Sun,';
 
-                    }
-                    if(timelist[0].split(',')[0]=='Sun'){
-                        timelist[0]='Mon,';
+        }
+        if (timelist[0].split(',')[0] == 'Sun') {
+            timelist[0] = 'Mon,';
 
-                    }
-                    //console.log('new time is '+timelist[0]);
-                    day=parseInt(timelist[1]);
-                    if (day<31) {
-                        day+=1;
-                        if(day<=10){
-                            timelist[1]='0'+day.toString();
-                        }
-                        else{
-                            timelist[1]=day.toString();
-                        }
-                        
-                    }
-                    else{
-                        pastamonth=1;
-                        day=1;
-                        timelist[1]='0'+day.toString();
-                    }
-                }
-                    if (pastamonth==1) {
-                        timelist[2]='Nov';
-                    }
-                    //console.log('new day is '+timelist[1]);
-                    finaltime=timelist[0]+' '+timelist[1]+' '+timelist[2]+' '+timelist[3]+' '+newtime;
-                    //console.log('finaltime time is '+ finaltime);
-                    return finaltime;
-                
-
+        }
+        //console.log('new time is '+timelist[0]);
+        day = parseInt(timelist[1]);
+        if (day < 31) {
+            day += 1;
+            if (day <= 10) {
+                timelist[1] = '0' + day.toString();
             }
+            else {
+                timelist[1] = day.toString();
+            }
+
+        }
+        else {
+            pastamonth = 1;
+            day = 1;
+            timelist[1] = '0' + day.toString();
+        }
+    }
+    if (pastamonth == 1) {
+        timelist[2] = 'Nov';
+    }
+    //console.log('new day is '+timelist[1]);
+    finaltime = timelist[0] + ' ' + timelist[1] + ' ' + timelist[2] + ' ' + timelist[3] + ' ' + newtime;
+    //console.log('finaltime time is '+ finaltime);
+    return finaltime;
+
+
+}
