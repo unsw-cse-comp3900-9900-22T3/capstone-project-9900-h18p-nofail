@@ -56,10 +56,6 @@ function PersonalDetail () {
         window.location.href = '/recipe_and_follower/follower.html';
       }
 
-    //my recipe button
-    function myRecipe() {
-        window.location.href = 'http://localhost:3000/personalpage';
-      }
 
 
 
@@ -105,7 +101,7 @@ function PersonalDetail () {
                         {recipe_num}
                     </label>
                     <br />
-                    <Button onClick={myRecipe} variant="outline-secondary"  style={{ marginLeft: 50 }}>
+                    <Button href={`/personalpage/${username}`} variant="outline-secondary"  style={{ marginLeft: 50 }}>
                         Recipes
                     </Button>
                 </td>

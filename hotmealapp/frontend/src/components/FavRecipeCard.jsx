@@ -17,7 +17,7 @@ function FavRecipeCard () {
   const getfavrecipe = async () => {
 
     //make the page wait for 2 seconds
-    await new Promise(r => setTimeout(r, 3000));
+    await new Promise(r => setTimeout(r, 4000));
 
     const response_fav_recipe = await fetch('http://localhost:8080/user/getfavlist', {
         method: 'POST',
