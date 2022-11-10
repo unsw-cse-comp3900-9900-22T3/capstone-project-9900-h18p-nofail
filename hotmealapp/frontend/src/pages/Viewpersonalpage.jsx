@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import {
     Button,
     Form,
@@ -23,105 +23,132 @@ function Viewpersonalpage() {
   const self_username = localStorage.getItem('username');
   const query_username = username;
 
+  //check following status
+  const checkFollowStatus = async() =>{
+    try{
+      const response = await fetch('http://localhost:8080/user/checkfollowingstatus', {
+        method: 'POST',
+        headers: {
+          'Content-type': 'application/json',
+        },
+        body: JSON.stringify({
+          self_username,
+          query_username
+        })
+      });
+      const data = await response.json();
+      console.log("Check following status:",data.message);
+      if(data.message==="This user is following you!"){
+          return true;
+      }
+      else {
+          return false;
+      }
+    }catch (err) {
+      alert("Check following status:"+err)
+    }
+  }
+  useEffect(() => {
+    (async () => {
+        let fc = await checkFollowStatus();
+        if (fc.status === 'success') {
+          localStorage.setItem('fc', true);
+          console.log("return info:",fc.status,"local:",localStorage.getItem('fc'));
+        } else {
+          localStorage.setItem('fc', false);
+          console.log("return info:",fc.status,"local:",localStorage.getItem('fc'));
+        }
+    })(); 
+  }, []); 
+
   class FollowBtn extends React.Component {
     constructor(){
         super()
         this.state={
-            isLiked: true//this.checkFollowStatus()
+            isLiked: localStorage.getItem('fc') === 'true' ? true : false
         }
     }
-    checkFollowStatus = async() =>{
-      try{
-        //make the page wait for 2 seconds
-        await new Promise(r => setTimeout(r, 8000));
-
-        const response = await fetch('http://localhost:8080/user/checkfollowingstatus', {
-          method: 'POST',
-          headers: {
-            'Content-type': 'application/json',
-          },
-          body: JSON.stringify({
-            self_username,
-            query_username
-          })
-        });
-        const data = await response.json();
-        console.log("Check following status:",data.message);
-        if(data.message==="This user is following you!"){
-            return true;
-        }
-        else {
-            return false;
-        }
-      }catch (err) {
-        alert("Check following status:"+err)
-      }
-    }
-    handleFollow = async() =>{
-        this.setState((prevState)=>{
-            //console.log("prevstate",prevState.isLiked)
-            return{
-                isLiked:!prevState.isLiked
-            }
-        },async() =>{
-            console.log("this state",this.state.isLiked) //获取最新的状态
-
-            if(this.state.isLiked=='false') {
-              console.log("false");
-               const response = await fetch('http://localhost:8080/user/follow', {
-                 method: 'POST',
-                 headers: {
-                   'Content-type': 'application/json',
-                 },
-                 body: JSON.stringify({
-                   from_username,
-                   to_username
-                 })
-               });
-               const data = await response.json();
-               if(data.status==="success") {
-                  this.state.isLiked=='true';
-                  console.log("state:",this.state.isLiked);
-               }else {
-                alert(data.message)
-              }
-            }
-            else if(this.state.isLiked=='true') {
-              console.log("true");
-              const response = await fetch('http://localhost:8080/user/unfollow', {
-                method: 'POST',
-                headers: {
-                  'Content-type': 'application/json',
-                },
-                body: JSON.stringify({
-                  from_username,
-                  to_username
-                })
-              });
-              const data = await response.json();
-              if(data.status==="success") {
-                this.state.isLiked=='false';
-                console.log("state:",this.state.isLiked);
-              }else {
-                alert(data.message)
-              }
-           }
-        })
-      }
+    handleFollow=async()=>{
+      //fetch follow
+      if(this.state.isLiked==false){
+        const toFollow = async() =>{
+            const response_follow = await fetch('http://localhost:8080/user/follow', {
+                    method: 'POST',
+                    headers: {
+                    'Content-type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                    from_username,
+                    to_username
+                    })
+            });
+            const data_follow = await response_follow.json();
     
+            this.setState((prevState)=>{
+                //console.log("prevstate",prevState.isLiked)
+                return{
+                    isLiked:!prevState.isLiked
+                }
+            },() =>{
+                console.log("this state",this.state.isLiked) //获取最新的状态
+    
+                if(data_follow.status==="success"){
+                  this.state.isLiked=='true'
+                }
+            })
+          
+        }
+        toFollow();
+      }
+      //fetch unfollow
+      else{
+        const toUnFollow = async() =>{
+              const response_unfollow = await fetch('http://localhost:8080/user/unfollow', {
+                      method: 'POST',
+                      headers: {
+                      'Content-type': 'application/json',
+                      },
+                      body: JSON.stringify({
+                      from_username,
+                      to_username
+                      })
+              });
+              const data_unfollow = await response_unfollow.json();
+      
+              this.setState((prevState)=>{
+                  //console.log("prevstate",prevState.isLiked)
+                  return{
+                      isLiked:!prevState.isLiked
+                  }
+              },() =>{
+                  console.log("this state",this.state.isLiked) //获取最新的状态
+      
+                  if(data_unfollow.status==="success"){
+                    this.state.isLiked=='false'
+                  }
+              })
+        }
+        toUnFollow();
+      }
+    }
+
+  
+
     render() {
       return (
+        <React.Suspense fallback={<div>Loading...</div>}>
               <Button variant="outline-success" style={{ marginLeft: 50 }} onClick={this.handleFollow.bind(this)}>
                   {
                   this.state.isLiked ? 'Followed' :'Follow'
                   }
               </Button>
+        </React.Suspense>
       )
     }
   }
 
 
-
+  
 
     return (
         <>

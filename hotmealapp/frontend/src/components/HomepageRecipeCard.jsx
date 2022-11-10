@@ -51,40 +51,44 @@ function HomepageRecipeCard () {
                         <br />
                         <label htmlFor="Cooking Time">Cooking Time: </label>
                         <select>
-                          <option value="Less than 10min">Less than 10min</option>
-                          <option value="10-30min">10-30min</option>
-                          <option value="30-60min">30-60min</option>
-                          <option value="More than 60min">More than 60min</option>
+                          <option value="easy">Less than 30min</option>
+                          <option value="middle">30-60min</option>
+                          <option value="hard">More than 60min</option>
                         </select>
                         <label htmlFor="Food Style" style={{ marginLeft: 80 }}>
                           Food Style: 
                         </label>
                         <select>
-                          <option value="Asian">Asian</option>
-                          <option value="Italian">Italian</option>
+                          <option value="Chinese">Chinese</option>
+                          <option value="Japanese">Japanese</option>
+                          <option value="Korean">Korean</option>
+                          <option value="South East Asia">South East Asia</option>
                           <option value="French">French</option>
+                          <option value="Italy">Italy</option>
                           <option value="Fast Food">Fast Food</option>
-                          <option value="Other">Other</option>
+                          <option value="Middle East">Middle East</option>
+                          <option value="Indian">Indian</option>
+                          <option value="Russian">Russian</option>
                         </select>
                         <label htmlFor="Ingredient" style={{ marginLeft: 80 }}>
                           Ingredient: 
                         </label>
                         <select>
-                          <option value="Rice">Rice</option>
-                          <option value="Noodle">Noodle</option>
-                          <option value="Beef">Beef</option>
-                          <option value="Chicken">Chicken</option>
-                          <option value="Pork">Pork</option>
-                          <option value="Lamb">Lamb</option>
-                          <option value="Vegetable">Vegetable</option>
-                          <option value="Other">Other</option>
+                          <option value="rice">Rice</option>
+                          <option value="noodle">Noodle</option>
+                          <option value="beef">Beef</option>
+                          <option value="chicken">Chicken</option>
+                          <option value="pork">Pork</option>
+                          <option value="fish">Fish</option>
+                          <option value="vegetable">Vegetable</option>
+                          <option value="milk">Milk</option>
                         </select>
-                        <label htmlFor="Sorting" style={{ marginLeft: 190}}>
+                        <label htmlFor="Sorting" style={{ marginLeft: 130}}>
                           Sort By: 
                         </label>
                         <select>
                           <option value="Most Likes">Most Likes</option>
-                          <option value="Most Subscribed">Most Subscribed</option>
+                          <option value="Most Subscribed">Most Followers</option>
                           <option value="Most Recent">Most Recent</option>
                         </select>
                   </div>
