@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import {
     Button,
     Form,
@@ -35,10 +35,10 @@ function ViewFavrecipepage() {
         const data = await response.json();
         console.log("Check following status:",data.message);
         if(data.message==="This user is following you!"){
-            return true;
+            localStorage.setItem('fc', true);
         }
         else {
-            return false;
+            localStorage.setItem('fc', false);
         }
         }catch (err) {
         alert("Check following status:"+err)
@@ -47,13 +47,6 @@ function ViewFavrecipepage() {
     useEffect(() => {
         (async () => {
             let fc = await checkFollowStatus();
-            if (fc.status === 'success') {
-                localStorage.setItem('fc', true);
-                console.log("return info:",fc.status,"local:",localStorage.getItem('fc'));
-            } else {
-                localStorage.setItem('fc', false);
-                console.log("return info:",fc.status,"local:",localStorage.getItem('fc'));
-            }
         })(); 
     }, []); 
 

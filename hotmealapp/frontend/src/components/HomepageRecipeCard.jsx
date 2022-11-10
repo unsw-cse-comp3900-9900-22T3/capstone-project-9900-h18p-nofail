@@ -41,6 +41,15 @@ function HomepageRecipeCard () {
    }, []); 
   
   const all_recipes = JSON.parse(localStorage.getItem('all_recipes'));
+
+  // const filter_cooking_time = document.getElementById('filter_cooking_time').value;
+  //   console.log(filter_cooking_time);
+  //filters
+  // const filter_cooking_time = async() => {
+  //   const filter_cooking_time = document.getElementById('filter_cooking_time').value;
+  //   console.log(filter_cooking_time);
+  // }
+
   
 
     return (
@@ -50,7 +59,7 @@ function HomepageRecipeCard () {
                   <div id="Filters">
                         <br />
                         <label htmlFor="Cooking Time">Cooking Time: </label>
-                        <select>
+                        <select id="filter_cooking_time">
                           <option value="easy">Less than 30min</option>
                           <option value="middle">30-60min</option>
                           <option value="hard">More than 60min</option>
