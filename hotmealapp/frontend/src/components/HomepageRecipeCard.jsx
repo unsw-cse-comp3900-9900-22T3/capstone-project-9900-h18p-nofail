@@ -3,7 +3,7 @@ import {
   Card,
   Row,
   Col,
-  Button
+  Button,
 } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
@@ -25,7 +25,7 @@ function HomepageRecipeCard () {
      if(data_all_recipe.status==="success") {
        let all_recipes = data_all_recipe.recipe_list
        localStorage.setItem('all_recipes', JSON.stringify(all_recipes))
-       console.log(all_recipes)
+       console.log("all_recipes:",all_recipes)
      }else {
       alert(data_all_recipe.message)
     }
@@ -42,13 +42,98 @@ function HomepageRecipeCard () {
   
   const all_recipes = JSON.parse(localStorage.getItem('all_recipes'));
 
-  // const filter_cooking_time = document.getElementById('filter_cooking_time').value;
-  //   console.log(filter_cooking_time);
-  //filters
-  // const filter_cooking_time = async() => {
-  //   const filter_cooking_time = document.getElementById('filter_cooking_time').value;
-  //   console.log(filter_cooking_time);
-  // }
+
+  //filters - Cooking Time
+  const filter_cooking_time = async() => {
+      const filter_cooking_time_value = document.getElementById('filter_cooking_time').value;
+      const filter_content = JSON.stringify({"search_content":"","difficult":filter_cooking_time_value,"style_name":"","ingredient":""});
+      var filter_content_real = JSON.parse(filter_content);
+
+      const response = await fetch('http://localhost:8080/search/recipe', {
+        method: 'POST',
+        headers: {
+          'Content-type': 'application/json',
+        },
+        body: JSON.stringify({
+          filter_content_real
+        }.filter_content_real)
+      });
+      const data = await response.json();
+      if(data.status==="success") {
+        localStorage.setItem('all_recipes', JSON.stringify(data.return_recipe));
+        console.log("filter_cooking_time:",data.return_recipe);
+        const all_recipes = JSON.parse(localStorage.getItem('all_recipes'));
+
+        if(location.href.indexOf("#1")!=-1){
+           location.href=location.href+"#2";
+           location.reload();
+           }
+      }else {
+        alert("No recipe found!")
+      }
+  }
+
+
+  //filters - Food Style
+  const filter_food_style = async() => {
+    const filter_food_style_value = document.getElementById('filter_food_style').value;
+    const filter_content = JSON.stringify({"search_content":"","difficult":"","style_name":filter_food_style_value,"ingredient":""});
+    var filter_content_real = JSON.parse(filter_content);
+
+    const response = await fetch('http://localhost:8080/search/recipe', {
+      method: 'POST',
+      headers: {
+        'Content-type': 'application/json',
+      },
+      body: JSON.stringify({
+        filter_content_real
+      }.filter_content_real)
+    });
+    const data = await response.json();
+    if(data.status==="success") {
+      localStorage.setItem('all_recipes', JSON.stringify(data.return_recipe));
+      console.log("filter_food_style:",data.return_recipe);
+      const all_recipes = JSON.parse(localStorage.getItem('all_recipes'));
+
+      if(location.href.indexOf("#1")!=-1){
+         location.href=location.href+"#2";
+         location.reload();
+         }
+    }else {
+      alert("No recipe found!")
+    }
+  }
+
+
+  //filters - Ingredients
+  const filter_ingredient = async() => {
+    const filter_ingredient_value = document.getElementById('filter_ingredient').value;
+    const filter_content = JSON.stringify({"search_content":"","difficult":"","style_name":"","ingredient":filter_ingredient_value});
+    var filter_content_real = JSON.parse(filter_content);
+
+    const response = await fetch('http://localhost:8080/search/recipe', {
+      method: 'POST',
+      headers: {
+        'Content-type': 'application/json',
+      },
+      body: JSON.stringify({
+        filter_content_real
+      }.filter_content_real)
+    });
+    const data = await response.json();
+    if(data.status==="success") {
+      localStorage.setItem('all_recipes', JSON.stringify(data.return_recipe));
+      console.log("filter_food_style:",data.return_recipe);
+      const all_recipes = JSON.parse(localStorage.getItem('all_recipes'));
+
+      if(location.href.indexOf("#1")!=-1){
+         location.href=location.href+"#2";
+         location.reload();
+         }
+    }else {
+      alert("No recipe found!")
+    }
+  }
 
   
 
@@ -59,15 +144,15 @@ function HomepageRecipeCard () {
                   <div id="Filters">
                         <br />
                         <label htmlFor="Cooking Time">Cooking Time: </label>
-                        <select id="filter_cooking_time">
+                        <select id="filter_cooking_time" onChange={e => filter_cooking_time(e.target.value)}>
+                          <option value="">Open to select</option>
                           <option value="easy">Less than 30min</option>
                           <option value="middle">30-60min</option>
                           <option value="hard">More than 60min</option>
                         </select>
-                        <label htmlFor="Food Style" style={{ marginLeft: 80 }}>
-                          Food Style: 
-                        </label>
-                        <select>
+                        <label htmlFor="Food Style" style={{ marginLeft: 80 }}>Food Style: </label>
+                        <select id="filter_food_style" onChange={e => filter_food_style(e.target.value)}>
+                          <option value="">Open to select</option>
                           <option value="Chinese">Chinese</option>
                           <option value="Japanese">Japanese</option>
                           <option value="Korean">Korean</option>
@@ -79,10 +164,9 @@ function HomepageRecipeCard () {
                           <option value="Indian">Indian</option>
                           <option value="Russian">Russian</option>
                         </select>
-                        <label htmlFor="Ingredient" style={{ marginLeft: 80 }}>
-                          Ingredient: 
-                        </label>
-                        <select>
+                        <label htmlFor="Ingredient" style={{ marginLeft: 80 }}>Ingredient: </label>
+                        <select id="filter_ingredient" onChange={e => filter_ingredient(e.target.value)}>
+                          <option value="">Open to select</option>
                           <option value="rice">Rice</option>
                           <option value="noodle">Noodle</option>
                           <option value="beef">Beef</option>
@@ -92,10 +176,9 @@ function HomepageRecipeCard () {
                           <option value="vegetable">Vegetable</option>
                           <option value="milk">Milk</option>
                         </select>
-                        <label htmlFor="Sorting" style={{ marginLeft: 130}}>
-                          Sort By: 
-                        </label>
-                        <select>
+                        <label htmlFor="Sorting" style={{ marginLeft: 130}}>Sort By: </label>
+                        <select id="filter_sort_by">
+                          <option value="">Open to select</option>
                           <option value="Most Likes">Most Likes</option>
                           <option value="Most Subscribed">Most Followers</option>
                           <option value="Most Recent">Most Recent</option>
