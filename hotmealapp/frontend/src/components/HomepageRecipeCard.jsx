@@ -172,6 +172,7 @@ function HomepageRecipeCard () {
                           <option value="fish">Fish</option>
                           <option value="vegetable">Vegetable</option>
                           <option value="milk">Milk</option>
+                          <option value="egg">Egg</option>
                         </select>
                         <label htmlFor="Sorting" style={{ marginLeft: 130}}>Sort By: </label>
                         <select id="filter_sort_by">

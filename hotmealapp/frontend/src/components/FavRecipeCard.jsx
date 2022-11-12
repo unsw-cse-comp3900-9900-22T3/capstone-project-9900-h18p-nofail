@@ -62,7 +62,6 @@ function FavRecipeCard () {
                             <Card.Img variant="top" src={"/" + fav_recipe.recipe_photo} height="180px"/>
                           </Button>
                           <Card.Title>{fav_recipe.recipe_name}</Card.Title>
-                          <Card.Text>❤️{fav_recipe.like_num}</Card.Text>
                         </Card.Body>
                       </Card>
                     </Col>
