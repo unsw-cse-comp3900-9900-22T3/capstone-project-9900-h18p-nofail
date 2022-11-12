@@ -11,23 +11,21 @@ function HomepageRecipeCard () {
 
   //get all recipes
   const getrecipe = async () => {
-      
      const response_all_recipe = await fetch('http://localhost:8080/recipe/showall', {
-       method: 'POST',
-       headers: {
-         'Content-type': 'application/json',
-       },
-       body: JSON.stringify({
-        
-       })
-     })
+          method: 'POST',
+          headers: {
+            'Content-type': 'application/json',
+          },
+          body: JSON.stringify({
+          })
+        })
      const data_all_recipe = await response_all_recipe.json();
      if(data_all_recipe.status==="success") {
-       let all_recipes = data_all_recipe.recipe_list
-       localStorage.setItem('all_recipes', JSON.stringify(all_recipes))
-       console.log("all_recipes:",all_recipes)
+          let all_recipes = data_all_recipe.recipe_list
+          localStorage.setItem('all_recipes', JSON.stringify(all_recipes))
+          console.log("all_recipes:",all_recipes)
      }else {
-      alert(data_all_recipe.message)
+          alert(data_all_recipe.message)
     }
    }
    React.useEffect(() => {
@@ -39,7 +37,6 @@ function HomepageRecipeCard () {
         }
      })(); 
    }, []); 
-  
   const all_recipes = JSON.parse(localStorage.getItem('all_recipes'));
 
 
@@ -76,63 +73,63 @@ function HomepageRecipeCard () {
 
   //filters - Food Style
   const filter_food_style = async() => {
-    const filter_food_style_value = document.getElementById('filter_food_style').value;
-    const filter_content = JSON.stringify({"search_content":"","difficult":"","style_name":filter_food_style_value,"ingredient":""});
-    var filter_content_real = JSON.parse(filter_content);
+        const filter_food_style_value = document.getElementById('filter_food_style').value;
+        const filter_content = JSON.stringify({"search_content":"","difficult":"","style_name":filter_food_style_value,"ingredient":""});
+        var filter_content_real = JSON.parse(filter_content);
 
-    const response = await fetch('http://localhost:8080/search/recipe', {
-      method: 'POST',
-      headers: {
-        'Content-type': 'application/json',
-      },
-      body: JSON.stringify({
-        filter_content_real
-      }.filter_content_real)
-    });
-    const data = await response.json();
-    if(data.status==="success") {
-      localStorage.setItem('all_recipes', JSON.stringify(data.return_recipe));
-      console.log("filter_food_style:",data.return_recipe);
-      const all_recipes = JSON.parse(localStorage.getItem('all_recipes'));
+        const response = await fetch('http://localhost:8080/search/recipe', {
+          method: 'POST',
+          headers: {
+            'Content-type': 'application/json',
+          },
+          body: JSON.stringify({
+            filter_content_real
+          }.filter_content_real)
+        });
+        const data = await response.json();
+        if(data.status==="success") {
+          localStorage.setItem('all_recipes', JSON.stringify(data.return_recipe));
+          console.log("filter_food_style:",data.return_recipe);
+          const all_recipes = JSON.parse(localStorage.getItem('all_recipes'));
 
-      if(location.href.indexOf("#1")!=-1){
-         location.href=location.href+"#2";
-         location.reload();
-         }
-    }else {
-      alert("No recipe found!")
-    }
+          if(location.href.indexOf("#1")!=-1){
+            location.href=location.href+"#2";
+            location.reload();
+            }
+        }else {
+          alert("No recipe found!")
+        }
   }
 
 
   //filters - Ingredients
   const filter_ingredient = async() => {
-    const filter_ingredient_value = document.getElementById('filter_ingredient').value;
-    const filter_content = JSON.stringify({"search_content":"","difficult":"","style_name":"","ingredient":filter_ingredient_value});
-    var filter_content_real = JSON.parse(filter_content);
+        const filter_ingredient_value = document.getElementById('filter_ingredient').value;
+        const filter_content = JSON.stringify({"search_content":"","difficult":"","style_name":"","ingredient":filter_ingredient_value});
+        var filter_content_real = JSON.parse(filter_content);
 
-    const response = await fetch('http://localhost:8080/search/recipe', {
-      method: 'POST',
-      headers: {
-        'Content-type': 'application/json',
-      },
-      body: JSON.stringify({
-        filter_content_real
-      }.filter_content_real)
-    });
-    const data = await response.json();
-    if(data.status==="success") {
-      localStorage.setItem('all_recipes', JSON.stringify(data.return_recipe));
-      console.log("filter_food_style:",data.return_recipe);
-      const all_recipes = JSON.parse(localStorage.getItem('all_recipes'));
+        const response = await fetch('http://localhost:8080/search/recipe', {
+          method: 'POST',
+          headers: {
+            'Content-type': 'application/json',
+          },
+          body: JSON.stringify({
+            filter_content_real
+          }.filter_content_real)
+        });
+        const data = await response.json();
+        if(data.status==="success") {
+          localStorage.setItem('all_recipes', JSON.stringify(data.return_recipe));
+          console.log("filter_food_style:",data.return_recipe);
+          const all_recipes = JSON.parse(localStorage.getItem('all_recipes'));
 
-      if(location.href.indexOf("#1")!=-1){
-         location.href=location.href+"#2";
-         location.reload();
-         }
-    }else {
-      alert("No recipe found!")
-    }
+          if(location.href.indexOf("#1")!=-1){
+            location.href=location.href+"#2";
+            location.reload();
+            }
+        }else {
+          alert("No recipe found!")
+        }
   }
 
   
