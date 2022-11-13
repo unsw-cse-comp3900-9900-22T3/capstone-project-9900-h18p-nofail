@@ -59,8 +59,8 @@ function Personalpage() {
                 <tr>
                   <td>
                     <br />
-                    <Button id="editSaveBtn" href={`/update_personal_info/${username}`} variant="outline-success" style={{ marginLeft: 100 }}>
-                      Edit/Save
+                    <Button id="editSaveBtn" href={`/update_personal_info/${username}`} variant="outline-success" style={{ marginLeft: 110 }}>
+                      Edit
                     </Button>
                   </td>
                   <td></td>
