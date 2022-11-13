@@ -165,14 +165,16 @@ function CreateRecipe () {
                 <Form.Label>Style: </Form.Label>
                 <Form.Select aria-label="Default select example" onChange={e => setCategory(e.target.value)}>
                   <option>Open to select</option>
-                  <option value="Meat">Meat</option>
-                  <option value="Egg">Egg</option>
-                  <option value="Vegetable">Vegetable</option>
-                  <option value="Milk">Milk</option>
-                  <option value="Seafood">Seafood</option>
-                  <option value="Seasoning">Seasoning</option>
-                  <option value="Grain">Grain</option>
-                  <option value="Others">Others</option>
+                  <option value="Chinese">Chinese</option>
+                  <option value="Japanese">Japanese</option>
+                  <option value="Korean">Korean</option>
+                  <option value="South East Asia">South East Asia</option>
+                  <option value="French">French</option>
+                  <option value="Italy">Italy</option>
+                  <option value="Fast food">Fast food</option>
+                  <option value="Middle East">Middle East</option>
+                  <option value="Indian">Indian</option>
+                  <option value="Russian">Russian</option>
                 </Form.Select>
               </Form.Group>
             </div>
