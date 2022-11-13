@@ -156,7 +156,7 @@ function ViewFavrecipepage() {
         <br />
             <div class="loginRemark" style={{ marginLeft: 1200 }}>
             <Form>
-                <Form.Text>Welcome {from_username}</Form.Text>
+                <Form.Text href={`/personalpage/${username}`}>Welcome {from_username}</Form.Text>
                 <Logout />
                 </Form>
             </div>

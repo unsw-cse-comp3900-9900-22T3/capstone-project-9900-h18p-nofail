@@ -132,6 +132,26 @@ function HomepageRecipeCard () {
         }
   }
 
+
+  //filter - Sort by
+  function filter_sort_by(){
+    const filter_sort_by_value = document.getElementById('filter_sort_by').value;
+    if(filter_sort_by_value==="Most Likes"){
+        all_recipes.sort(function(a,b){
+          return b.like_num - a.like_num;
+        })
+        localStorage.setItem('all_recipes', JSON.stringify(all_recipes));
+        console.log("sort_by_like_num:",all_recipes);
+
+        if(location.href.indexOf("#1")!=-1){
+          location.href=location.href+"#2";
+          location.reload();
+          }
+    }
+  }
+
+
+
   
 
     return (
@@ -175,11 +195,9 @@ function HomepageRecipeCard () {
                           <option value="egg">Egg</option>
                         </select>
                         <label htmlFor="Sorting" style={{ marginLeft: 130}}>Sort By: </label>
-                        <select id="filter_sort_by">
+                        <select id="filter_sort_by" onChange={e => filter_sort_by(e.target.value)}>
                           <option value="">Open to select</option>
                           <option value="Most Likes">Most Likes</option>
-                          <option value="Most Subscribed">Most Followers</option>
-                          <option value="Most Recent">Most Recent</option>
                         </select>
                   </div>
               </div>
