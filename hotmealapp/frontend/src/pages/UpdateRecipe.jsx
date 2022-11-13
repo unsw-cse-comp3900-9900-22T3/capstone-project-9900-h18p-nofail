@@ -22,6 +22,11 @@ function UpdateRecipe () {
   // const go = (val) => {
   //   setCurr(Number(curr) + val);
   // };
+  const initial = {cooking_time:0, description:0,ingredient:0, steps:0, recipe_photo:0, recipe_style:0,recipe_name:0};
+  if(localStorage.getItem('recipe')==null) {
+    localStorage.setItem('recipe', JSON.stringify(initial))
+  }
+  // localStorage.removeItem('recipe')
   const params = useParams();
   const recipeid = params.recipeid
   const [recipe_id, setR] = React.useState(recipeid);
