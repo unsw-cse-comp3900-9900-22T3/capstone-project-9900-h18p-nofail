@@ -244,9 +244,16 @@ function UpdateRecipe () {
                 <Form.Label>Style: </Form.Label>
                 <Form.Select aria-label="Default select example" value={recipe_style} onChange={e => setCategory(e.target.value)}>
                   <option>Open to select</option>
-                  <option value="1">One</option>
-                  <option value="2">Two</option>
-                  <option value="3">Three</option>
+                  <option value="Chinese">Chinese</option>
+                  <option value="Japanese">Japanese</option>
+                  <option value="Korean">Korean</option>
+                  <option value="South East Asia">South East Asia</option>
+                  <option value="French">French</option>
+                  <option value="Italy">Italy</option>
+                  <option value="Fast food">Fast food</option>
+                  <option value="Middle East">Middle East</option>
+                  <option value="Indian">Indian</option>
+                  <option value="Russian">Russian</option>
                 </Form.Select>
               </Form.Group>
             </div>
