@@ -7,7 +7,7 @@ $(document).ready(
                 currentUserName = localStorage.getItem("username") ? localStorage.getItem("username") : 'Ryan';
 
                 document.getElementsByClassName("currentUserName")[0].innerHTML = currentUserName;
-
+                document.getElementById("curr").href = 'http://localhost:3000/personalpage/' + currentUserName;
                 setTimeout(function () {
                     //利用延时器，在获取完毕数据后，延迟2秒去加载dom对象
                     init();
@@ -29,7 +29,7 @@ $(document).ready(
                                 obj.avatarUrl = "images/logo.png";
                                 obj.time=changetime(obj.time);
                                 var commentContainer =
-                                    "<div class='commentDiv'><div class='commentAvatar'><div class='commentImgBorder'><img src='" + obj.user_photo + "' class='commentImg'/></div></div><div class='commentMain'><div class='commentUserName'><a href='viewpersonalpage/" + obj.follower_username + "'>" + obj.follower_username + "</a></div></div><div class='commentTime'>" + obj.time + "</div></div>";
+                                    "<div class='commentDiv'><div class='commentAvatar'><div class='commentImgBorder'><img src='" + obj.user_photo + "' class='commentImg'/></div></div><div class='commentMain'><div class='commentUserName'><a href='http://localhost:3000/viewpersonalpage/" + obj.follower_username + "'>" + obj.follower_username + "</a></div></div><div class='commentTime'>" + obj.time + "</div></div>";
 
                                 document.getElementById("commentContainer").innerHTML += commentContainer;
                             }

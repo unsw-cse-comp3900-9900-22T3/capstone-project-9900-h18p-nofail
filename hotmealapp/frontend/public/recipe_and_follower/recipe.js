@@ -300,7 +300,7 @@ $(document).ready(
                 document.getElementById("recipeName").innerHTML = recipeDetail.recipeName;
                 document.getElementById("recipeDesciption").innerHTML = recipeDetail.recipeDescription;
                 document.getElementById("receipImg").src = recipeDetail.recipeAvatar;
-                document.getElementsByClassName("recipeOwnerName")[0].href = "viewpersonalpage/" + recipeDetail.recipeOwnerName;
+                document.getElementsByClassName("recipeOwnerName")[0].href = "http://localhost:3000/viewpersonalpage/" + recipeDetail.recipeOwnerName;
                 document.getElementsByClassName("detailRemark")[0].innerHTML = recipeDetail.recipeDetail;
                 document.getElementsByClassName("detailRemark")[1].innerHTML = recipeDetail.recipeSteps;
                 document.getElementById("curr").href = 'http://localhost:3000/personalpage/' + currentUserName;
