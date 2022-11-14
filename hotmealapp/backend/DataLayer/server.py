@@ -259,9 +259,32 @@ def showall_recipe():
             for i in range(len(recipe_list)):
                 like_num = DataLayer.Recipe_get_like_num(recipe_list[i][1],recipe_list[i][2])
                 if like_num:
-                    recipe_list[i] = {"recipe_id": recipe_list[i][0], "recipe_name": recipe_list[i][1], "recipe_username": recipe_list[i][2], "recipe_style": recipe_list[i][3], "ingredient": recipe_list[i][4], "cooking_time": recipe_list[i][5], "steps": recipe_list[i][6], "recipe_photo": recipe_list[i][7],"description": recipe_list[i][9],"like_num":like_num}
+                    recipe_list[i] = {
+                        "recipe_id": recipe_list[i][0], 
+                        "recipe_name": recipe_list[i][1], 
+                        "recipe_username": recipe_list[i][2], 
+                        "recipe_style": recipe_list[i][3], 
+                        "ingredient": recipe_list[i][4], 
+                        "cooking_time": recipe_list[i][5], 
+                        "steps": recipe_list[i][6], 
+                        "recipe_photo": recipe_list[i][7],
+                        "create_time": recipe_list[i][8],
+                        "description": recipe_list[i][9],
+                        "like_num":like_num
+                        }
                 else:
-                    recipe_list[i] = {"recipe_id": recipe_list[i][0], "recipe_name": recipe_list[i][1], "recipe_username": recipe_list[i][2], "recipe_style": recipe_list[i][3], "ingredient": recipe_list[i][4], "cooking_time": recipe_list[i][5], "steps": recipe_list[i][6], "recipe_photo": recipe_list[i][7],"description": recipe_list[i][9],"like_num":0}
+                    recipe_list[i] = {
+                        "recipe_id": recipe_list[i][0], 
+                        "recipe_name": recipe_list[i][1], 
+                        "recipe_username": recipe_list[i][2], 
+                        "recipe_style": recipe_list[i][3], 
+                        "ingredient": recipe_list[i][4], 
+                        "cooking_time": recipe_list[i][5], 
+                        "steps": recipe_list[i][6], 
+                        "recipe_photo": recipe_list[i][7],
+                        "create_time": recipe_list[i][8],
+                        "description": recipe_list[i][9],
+                        "like_num":0}
             
             msg = {'status': 'success', 'message': 'You have successfully show all recipes!', 'recipe_list': recipe_list}
 
