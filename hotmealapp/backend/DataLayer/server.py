@@ -958,10 +958,15 @@ def search_recipe():
         if return_recipe:
             return_recipe = list(return_recipe) #convert tuple to list
             for i in range(len(return_recipe)):
-                return_recipe[i] = {'recipe_id':return_recipe[i][0],'recipe_name':return_recipe[i][1],'recipe_username':return_recipe[i][2],'recipe_style':return_recipe[i][3],'ingredient':return_recipe[i][4],'cooking_time':return_recipe[i][5],'steps':return_recipe[i][6],'recipe_photo':return_recipe[i][7],'recipe_create_time':return_recipe[i][8],'description':return_recipe[i][9]} #convert tuple to dict
+                like_num = DataLayer.Recipe_get_like_num(return_recipe[i][1],return_recipe[i][2])
+                if like_num:
+                    return_recipe[i] = {'recipe_id':return_recipe[i][0],'recipe_name':return_recipe[i][1],'recipe_username':return_recipe[i][2],'recipe_style':return_recipe[i][3],'ingredient':return_recipe[i][4],'cooking_time':return_recipe[i][5],'steps':return_recipe[i][6],'recipe_photo':return_recipe[i][7],'recipe_create_time':return_recipe[i][8],'description':return_recipe[i][9], 'like_num':like_num}
+                else:
+                    return_recipe[i] = {'recipe_id':return_recipe[i][0],'recipe_name':return_recipe[i][1],'recipe_username':return_recipe[i][2],'recipe_style':return_recipe[i][3],'ingredient':return_recipe[i][4],'cooking_time':return_recipe[i][5],'steps':return_recipe[i][6],'recipe_photo':return_recipe[i][7],'recipe_create_time':return_recipe[i][8],'description':return_recipe[i][9], 'like_num':0}
             msg = {'status': 'success', 'message': 'You have successfully searched a recipe!','return_recipe':return_recipe}
         else:
             msg = {'status': 'fail', 'message': 'Search recipe failed!'}
+
     return jsonify(msg)
 
 @app.route('/search/user', methods =['POST'])
