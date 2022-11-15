@@ -9,7 +9,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 function ForUPage(){
 
-
+    const username = localStorage.getItem('username');
     const recipes = JSON.parse(localStorage.getItem('for_u_recipes'));
     //console.log(recipes);
 
@@ -18,6 +18,8 @@ function ForUPage(){
         <>
             <div className='Title'><h1>For U</h1></div>
             <div className='Container2'>
+              <br />
+              <text><b>Hi {username}! <br />These are what we recommend for you based on your favorite styles:</b></text>
             <br />
             <Row xs={1} md={4} className="g-4">
               {recipes.map(recipe =>(

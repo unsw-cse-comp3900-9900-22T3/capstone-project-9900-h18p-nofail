@@ -185,9 +185,9 @@ function HomepageRecipeCard () {
                           <option value="Chinese">Chinese</option>
                           <option value="Japanese">Japanese</option>
                           <option value="Korean">Korean</option>
-                          <option value="South East Asia">South East Asia</option>
+                          <option value="South East Asia">South East Asian</option>
                           <option value="French">French</option>
-                          <option value="Italy">Italy</option>
+                          <option value="Italy">Italian</option>
                           <option value="Fast Food">Fast Food</option>
                           <option value="Middle East">Middle East</option>
                           <option value="Indian">Indian</option>

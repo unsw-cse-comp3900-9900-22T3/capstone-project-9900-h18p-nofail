@@ -9,7 +9,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 function PopularPage(){
 
-
+    const username = localStorage.getItem('username');
     const recipes = JSON.parse(localStorage.getItem('popular_recipes'));
     //console.log(recipes);
 
@@ -18,6 +18,7 @@ function PopularPage(){
         <>
             <div className='Title'><h1>Popular</h1></div>
             <div className='Container2'>
+            <text><b>Hi {username}! <br />These are the most popular:</b></text>
             <br />
             <Row xs={1} md={4} className="g-4">
               {recipes.map(recipe =>(
