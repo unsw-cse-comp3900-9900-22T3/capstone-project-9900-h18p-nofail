@@ -35,6 +35,19 @@ function PersonalRecipeCard () {
         //get a user's recipe number
         else if(data_recipe.status==="fail"){
           localStorage.setItem('recipe_num', 0);
+          const recipes = JSON.stringify([{
+            "cooking_time": 0,
+            "description": "",
+            "ingredient": "",
+            "like_num": 0,
+            "recipe_id": 0,
+            "recipe_name": "No recipe",
+            "recipe_photo": "imgs/nothing.jpeg",
+            "recipe_style": "",
+            "recipe_username": "",
+            "steps": ""
+          }]);
+          localStorage.setItem('recipes', recipes);
           alert(data_recipe.message)
         }
       }

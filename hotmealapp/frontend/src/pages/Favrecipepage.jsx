@@ -77,10 +77,10 @@ function Favrecipepage() {
                         <tbody>
                           <tr>
                             <td>
-                              <a href={`/personalpage/${username}`}  style={{ marginLeft: 380, color:'black'}}>My Recipe</a>
+                              <a href={`/personalpage/${username}`}  style={{ marginLeft: 370, color:'black'}}>{username}'s Recipe</a>
                             </td>
                             <td>
-                              <a href={`/favrecipepage/${username}`} style={{ margin: 434 , color:'black'}}>Favorite Recipe</a>
+                              <b><a href={`/favrecipepage/${username}`} style={{ margin: 420 , color:'black'}}>Favorite Recipe</a></b>
                             </td>
                             </tr>
                         </tbody>

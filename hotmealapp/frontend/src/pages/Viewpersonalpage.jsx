@@ -194,10 +194,10 @@ function Viewpersonalpage() {
                       <tbody>
                         <tr>
                           <td>
-                            <a href={`/viewpersonalpage/${username}`}  style={{ marginLeft: 380, color:'black'}}>My Recipe</a>
+                            <b><a href={`/viewpersonalpage/${username}`}  style={{ marginLeft: 370, color:'black'}}>{username}'s Recipe</a></b>
                           </td>
                           <td>
-                            <a href={`/viewfavrecipepage/${username}`} style={{ margin: 434 , color:'black'}}>Favorite Recipe</a>
+                            <a href={`/viewfavrecipepage/${username}`} style={{ margin: 420 , color:'black'}}>Favorite Recipe</a>
                           </td>
                           </tr>
                       </tbody>
