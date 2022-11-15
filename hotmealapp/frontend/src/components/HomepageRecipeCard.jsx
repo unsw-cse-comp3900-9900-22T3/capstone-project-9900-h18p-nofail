@@ -149,9 +149,10 @@ function HomepageRecipeCard () {
           }
     }
     else if(filter_sort_by_value==="Most Recent"){
-        all_recipes.sort(function(a,b){
-          return b.create_time < a.create_time ? 1 : -1;
-        })
+        // all_recipes.sort(function(a,b){
+        //   return b.create_time < a.create_time ? 1 : -1;
+        // })
+        all_recipes.reverse();
         localStorage.setItem('all_recipes', JSON.stringify(all_recipes));
         console.log("sort_by_date:",all_recipes);
 
