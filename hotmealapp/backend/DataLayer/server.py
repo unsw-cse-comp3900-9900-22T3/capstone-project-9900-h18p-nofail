@@ -110,7 +110,7 @@ def register():
             if DataLayer.User_Register_with_style(username,email , password, style1, style2):
                 msg = {
                     'status': 'success', 
-                    'message': 'User registered successfully with username: {username} and style1: {style1} and style2:{style2}'.format(
+                    'message': 'User registered successfully with username: {username} and style1: {style1} and style2: {style2}'.format(
                         username=username, 
                         style1=style1, 
                         style2=style2
