@@ -107,7 +107,7 @@ def register():
         style1 = request.json['style1']
         style2 = request.json['style2']
         if DataLayer.Username_Check(username):
-            if DataLayer.User_Register_with_style(username, password, email, style1, style2):
+            if DataLayer.User_Register_with_style(username,email , password, style1, style2):
                 msg = {
                     'status': 'success', 
                     'message': 'User registered successfully with username: {username} and style1: {style1} and style2:{style2}'.format(

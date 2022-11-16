@@ -23,7 +23,7 @@ def User_Register(username, password, email):
         return True
     except Exception:
         db.rollback()
-        print("register worng!!")
+        print("register wrong!!")
         db.close()
         return False
 
@@ -38,7 +38,7 @@ def User_Register_with_style(username, email, password, st1,st2):
         db.commit()
     except Exception:
         db.rollback()
-        print("register worng!!")
+        print("register wrong!!")
         return False
     db.close()
     return True
@@ -53,7 +53,7 @@ def User_register_style(username,st1,st2):
         db.commit()
     except Exception:
         db.rollback()
-        print("insert style worng!!")
+        print("insert style wrong!!")
         return False
     db.close()
     return True
@@ -70,7 +70,7 @@ def User_Login(username, password):
         return_password = insert_cursor.fetchone()[0]
     except Exception:
         db.rollback()
-        print("login worng!!")
+        print("login wrong!!")
     if return_password == password:
         db.close()
         # print('hello true')
@@ -89,7 +89,7 @@ def Username_Check(username):
         return_password = insert_cursor.fetchone()[0]
     except Exception:
         db.rollback()
-        print("check worng!!")
+        print("check wrong!!")
     if return_password == '':
         db.close()
         return True
@@ -108,7 +108,7 @@ def Recipe_Insert_Update(recipe_name,recipe_username,recipe_discrption,recipe_st
         return_re = select_cursor.fetchone()
     except Exception:
         db.rollback()
-        print("select_recipe worng!!")
+        print("select_recipe wrong!!")
     if return_re==None:
         sql = "INSERT INTO sys.Recipe(Recipe_Name,Recipe_Username,Description,Recipe_Style,Ingredient,Cooking_Time,Steps,Recipe_Photo) \
         VALUE ('%s','%s','%s','%s','%s','%s','%s','%s');" %(recipe_name,recipe_username,recipe_discrption,recipe_style,ingredient,cooking_time,steps,recipe_photo)
@@ -121,7 +121,7 @@ def Recipe_Insert_Update(recipe_name,recipe_username,recipe_discrption,recipe_st
         db.commit()
     except Exception:
         db.rollback()
-        print("create recipe worng!!")
+        print("create recipe wrong!!")
         db.close()
         return False
     id_sql = "SELECT last_insert_id() FROM sys.Recipe;"
@@ -133,7 +133,7 @@ def Recipe_Insert_Update(recipe_name,recipe_username,recipe_discrption,recipe_st
         return_re = select_cursor.fetchone()[0]
     except Exception:
         db.rollback()
-        print("return id is worng!!")
+        print("return id is wrong!!")
     # print('kk', return_re)
     db.close()
     return return_re
@@ -151,7 +151,7 @@ def Recipe_Insert_Update(recipe_name,recipe_username,recipe_discrption,recipe_st
 #         return_re = select_cursor.fetchone()
 #     except Exception:
 #         db.rollback()
-#         print("select_recipe worng!!")
+#         print("select_recipe wrong!!")
 #     if return_re==None:
 #         return False
 #     else:
@@ -165,7 +165,7 @@ def Recipe_Insert_Update(recipe_name,recipe_username,recipe_discrption,recipe_st
 #         return True
 #     except Exception:
 #         db.rollback()
-#         print("create recipe worng!!")
+#         print("create recipe wrong!!")
 #         db.close()
 #         return False
 
@@ -181,7 +181,7 @@ def Recipe_Insert_Update_repeate(recipe_name,recipe_username,recipe_discrption,r
         return_re = select_cursor.fetchone()
     except Exception:
         db.rollback()
-        print("select_recipe worng!!")
+        print("select_recipe wrong!!")
 
     sql = "INSERT INTO sys.Recipe(Recipe_Name,Recipe_Username,Description,Recipe_Style,Ingredient,Cooking_Time,Steps,Recipe_Photo) \
     VALUE ('%s','%s','%s','%s','%s','%s','%s','%s');" %(recipe_name,recipe_username,recipe_discrption,recipe_style,ingredient,cooking_time,steps,recipe_photo)
@@ -192,7 +192,7 @@ def Recipe_Insert_Update_repeate(recipe_name,recipe_username,recipe_discrption,r
         # return True
     except Exception:
         db.rollback()
-        print("create recipe worng!!")
+        print("create recipe wrong!!")
         db.close()
         return False
     id_sql = "SELECT last_insert_id() FROM sys.Recipe;"
@@ -204,7 +204,7 @@ def Recipe_Insert_Update_repeate(recipe_name,recipe_username,recipe_discrption,r
         return_re = select_cursor.fetchone()[0]
     except Exception:
         db.rollback()
-        print("return id is worng!!")
+        print("return id is wrong!!")
     # print('kk',return_re)
     db.close()
     return return_re
@@ -222,7 +222,7 @@ def Recipe_Delete(recipe_name,recipe_username):
         return_re = select_cursor.fetchone()
     except Exception:
         db.rollback()
-        print("select_recipe worng!!")
+        print("select_recipe wrong!!")
     if return_re==None:
         return False
     else:
@@ -233,7 +233,7 @@ def Recipe_Delete(recipe_name,recipe_username):
         db.commit()
     except Exception:
         db.rollback()
-        print("delete recipe worng!!")
+        print("delete recipe wrong!!")
         return False
     db.close()
     return True
@@ -250,7 +250,7 @@ def Recipe_Delete_byid(recipe_id):
         return_re = select_cursor.fetchone()
     except Exception:
         db.rollback()
-        print("select_recipe worng!!")
+        print("select_recipe wrong!!")
     if return_re==None:
         return False
     else:
@@ -261,7 +261,7 @@ def Recipe_Delete_byid(recipe_id):
         db.commit()
     except Exception:
         db.rollback()
-        print("delete recipe worng!!")
+        print("delete recipe wrong!!")
         return False
     db.close()
     return True
@@ -277,7 +277,7 @@ def Recipe_Show(username):
         return_re = sel_cursor.fetchall()
     except Exception:
         db.rollback()
-        print("recipe show worng!!")
+        print("recipe show wrong!!")
     db.close()
     if return_re==None:
         return None
@@ -331,7 +331,7 @@ def Ingredient_Insert(ingredient,in_type):
         return_re = select_cursor.fetchone()
     except Exception:
         db.rollback()
-        print("select_ingredient worng!!")
+        print("select_ingredient wrong!!")
     if return_re == None:
         sql = "INSERT INTO sys.Ingredients_type(Ingredient,type) \
             VALUE ('%s','%s');" % (ingredient,in_type)
@@ -342,7 +342,7 @@ def Ingredient_Insert(ingredient,in_type):
         db.commit()
     except Exception:
         db.rollback()
-        print("create ingredient worng!!")
+        print("create ingredient wrong!!")
     db.close()
     return True
 def User_follow(username,follow_name):
@@ -361,7 +361,7 @@ def User_follow(username,follow_name):
 
     except Exception:
         db.rollback()
-        print("select_follower worng!!")
+        print("select_follower wrong!!")
     if follow_result == None:
         insert_follow = db.cursor()
         try:
@@ -369,7 +369,7 @@ def User_follow(username,follow_name):
             db.commit()
         except Exception:
             db.rollback()
-            print("create follow worng!!")
+            print("create follow wrong!!")
     following_check = db.cursor()
     following_result = ''
     try:
@@ -377,7 +377,7 @@ def User_follow(username,follow_name):
         following_result = following_check.fetchone()
     except Exception:
         db.rollback()
-        print("select_follower worng!!")
+        print("select_follower wrong!!")
     if following_result == None:
         insert_following = db.cursor()
         try:
@@ -385,7 +385,7 @@ def User_follow(username,follow_name):
             db.commit()
         except Exception:
             db.rollback()
-            print("create following worng!!")
+            print("create following wrong!!")
     db.close()
     return True
 def User_cancel_follow(username,follow_name):
@@ -403,7 +403,7 @@ def User_cancel_follow(username,follow_name):
         follow_result = check_follow.fetchone()
     except Exception:
         db.rollback()
-        print("select_follower worng!!")
+        print("select_follower wrong!!")
     if follow_result != None:
         insert_follow = db.cursor()
         try:
@@ -411,7 +411,7 @@ def User_cancel_follow(username,follow_name):
             db.commit()
         except Exception:
             db.rollback()
-            print("delete follow worng!!")
+            print("delete follow wrong!!")
     following_check = db.cursor()
     following_result = ''
     try:
@@ -419,7 +419,7 @@ def User_cancel_follow(username,follow_name):
         following_result = following_check.fetchone()
     except Exception:
         db.rollback()
-        print("select_follower worng!!")
+        print("select_follower wrong!!")
     if following_result != None:
         insert_following = db.cursor()
         try:
@@ -427,7 +427,7 @@ def User_cancel_follow(username,follow_name):
             db.commit()
         except Exception:
             db.rollback()
-            print("delete following worng!!")
+            print("delete following wrong!!")
     db.close()
     return True
 def User_get_follower_number(username):
@@ -440,7 +440,7 @@ def User_get_follower_number(username):
         re_num = cursor.fetchone()[0]
     except Exception:
         db.rollback()
-        print("count_follower worng!!")
+        print("count_follower wrong!!")
     re_num = int(re_num)
     db.close()
     return re_num
@@ -454,7 +454,7 @@ def User_get_following_number(username):
         re_num = cursor.fetchone()[0]
     except Exception:
         db.rollback()
-        print("count_following worng!!")
+        print("count_following wrong!!")
     re_num = int(re_num)
     db.close()
     return re_num
@@ -468,7 +468,7 @@ def User_insert_favour(username,recipe_name,recipe_username):
         re_id = qury_cursor.fetchone()[0]
     except Exception:
         db.rollback()
-        print("search recipe id worng!!")
+        print("search recipe id wrong!!")
     re_id = int(re_id)
     insert_favour = "INSERT INTO sys.User_Favourite(Favourite_Name,Favourite_Recipe) VALUE('%s','%s');" %(username,re_id)
     insert_cursor = db.cursor()
@@ -478,7 +478,7 @@ def User_insert_favour(username,recipe_name,recipe_username):
         return True
     except Exception:
         db.rollback()
-        print("insert favour worng!!")
+        print("insert favour wrong!!")
     db.close()
     return False
 def User_insert_favour_byid(username,recipe_id):
@@ -492,7 +492,7 @@ def User_insert_favour_byid(username,recipe_id):
         return True
     except Exception:
         db.rollback()
-        print("insert favour worng!!")
+        print("insert favour wrong!!")
     db.close()
     return False
 def User_show_favourite(username):
@@ -505,7 +505,7 @@ def User_show_favourite(username):
         re = cursor.fetchall()
     except Exception:
         db.rollback()
-        print("show recipe id worng!!")
+        print("show recipe id wrong!!")
     db.close()
     print(re)
     return re
@@ -520,7 +520,7 @@ def User_remove_favourite(username,favourite_recipe,favourite_name):
         re_id = qury_cursor.fetchone()[0]
     except Exception:
         db.rollback()
-        print("search recipe id worng!!")
+        print("search recipe id wrong!!")
     re_id = int(re_id)
     insert_favour = "DELETE FROM sys.User_Favourite WHERE Favourite_Name='%s' AND Favourite_Recipe = '%s';" % (username, re_id)
     insert_cursor = db.cursor()
@@ -529,7 +529,7 @@ def User_remove_favourite(username,favourite_recipe,favourite_name):
         db.commit()
     except Exception:
         db.rollback()
-        print("delete favour worng!!")
+        print("delete favour wrong!!")
     db.close()
     return True
 def User_remove_favourite_byid(username,recipe_id):
@@ -542,7 +542,7 @@ def User_remove_favourite_byid(username,recipe_id):
         db.commit()
     except Exception:
         db.rollback()
-        print("delete favour worng!!")
+        print("delete favour wrong!!")
     db.close()
     return True
 def User_get_favourite_num(username):
@@ -555,7 +555,7 @@ def User_get_favourite_num(username):
         re_num = cursor.fetchone()[0]
     except Exception:
         db.rollback()
-        print("count_favourite worng!!")
+        print("count_favourite wrong!!")
     re_num = int(re_num)
     db.close()
     return re_num
@@ -570,7 +570,7 @@ def Recipe_add_like(username,recipe_name,recipe_username):
         re_id = qury_cursor.fetchone()[0]
     except Exception:
         db.rollback()
-        print("search recipe id worng!!")
+        print("search recipe id wrong!!")
     re_id = int(re_id)
     insert_favour = "INSERT INTO sys.Recipe_Like(Recipe_Id,Like_Username) VALUE('%s','%s');" % (re_id,username)
     insert_cursor = db.cursor()
@@ -579,7 +579,7 @@ def Recipe_add_like(username,recipe_name,recipe_username):
         db.commit()
     except Exception:
         db.rollback()
-        print("insert like worng!!")
+        print("insert like wrong!!")
     db.close()
     return True
 def Recipe_add_like_byid(username,recipe_id):
@@ -592,7 +592,7 @@ def Recipe_add_like_byid(username,recipe_id):
         db.commit()
     except Exception:
         db.rollback()
-        print("insert like worng!!")
+        print("insert like wrong!!")
     db.close()
     return True
 def Recipe_remove_Like(username,recipe_name,recipe_username):
@@ -606,7 +606,7 @@ def Recipe_remove_Like(username,recipe_name,recipe_username):
         re_id = qury_cursor.fetchone()[0]
     except Exception:
         db.rollback()
-        print("search recipe id worng!!")
+        print("search recipe id wrong!!")
     re_id = int(re_id)
     insert_favour = "DELETE FROM sys.Recipe_Like WHERE Recipe_Id='%s' AND Like_Username = '%s';" % (re_id,username)
     insert_cursor = db.cursor()
@@ -615,7 +615,7 @@ def Recipe_remove_Like(username,recipe_name,recipe_username):
         db.commit()
     except Exception:
         db.rollback()
-        print("delete like worng!!")
+        print("delete like wrong!!")
     db.close()
     return True
 def Recipe_remove_Like_byid(username,recipe_id):
@@ -628,7 +628,7 @@ def Recipe_remove_Like_byid(username,recipe_id):
         db.commit()
     except Exception:
         db.rollback()
-        print("delete like worng!!")
+        print("delete like wrong!!")
     db.close()
     return True
 def Recipe_get_like_num(recipe_name,recipe_username):
@@ -641,7 +641,7 @@ def Recipe_get_like_num(recipe_name,recipe_username):
         re_id = qury_cursor.fetchone()[0]
     except Exception:
         db.rollback()
-        print("search recipe id worng!!")
+        print("search recipe id wrong!!")
     re_id = int(re_id)
     sql = "SELECT COUNT(*) FROM sys.Recipe_Like WHERE Recipe_Id='%s';" % (re_id)
     cursor = db.cursor()
@@ -651,7 +651,7 @@ def Recipe_get_like_num(recipe_name,recipe_username):
         re_num = cursor.fetchone()[0]
     except Exception:
         db.rollback()
-        print("count_favourite worng!!")
+        print("count_favourite wrong!!")
     re_num = int(re_num)
     # print(re_num)
     db.close()
@@ -667,7 +667,7 @@ def Recipe_get_like_num_byid(recipe_id):
         re_num = cursor.fetchone()[0]
     except Exception:
         db.rollback()
-        print("count_favourite worng!!")
+        print("count_favourite wrong!!")
     re_num = int(re_num)
     print(re_num)
     db.close()
@@ -683,7 +683,7 @@ def Recipe_show_comment(recipe_name,recipe_username):
         re_id = qury_cursor.fetchone()[0]
     except Exception:
         db.rollback()
-        print("search recipe id worng!!")
+        print("search recipe id wrong!!")
     re_id = int(re_id)
     sql = "SELECT a.*,b.User_Photo From(SELECT * FROM sys.Recipe_Comment WHERE Comment_Recipe_Id = '%s') a join sys.User b on a.Comment_Username=b.Username ;" %(re_id)
     print(sql)
@@ -694,7 +694,7 @@ def Recipe_show_comment(recipe_name,recipe_username):
         re = cursor.fetchall()
     except Exception:
         db.rollback()
-        print("show comment id worng!!")
+        print("show comment id wrong!!")
     return re
 def Recipe_show_comment_byid(recipe_id):
     db.ping()
@@ -708,7 +708,7 @@ def Recipe_show_comment_byid(recipe_id):
         re = cursor.fetchall()
     except Exception:
         db.rollback()
-        print("show comment id worng!!")
+        print("show comment id wrong!!")
     return re
 def User_comment_recipe(username,recipe_name,recipe_username,content):
     qury_recipe = "SELECT Recipe_Id FROM sys.Recipe WHERE Recipe_Name = '%s' AND Recipe_Username = '%s';" % (
@@ -721,7 +721,7 @@ def User_comment_recipe(username,recipe_name,recipe_username,content):
         re_id = qury_cursor.fetchone()[0]
     except Exception:
         db.rollback()
-        print("search recipe id worng!!")
+        print("search recipe id wrong!!")
     re_id = int(re_id)
     sql = "INSERT INTO Recipe_Comment(Comment_Username,Comment_Recipe_Id,Comment_Content) \
           VALUE ('%s','%s','%s');" %(username,re_id,content)
@@ -731,7 +731,7 @@ def User_comment_recipe(username,recipe_name,recipe_username,content):
         db.commit()
     except Exception:
         db.rollback()
-        print("insert like worng!!")
+        print("insert like wrong!!")
     db.close()
     return True
 def User_comment_recipe_byid(username,recipe_id,content):
@@ -745,7 +745,7 @@ def User_comment_recipe_byid(username,recipe_id,content):
         db.commit()
     except Exception:
         db.rollback()
-        print("insert like worng!!")
+        print("insert like wrong!!")
     db.close()
     return True
 def User_comment_user(username,recipe_name,recipe_username,comment_id,content):
@@ -759,7 +759,7 @@ def User_comment_user(username,recipe_name,recipe_username,comment_id,content):
         re_id = qury_cursor.fetchone()[0]
     except Exception:
         db.rollback()
-        print("search recipe id worng!!")
+        print("search recipe id wrong!!")
     re_id = int(re_id)
     sql = "INSERT INTO Recipe_Comment(Comment_Username,Comment_Recipe_Id,Comment_To,Comment_Content) \
               VALUE ('%s','%s','%s','%s');" % (username, re_id,comment_id, content)
@@ -769,7 +769,7 @@ def User_comment_user(username,recipe_name,recipe_username,comment_id,content):
         db.commit()
     except Exception:
         db.rollback()
-        print("insert comment worng!!")
+        print("insert comment wrong!!")
     db.close()
     return True
 def User_comment_user_byid(username,recipe_id,comment_id,content):
@@ -783,7 +783,7 @@ def User_comment_user_byid(username,recipe_id,comment_id,content):
         db.commit()
     except Exception:
         db.rollback()
-        print("insert comment worng!!")
+        print("insert comment wrong!!")
     db.close()
     return True
 def Comment_delete(comment_id):
@@ -795,7 +795,7 @@ def Comment_delete(comment_id):
         db.commit()
     except Exception:
         db.rollback()
-        print("delete comment worng!!")
+        print("delete comment wrong!!")
     db.close()
     return True
 def Recipe_get_comment_num(recipe_name,recipe_username):
@@ -809,7 +809,7 @@ def Recipe_get_comment_num(recipe_name,recipe_username):
         re_id = qury_cursor.fetchone()[0]
     except Exception:
         db.rollback()
-        print("search recipe id worng!!")
+        print("search recipe id wrong!!")
     re_id = int(re_id)
     sql = "SELECT count(*) FROM sys.Recipe_Comment WHERE Comment_Recipe_Id='%s';"%(re_id)
     cursor = db.cursor()
@@ -819,7 +819,7 @@ def Recipe_get_comment_num(recipe_name,recipe_username):
         re_num = cursor.fetchone()[0]
     except Exception:
         db.rollback()
-        print("get comment num worng!!")
+        print("get comment num wrong!!")
     db.close()
     print(re_num)
     return re_num
@@ -834,7 +834,7 @@ def Recipe_get_comment_num_byid(recipe_id):
         re_num = cursor.fetchone()[0]
     except Exception:
         db.rollback()
-        print("get comment num worng!!")
+        print("get comment num wrong!!")
     db.close()
     print(re_num)
     return re_num
@@ -860,7 +860,7 @@ def Search_Recipe(search_content='',difficult='',style_name='',ingredient=''):
         re_re = cursor.fetchall()
     except Exception:
         db.rollback()
-        print("get recipe worng!!")
+        print("get recipe wrong!!")
     db.close()
     print(re_re)
     return re_re
@@ -874,7 +874,7 @@ def search_user(search_content):
         re_ur = ur_cursor.fetchall()
     except Exception:
         db.rollback()
-        print("get username num worng!!")
+        print("get username num wrong!!")
     db.close()
     return re_ur
 
@@ -889,7 +889,7 @@ def Recipe_show_comment_backup(recipe_name, recipe_username):
         re_id = qury_cursor.fetchone()[0]
     except Exception:
         db.rollback()
-        print("search recipe id worng!!")
+        print("search recipe id wrong!!")
     re_id = int(re_id)
     sql = "SELECT * FROM sys.Recipe_Comment WHERE Comment_Recipe_Id = '%s';" % (re_id)
     print(sql)
@@ -900,7 +900,7 @@ def Recipe_show_comment_backup(recipe_name, recipe_username):
         re = cursor.fetchall()
     except Exception:
         db.rollback()
-        print("show comment id worng!!")
+        print("show comment id wrong!!")
     db.close()
     return re
 def Recipe_show_comment_backup_byid(recipe_id):
@@ -915,7 +915,7 @@ def Recipe_show_comment_backup_byid(recipe_id):
         re = cursor.fetchall()
     except Exception:
         db.rollback()
-        print("show comment id worng!!")
+        print("show comment id wrong!!")
     db.close()
     return re
 
@@ -929,7 +929,7 @@ def check_recipe_like(reicpe_id,username):
         re_id = qury_cursor.fetchone()
     except Exception:
         db.rollback()
-        print("search recipe like worng!!")
+        print("search recipe like wrong!!")
     db.close()
     # print(re_id)
     if re_id!=None:
@@ -947,7 +947,7 @@ def check_user_favourite(reicpe_id,username):
         re_id = qury_cursor.fetchone()
     except Exception:
         db.rollback()
-        print("search recipe like worng!!")
+        print("search recipe like wrong!!")
     db.close()
     # print(re_id)
     if re_id!=None:
@@ -964,7 +964,7 @@ def check_user_follow(username,follower_name):
         re_id = qury_cursor.fetchone()
     except Exception:
         db.rollback()
-        print("search user follower worng!!")
+        print("search user follower wrong!!")
     db.close()
     # print(re_id)
     if re_id!=None:
@@ -981,7 +981,7 @@ def check_user_following(username,following_name):
         re_id = qury_cursor.fetchone()
     except Exception:
         db.rollback()
-        print("search user following worng!!")
+        print("search user following wrong!!")
     db.close()
     # print(re_id)
     if re_id!=None:
@@ -999,7 +999,7 @@ def Follow_Show(username):
     except Exception:
         db.rollback()
         db.close()
-        print("show follower worng!!")
+        print("show follower wrong!!")
         return False
     # print(re_id)
     db.close()
@@ -1015,7 +1015,7 @@ def Following_Show(username):
     except Exception:
         db.rollback()
         db.close()
-        print("show following worng!!")
+        print("show following wrong!!")
         return False
     # print(re_id)
     db.close()
@@ -1030,7 +1030,7 @@ def User_show(username):
         re = cur.fetchall()
     except Exception:
         db.rollback()
-        print("show user worng!!")
+        print("show user wrong!!")
         db.close()
         return False
     # print(re_id)
@@ -1048,7 +1048,7 @@ def User_update(username,email, password, describe, user_photo):
         return True
     except Exception:
         db.rollback()
-        print("update user worng!!")
+        print("update user wrong!!")
         db.close()
         return False
 def Recipe_show_all():
@@ -1061,7 +1061,7 @@ def Recipe_show_all():
         re = cur.fetchall()
     except Exception:
         db.rollback()
-        print("show recipe all worng!!")
+        print("show recipe all wrong!!")
         db.close()
         return False
     # print(re_id)
@@ -1078,7 +1078,7 @@ def Ingredient_find(ingredient):
         re = cur.fetchone()
     except Exception:
         db.rollback()
-        print("search user follower worng!!")
+        print("search user follower wrong!!")
         return False
     db.close()
     # print(re)
@@ -1094,7 +1094,7 @@ def Recipe_get_fav_num(recipe_id):
         re_num = cursor.fetchone()[0]
     except Exception:
         db.rollback()
-        print("count_favourite worng!!")
+        print("count_favourite wrong!!")
         return False
     re_num = int(re_num)
     # print(re_num)
@@ -1126,7 +1126,7 @@ def favourite_style(username,recipe_id):
         re_style = cursor.fetchone()[0]
     except Exception:
         db.rollback()
-        print("count_favourite worng!!")
+        print("count_favourite wrong!!")
         return False
     # print(re_style)
     select_user = "SELECT %s FROM sys.User WHERE Username='%s';"%(re_style,username)
@@ -1137,7 +1137,7 @@ def favourite_style(username,recipe_id):
         re_num = cur.fetchone()[0]
     except Exception:
         db.rollback()
-        print("count_favourite worng!!")
+        print("count_favourite wrong!!")
     re_num = float(re_num)+2
     # print(re_num)
     update_sql = "UPDATE sys.User SET %s=%s WHERE Username='%s';"%(re_style,re_num,username)
@@ -1147,7 +1147,7 @@ def favourite_style(username,recipe_id):
         db.commit()
     except Exception:
         db.rollback()
-        print("insert style worng!!")
+        print("insert style wrong!!")
         return False
     db.close()
     return True
@@ -1162,7 +1162,7 @@ def like_style(username,recipe_id):
         re_style = cursor.fetchone()[0]
     except Exception:
         db.rollback()
-        print("count_favourite worng!!")
+        print("count_favourite wrong!!")
     # print(re_style)
     select_user = "SELECT %s FROM sys.User WHERE Username='%s';"%(re_style,username)
     cur = db.cursor()
@@ -1172,7 +1172,7 @@ def like_style(username,recipe_id):
         re_num = cur.fetchone()[0]
     except Exception:
         db.rollback()
-        print("count_favourite worng!!")
+        print("count_favourite wrong!!")
     re_num = float(re_num)+1
     # print(re_num)
     update_sql = "UPDATE sys.User SET %s=%s WHERE Username='%s';"%(re_style,re_num,username)
@@ -1182,7 +1182,7 @@ def like_style(username,recipe_id):
         db.commit()
     except Exception:
         db.rollback()
-        print("insert style worng!!")
+        print("insert style wrong!!")
         return False
     db.close()
     return True
@@ -1199,7 +1199,7 @@ def recommend_recipe(username):
         re_num = cursor.fetchone()
     except Exception:
         db.rollback()
-        print("select style worng!!")
+        print("select style wrong!!")
         return False
     # print(re_num)
     re_num=list(re_num)
