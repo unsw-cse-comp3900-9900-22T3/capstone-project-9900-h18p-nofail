@@ -70,6 +70,9 @@ function RegisterForm () {
       <Form.Group className="mb-3">
         <Form.Label>Password: </Form.Label>
         <Form.Control placeholder="password" type='password' onChange={e => setPassword(e.target.value)} />
+        <Form.Text id="passwordHelpBlock" muted>
+        Password should be at least 6 character, contain with upper and lower case letter, numbers, and special characters: !@#$%^*(,)~_
+      </Form.Text>
       </Form.Group>
       <Form.Group className="mb-3">
         <Form.Label>Confirm Password: </Form.Label>
