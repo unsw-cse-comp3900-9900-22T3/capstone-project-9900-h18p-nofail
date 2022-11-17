@@ -30,6 +30,10 @@ function Updatepersonalinfo () {
   React.useEffect(() => {
     (async () => {
       await getinfo();
+      if(location.href.indexOf('#reloaded')==-1){
+        location.href = location.href+'#reloaded';
+        location.reload();
+      }
     })(); 
   }, []); 
   const info = JSON.parse(localStorage.getItem('info'));
@@ -38,6 +42,7 @@ function Updatepersonalinfo () {
   const [description, setDes] = React.useState(userinfo.description);
   const [email, setEmail] = React.useState(userinfo.email);
   let [user_photo, setImg] = React.useState(userinfo.user_photo);
+  console.log(user_photo)
   const [password, setPassword] = React.useState(userinfo.password);
   // const [description, setDes] = React.useState('');
   // const [email, setEmail] = React.useState('');
@@ -45,7 +50,7 @@ function Updatepersonalinfo () {
   // const [password, setPassword] = React.useState('');
   const updateinfo = async () => {
     console.log(user_photo)
-    if(user_photo.length!=0){
+    if(user_photo.search('path')!=-1){
       const pics = user_photo.split('\\')
       user_photo = 'imgs/' + pics[pics.length-1];
       console.log(user_photo)
