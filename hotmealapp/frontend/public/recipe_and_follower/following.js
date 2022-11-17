@@ -143,3 +143,8 @@ function changetime(currenttime) {
 
 
 }
+
+function CreateRecipe() {
+    window.location.href = 'http://localhost:3000/createrecipe';
+
+}
