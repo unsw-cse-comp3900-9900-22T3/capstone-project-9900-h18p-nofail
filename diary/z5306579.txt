@@ -9,3 +9,21 @@ We communicate the functional modules and the work flow of the website, design a
 
 Week4
 Do the interface of homepage, personal page and view other's personal page. Finish the sprint 1.
+
+Week5
+Design the UI of homepage, personal page, map all the recipe cards.
+
+Week6
+Split the recipe card part of homepage, and split the personal details part and personal recipe card part of personal page. The CSS of the UI has been improved and consistent with other pages.
+
+Week7
+Almost all the functions of all pages have been implemented, including the jumping between each pages, the function of each button, some links on the texts and recipe cards. 
+
+Week8
+Except for the searching, filtering and novel functions, all the functions are ready. Fixing some bugs and do the improvement of loading pages.
+
+Week9
+Searching and filtering functions have been implemented, add some pages for better usages, improve some UI design for better view, improve the loading time of each pages, solve some bugs.
+
+Week10
+Writing the report and prepare for the final presentation.
