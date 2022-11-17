@@ -149,10 +149,13 @@ function HomepageRecipeCard () {
           }
     }
     else if(filter_sort_by_value==="Most Recent"){
-        // all_recipes.sort(function(a,b){
-        //   return b.create_time < a.create_time ? 1 : -1;
-        // })
-        all_recipes.reverse();
+        //  all_recipes.sort(function(a,b){
+        //    return b.create_time < a.create_time ? 1 : -1;
+        //  })
+        // all_recipes.reverse();
+        all_recipes.sort(function(a,b){
+          return b.recipe_id - a.recipe_id;
+        })
         localStorage.setItem('all_recipes', JSON.stringify(all_recipes));
         console.log("sort_by_date:",all_recipes);
 
@@ -206,7 +209,7 @@ function HomepageRecipeCard () {
                           <option value="milk">Milk</option>
                           <option value="egg">Egg</option>
                         </select>
-                        <label htmlFor="Sorting" style={{ marginLeft: 130}}>Sort By: </label>
+                        <label htmlFor="Sorting" style={{ marginLeft: 120}}>Sort By: </label>
                         <select id="filter_sort_by" onChange={e => filter_sort_by(e.target.value)}>
                           <option value="">Open to select</option>
                           <option value="Most Likes">Most Likes</option>
