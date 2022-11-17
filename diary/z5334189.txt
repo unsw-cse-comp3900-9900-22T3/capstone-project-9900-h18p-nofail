@@ -1,4 +1,4 @@
-Week 1:
+Week1:
 The group was formed, this is a fine group and get touch with each other on our first lab meeting. We decided our project topic
 
 
@@ -9,8 +9,23 @@ Week3:
 I start to work on our proposal, everyone is assigned with some work  i am in charge of image. Me and Ji used processon to draw those images and those picatures look awesome
 
 
+week4:
+i start to write the web page of Recipe detail, follower and following. all of them are static. our localhost is not available somehow therefore we upload all websites to AWS S3 to make all website connect
 
-test test
+week5:
+localhost are settled, i start to write js for recipe, like post comment, like , favorite and follow function. however all of these function are local storage. using AWS to storage our sql
 
-ggggggg
+week6:
+start to connect information with SQL make post, like ,favorite and follow function available.
 
+week7:
+connect follower,following list with SQL , update user's avatar, personal information.
+
+week8
+change UI interface to make it look exactly like homepages.
+
+week9
+make all pages are connected and connect all functions with sql.  solve bugs, improve loading efficiency.
+
+week10
+write the final report and prepare for the presentation
