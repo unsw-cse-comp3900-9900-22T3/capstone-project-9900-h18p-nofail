@@ -93,6 +93,7 @@ headers = {
 @app.route('/register', methods =['GET', 'POST'])
 def register():
     msg = 'missing parameter'
+    print(request.json)
     if (
         request.method == 'POST' and 
         'username' in request.json and 

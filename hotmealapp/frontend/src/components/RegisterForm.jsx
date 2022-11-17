@@ -64,7 +64,7 @@ function RegisterForm () {
         <Form.Control placeholder="email" type='text' onChange={e => setEmail(e.target.value)} />
       </Form.Group>
       <Form.Group className="mb-3">
-        <Form.Label>Name: </Form.Label>
+        <Form.Label>Username: </Form.Label>
         <Form.Control placeholder="name" type='text' onChange={e => setName(e.target.value)} />
       </Form.Group>
       <Form.Group className="mb-3">
@@ -82,11 +82,11 @@ function RegisterForm () {
           <option value="Chinese">Chinese</option>
           <option value="Japanese">Japanese</option>
           <option value="Korean">Korean</option>
-          <option value="South East Asia">South East Asia</option>
+          <option value="South_East_Asia">South East Asia</option>
           <option value="French">French</option>
           <option value="Italy">Italy</option>
-          <option value="Fast food">Fast food</option>
-          <option value="Middle East">Middle East</option>
+          <option value="Fast_Food">Fast food</option>
+          <option value="Middle_East">Middle East</option>
           <option value="Indian">Indian</option>
           <option value="Russian">Russian</option>
         </Form.Select>
@@ -98,11 +98,11 @@ function RegisterForm () {
           <option value="Chinese">Chinese</option>
           <option value="Japanese">Japanese</option>
           <option value="Korean">Korean</option>
-          <option value="South East Asia">South East Asia</option>
+          <option value="South_East_Asia">South East Asia</option>
           <option value="French">French</option>
           <option value="Italy">Italy</option>
-          <option value="Fast food">Fast food</option>
-          <option value="Middle East">Middle East</option>
+          <option value="Fast_Food">Fast food</option>
+          <option value="Middle_East">Middle East</option>
           <option value="Indian">Indian</option>
           <option value="Russian">Russian</option>
         </Form.Select>
