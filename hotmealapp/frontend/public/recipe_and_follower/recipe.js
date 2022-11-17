@@ -486,7 +486,7 @@ function getCommentList() {
         success: function (data) {
             if (data.status === "success") {
 
-                for (var i = 0; i < data.comm.length; i++) {
+                for (var i = data.comm.length-1; i < data.comm.length; i++) {
                     let obj = data.comm[i];
                     obj.avatarUrl = "images/logo.png";
                     obj[5] = changetime(obj[5]);
