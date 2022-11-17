@@ -1039,6 +1039,7 @@ def User_show(username):
     return re
 def User_update(username,email, password, describe, user_photo):
     sql="UPDATE sys.User SET email = '%s', Password = '%s', `Describe`='%s', User_photo='%s' WHERE Username='%s';"%(email,password,describe,user_photo,username)
+    print(sql)
     db.ping()
     cur = db.cursor()
     try:

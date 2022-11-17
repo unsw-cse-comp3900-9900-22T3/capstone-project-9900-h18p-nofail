@@ -209,7 +209,7 @@ function HomepageRecipeCard () {
                           <option value="milk">Milk</option>
                           <option value="egg">Egg</option>
                         </select>
-                        <label htmlFor="Sorting" style={{ marginLeft: 120}}>Sort By: </label>
+                        <label htmlFor="Sorting" style={{ marginLeft: 110}}>Sort By: </label>
                         <select id="filter_sort_by" onChange={e => filter_sort_by(e.target.value)}>
                           <option value="">Open to select</option>
                           <option value="Most Likes">Most Likes</option>

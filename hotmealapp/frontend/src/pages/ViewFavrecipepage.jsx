@@ -186,7 +186,7 @@ function ViewFavrecipepage() {
                             <a href={`/viewpersonalpage/${username}`}  style={{ marginLeft: 370, color:'black'}}>{username}'s Recipe</a>
                             </td>
                             <td>
-                            <b><a href={`/viewfavrecipepage/${username}`} style={{ margin: 420 , color:'black'}}>Favorite Recipe</a></b>
+                            <b><a href={`/viewfavrecipepage/${username}`} style={{ margin: 410 , color:'black'}}>Favorite Recipe</a></b>
                             </td>
                             </tr>
                         </tbody>
