@@ -10,3 +10,22 @@ I finished epics and user stories of personal page for\'a0proposal, and built th
 
 Week4:
 I completed the front-end framework architecture, developed the front-end page for recipe creation, the front-end page for login and registration, and interfaced with the back-end api for login and registration.
+
+Week5:
+I developed recipe update information and interfaced with the backend api for recipe creation.
+
+Week6:
+I interfaced with the backend api for recipe update page.
+
+Week7:
+I developed page of update personal information and interfaced it with backend api.
+
+Week8:
+I fixed bugs of that my page will show old information in localstorage.
+
+Week9:
+I finished all the jump between different pages.
+
+Week10:
+I finished some part of System and Feature Walkthrough in report, some part of Implementation Challenges and some part of references of report.
+I prepare and finish some part of our final demo.
