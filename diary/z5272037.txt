@@ -1,2 +1,21 @@
-week 1
-Form a group and choose the project
+Week dairy
+Week1: 
+initialize the group, and choose the topic for the project 
+Week2:
+I did the project proposal with my group members, and design the project structure
+Week3:
+I tried to design the api and the database design，and try to do the basic function of the project
+Week4:
+Managed to collaborate with the group members to make the front end functionality of the project on track and make the first demo
+Week5:
+I developed the back end of the project 
+Week6:
+I developed the back end of the project none stop
+Week7:
+I developed the back end of the project none stop
+Week8:
+Managed to collaborate with the group members to make the front end and back end functionality of the project on track and make the second demo
+Week9:
+I did the back end of recommendation system and popular ranking function together with my group member
+Week10:
+Did the final demo and presentation and the report with my group members
