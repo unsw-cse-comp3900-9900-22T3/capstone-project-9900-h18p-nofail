@@ -5,3 +5,17 @@ Week2:
 We worked together to plan our project¡¯s functions, schedule and divided our proposal¡¯s work. As a backend developer, I learned which framework is suitable for this project.
 Week3:
 I designed our project¡¯s database. Meanwhile, I work for the part of homepage¡¯s user story, ER-diagram and data layer text writing and finished it.
+Week4:
+I finished the register and login functions in datalayer.py. Meanwhile, we prepared the DemoA.
+Week5:
+I worked for the functions realising in data layer and wrote over 600 rows codes.
+Week6:
+I finished almost all functions in data layer except recommend system and popular functions. Meanwhile, I deploy the database on the AWS(Amazon cloud server).
+Week7:
+I debuged my code and add duplicated functions which can run by recipe_id instead of relaying on recipe_name and recipe_username.
+Week8:
+We prepared the DemoB. And redesigned the recommend system.
+Week9:
+I worked for recommend system, popular function and finished them.
+Week10:
+We worked for report and prepared the Final Demo.
